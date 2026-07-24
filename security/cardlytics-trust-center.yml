@@ -1,0 +1,22 @@
+generated: '2026-07-18'
+method: searched
+source: https://www.cardlytics.com/trust-center
+url: https://www.cardlytics.com/trust-center
+trust_portal: https://app.conveyor.com/profile/cardlytics
+certifications:
+- SOC 1
+- SOC 2
+- SOX
+notes: >-
+  Cardlytics publishes a Trust Center describing SOC 1 (financial reporting
+  integrity), SOC 2 (security, availability, and confidentiality of sensitive
+  information), and SOX (internal financial controls) attestations. Compliance
+  documentation is distributed through a Conveyor-hosted Trust Portal. A
+  whistleblower hotline is published; no public bug-bounty or responsible-
+  disclosure program or security.txt was found.
+evidence:
+- source: https://www.cardlytics.com/trust-center
+  kind: trust-center
+  keywords: [soc 1, soc 2, sox, trust center]
+- source: https://app.conveyor.com/profile/cardlytics
+  kind: trust-portal

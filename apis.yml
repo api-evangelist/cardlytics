@@ -1,7 +1,29 @@
 aid: cardlytics
 name: Cardlytics
-description: Cardlytics is a company surfaced as a portfolio company of canaan-partners and added to the
-  API Evangelist network as a stub for enrichment. This profile is a lead awaiting the enrichment pipeline.
+description: >-
+  Cardlytics is a commerce media platform that uses first-party purchase data
+  from its financial-institution partners to help advertisers reach consumers
+  inside banking apps with card-linked offers and measurable, closed-loop
+  attribution. Advertisers plan, launch, and measure card-linked campaigns
+  through Ads Manager and advertiser APIs, while banks and neobanks (publishers)
+  embed Merchant Offers and the Cardlytics Rewards Platform into their digital
+  channels via publisher APIs and SDKs. The company also operates the Dosh
+  card-linked network and the Bridg offline purchase-intelligence business,
+  giving advertisers person-level measurement across online and in-store spend.
+  Cardlytics is a public company (NASDAQ: CDLX) and its platform is an enterprise,
+  partnership-based product rather than a self-service developer API.
+accessModel:
+  pricing: unknown
+  onboarding: unknown
+  trial: false
+  try_now: false
+  public: false
+  label: Unknown
+  confidence: low
+  source: []
+  generated: '2026-07-22'
+  method: derived
+image: https://cdn.prod.website-files.com/647efc90c29ecb765fcd4f1a/6481aadd2b75cd4512df022a_cardlytics_open_graph_01.png
 url: https://raw.githubusercontent.com/api-evangelist/cardlytics/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
@@ -11,12 +33,47 @@ x-tier: stub
 x-tier-reason: portfolio-lead
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-17'
+modified: '2026-07-18'
 tags:
 - Company
+- Advertising
+- Commerce Media
+- Card-Linked Offers
+- Purchase Intelligence
+- Financial Services
+- Loyalty and Rewards
+- Marketing
 apis: []
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+common:
+- type: DomainSecurity
+  url: security/cardlytics-domain-security.yml
+- type: Website
+  url: https://www.cardlytics.com/
+- type: DeveloperPortal
+  url: https://platform.cardlytics.com/
+- type: Documentation
+  url: https://platform.cardlytics.com/
+- type: Login
+  url: https://platform.cardlytics.com/
+- type: Blog
+  url: https://www.cardlytics.com/research-and-insights/browse-all-articles
+- type: Support
+  url: https://www.cardlytics.com/contact
+- type: TermsOfService
+  url: https://www.cardlytics.com/master-advertiser-terms-and-conditions
+- type: PrivacyPolicy
+  url: https://www.cardlytics.com/privacy-policy
+- type: TrustCenter
+  url: https://www.cardlytics.com/trust-center
+- type: Compliance
+  url: https://www.cardlytics.com/trust-center
+x-enrichment:
+  date: '2026-07-19'
+  status: backfilled
+  pass: local-v1
+  note: backfilled from .gitignore signal + verified work evidence

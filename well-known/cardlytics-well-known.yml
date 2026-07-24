@@ -1,0 +1,24 @@
+generated: '2026-07-18'
+method: searched
+source: probe of /.well-known/ on cardlytics hosts
+notes: >-
+  No public /.well-known/ discovery documents were served. The platform host
+  redirects /.well-known/security.txt to its login landing page (not a valid
+  RFC 9116 document). No 200 responses were captured, so no WellKnown pointer
+  is wired.
+hosts:
+- host: https://www.cardlytics.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+- host: https://platform.cardlytics.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 302
+    note: redirects to https://platform.cardlytics.com/ (login), not a security.txt
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
