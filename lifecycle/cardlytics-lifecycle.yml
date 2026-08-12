@@ -1,0 +1,89 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://docs.cardlytics.com/ads/v1/common/versions.html,
+  https://docs.cardlytics.com/poweredby/mobile-sdk-releases.html,
+  https://docs.cardlytics.com/sdk/unified-sdk-releases.html,
+  https://platform.cardlytics.com/advertisers/changelog,
+  openapi/cardlytics-campaign-build-api-openapi.yml
+versioning:
+  scheme: uri-path
+  current:
+    partner_api: v1 (spec info.version 2025-10-07)
+    publisher_api: v2
+    campaign_build_api: v5–v8, versioned per resource
+  policy: >-
+    The URL carries the major version only. It increments on a breaking change —
+    changing an endpoint's HTTP verb, removing or renaming a request/response
+    property, or changing a response property's JSON type. Minor, non-breaking
+    changes ship without a URL version bump and are not separately announced.
+  docs: https://docs.cardlytics.com/ads/v1/common/versions.html
+deprecation:
+  policy_url: https://docs.cardlytics.com/sdk/unified-sdk-releases.html
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  api_deprecation_policy: null
+  sdk_adoption_policy:
+    source: https://docs.cardlytics.com/sdk/unified-sdk-releases.html
+    terms:
+    - SDK updates requiring no partner code change must be adopted within 60 days.
+    - SDK updates requiring partner code changes must be adopted within 90 days.
+    - Critical SDK bug patches must be adopted no later than two weeks after release.
+  announced_deprecations:
+  - item: Powered By Cardlytics SDK versions prior to 2.6.0
+    effective: '2022-07-01'
+    note: Older versions continue to function but stability and compatibility are not guaranteed.
+    source: https://docs.cardlytics.com/poweredby/mobile-sdk-releases.html
+  - item: Cost per Engagement (CPE) price type
+    effective: '2025-08-06'
+    note: End-of-life announced in the advertiser changelog.
+    source: https://platform.cardlytics.com/advertisers/changelog/august-2025
+  note: >-
+    Cardlytics publishes an SDK adoption/deprecation policy and has announced
+    individual product end-of-life dates, but no API deprecation policy, no
+    sunset window commitment, and no Sunset/Deprecation response headers.
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public SLA. The error-handling guidance says "specific APIs will speak to
+    their SLAs and capacity capabilities", which are delivered in the partner
+    agreement rather than published.
+status_page: null
+status_page_probe:
+  url: https://cardlytics.statuspage.io/
+  http_status: 200
+  finding: >-
+    An Atlassian Statuspage exists at cardlytics.statuspage.io but is INACTIVE —
+    it renders "Cardlytics Status - Page Inactive ... can only be viewed by team
+    members", and its /api/v2/summary.json returns "Your page is inactive."
+    status.cardlytics.com does not resolve. There is no public status page, so
+    no StatusPage pointer is wired.
+health_check:
+  endpoint: /healthcheck
+  example: https://pub-api-us.prod.cardlytics.com/healthcheck
+  note: >-
+    Publisher connectivity verification endpoint named in the mTLS onboarding
+    guide. It is not anonymously reachable — the host requires a client
+    certificate and an allow-listed source IP.
+  source: https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html
+deprecated_operations: []
+deprecated_operations_note: >-
+  No operation in any of the three published OpenAPI documents carries
+  deprecated: true.
+retired_surfaces:
+- surface: Ad Server v1 API (/api/v1)
+  evidence: >-
+    Documented only on the legacy docs.cardlytics.com snapshot; superseded by the
+    Publisher API v2. The legacy site's own canonical link points at
+    platform.cardlytics.com.
+- surface: Powered by Cardlytics SDK distribution hosts
+  evidence: >-
+    The documented iOS distribution host poweredby-sdk-release.cdlx.com no longer
+    resolves in DNS, and the Android Maven repository cdlx.jfrog.io/cdlx/libs now
+    302s to the JFrog marketing landing page. Both install paths in the published
+    SDK docs are dead as of this probe.
+changelog:
+  see: changelog/cardlytics-changelog.yml
+  url: https://platform.cardlytics.com/advertisers/changelog

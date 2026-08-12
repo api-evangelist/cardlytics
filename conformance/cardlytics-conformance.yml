@@ -1,0 +1,133 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/cardlytics-partner-api-openapi.yml,
+  openapi/cardlytics-campaign-build-api-openapi.yml,
+  openapi/cardlytics-publisher-api-openapi.yml,
+  https://docs.cardlytics.com/ads/v2/error-handling/index.html,
+  https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html,
+  https://www.cardlytics.com/trust-center
+standards:
+- id: openapi-3.0
+  conforms: true
+  evidence: All three published specifications declare openapi 3.0.1.
+- id: openapi-3.1
+  conforms: false
+  evidence: No published spec is 3.1.x.
+- id: oauth2
+  conforms: true
+  evidence: >-
+    securitySchemes type oauth2 in two specs — clientCredentials on the Partner
+    API (/v1/idp/oauth2/token) and authorizationCode on the Campaign Build API
+    (Amazon Cognito).
+- id: oauth2-pkce
+  conforms: true
+  evidence: >-
+    The CSR API documents the authorization code flow with PKCE against a Ping
+    Identity authorization server.
+  source: https://docs.cardlytics.com/csr/common/authentication.html
+- id: oidc
+  conforms: partial
+  evidence: >-
+    Both OAuth schemes declare the `openid` scope and the Campaign Build scheme
+    names id_token as the token to use, but no /.well-known/openid-configuration
+    discovery document is served on any Cardlytics host.
+- id: mutual-tls
+  conforms: true
+  evidence: >-
+    Publisher API v2 requires two-way TLS with a Cardlytics-signed client
+    certificate plus an IP allow list on both sandbox and production.
+- id: jwt-rfc7519
+  conforms: true
+  evidence: >-
+    Publisher session tokens are JWTs; Powered by Cardlytics webhook auth is an
+    HS256 JWT with iss/sub/exp/jti claims, citing RFC 7519 explicitly.
+- id: rfc9457-problem-details
+  conforms: false
+  evidence: >-
+    No application/problem+json anywhere. Errors use two bespoke JSON envelopes
+    (type/title/status/validationErrors/requestId, and error.message/error.code).
+- id: rfc9727-api-catalog
+  conforms: partial
+  evidence: >-
+    A valid application/linkset+json catalog is served at
+    https://platform.cardlytics.com/.well-known/api-catalog, but the two child
+    service-desc links it advertises both return 404.
+- id: rfc9116-security-txt
+  conforms: false
+  evidence: No /.well-known/security.txt on any host (404 or 403 everywhere probed).
+- id: rfc8594-sunset-header
+  conforms: false
+  evidence: No Sunset or Deprecation headers documented or present in any spec.
+- id: rfc8414-oauth-metadata
+  conforms: false
+  evidence: /.well-known/oauth-authorization-server 404s or 403s on every host.
+- id: idempotency-key
+  conforms: false
+  evidence: >-
+    No Idempotency-Key header or parameter in any spec or doc; only natural-key
+    PUT upsert on the Partner API.
+- id: json-api
+  conforms: false
+  evidence: Plain JSON, no JSON:API media type or document structure.
+- id: asyncapi
+  conforms: false
+  evidence: >-
+    A real webhook and real-time-messaging surface exists but is documented in
+    prose only; no AsyncAPI document is published.
+- id: uri-path-versioning
+  conforms: true
+  evidence: >-
+    Major version in the URL path with a published breaking-change definition
+    (verb change, property removal/rename, property type change).
+- id: pagination
+  conforms: partial
+  evidence: >-
+    Page/PerPage/OrderBy query parameters on Campaign Build API collections; the
+    Partner and Publisher APIs expose no pagination at all.
+- id: rate-limit-headers
+  conforms: false
+  evidence: >-
+    429 is documented but no X-RateLimit-*, RateLimit-* or Retry-After response
+    header is published.
+- id: request-id-tracing
+  conforms: true
+  evidence: >-
+    X-CDLX-Request-Id accepted on all APIs and echoed back as requestId on every
+    response and every error body; a UUID is generated when absent.
+- id: pci-dss
+  conforms: unknown
+  evidence: >-
+    Cardlytics processes card-linked purchase data and its SDK ships an optional
+    Card Vaulting module updated "to meet compliance requirements", but no PCI
+    DSS attestation is named on the public trust center.
+- id: soc-1
+  conforms: true
+  evidence: Named on https://www.cardlytics.com/trust-center (financial reporting integrity).
+- id: soc-2
+  conforms: true
+  evidence: Named on https://www.cardlytics.com/trust-center (security, availability, confidentiality).
+- id: sox
+  conforms: true
+  evidence: Named on https://www.cardlytics.com/trust-center (internal financial controls).
+- id: iso-27001
+  conforms: false
+  evidence: Not named on the public trust center.
+- id: gdpr
+  conforms: partial
+  evidence: >-
+    UK/EU publisher infrastructure is operated in a separate eu-west-1 region
+    (publisher-uk-fiuat, pub-api-eu) and a public privacy policy is published,
+    but no explicit GDPR/DPA attestation is named on the trust center.
+- id: psd2
+  conforms: false
+  evidence: Not an account-servicing payment service provider; no PSD2 surface.
+- id: fapi
+  conforms: false
+  evidence: No FAPI security profile claimed or implied by the securitySchemes.
+compliance_program:
+  published: true
+  url: https://www.cardlytics.com/trust-center
+  trust_portal: https://app.conveyor.com/profile/cardlytics
+  certifications: [SOC 1, SOC 2, SOX]
+  see: security/cardlytics-trust-center.yml

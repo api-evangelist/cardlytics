@@ -1,0 +1,95 @@
+generated: '2026-08-12'
+method: searched
+source:
+- https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+- https://docs.cardlytics.com/ads/v2/integrations/sandbox-api-calls.html
+- https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html
+- https://platform.cardlytics.com/advertisers/docs/api-get-started
+- openapi/cardlytics-partner-api-openapi.yml
+summary: >-
+  Cardlytics runs two separate sandboxes — one for advertiser partners on
+  api-sandbox.cardlytics.com, one for publishers on the regional
+  pub-api-*.sandbox.cardlytics.com hosts. Neither is self-service: access is
+  provisioned by an account manager, and the publisher sandbox additionally
+  requires a Cardlytics-signed mTLS client certificate plus an IP allow list.
+  There are no magic test card numbers or hosted test tokens; the publisher
+  sandbox instead returns pre-defined canned responses.
+test_vs_live:
+  separation: host-based
+  environments:
+  - name: advertiser sandbox
+    base_url: https://api-sandbox.cardlytics.com
+    description: Sandbox environment — use this for API testing and development
+    source: openapi/cardlytics-partner-api-openapi.yml (servers[])
+  - name: advertiser production
+    base_url: https://api.cardlytics.com
+    description: >-
+      Production environment. The spec itself labels this
+      "Documentation reference only, contact support for access".
+    source: openapi/cardlytics-partner-api-openapi.yml (servers[])
+  - name: publisher sandbox (US)
+    base_url: https://pub-api-us.sandbox.cardlytics.com
+    source: https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+  - name: publisher sandbox (UK/EU)
+    base_url: https://pub-api-eu.sandbox.cardlytics.com
+    source: https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+  - name: publisher production (US)
+    base_url: https://pub-api-us.prod.cardlytics.com
+    source: https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html
+  - name: publisher pre-production (UK)
+    base_url: https://publisher-uk-fiuat.cardlytics.com
+    source: openapi/cardlytics-publisher-api-openapi.yml (servers[])
+  key_prefixes: []
+  key_prefix_note: >-
+    Cardlytics uses no test-vs-live key prefix convention. The separation is the
+    hostname plus a distinct client certificate per environment — the mTLS guide
+    requires two CSRs, one for pre-production and one for production, with
+    different subjects (it recommends CN=UAT on the pre-prod CSR).
+access:
+  self_service: false
+  prerequisites:
+  - Reach out to your assigned Cardlytics account manager or integration consultant.
+  - Provide a range of source IP addresses for allow-listing.
+  - Generate an RSA private key and CSR with openssl; Cardlytics signs it and returns client.crt.
+  note: >-
+    A single signed client certificate may be shared across multiple developers
+    in one partner environment.
+  csr_example: 'openssl req -new -newkey rsa:4096 -keyout client.key -out client.csr -nodes -subj "/C=US/ST=CA/O=Publisher/CN=api-test-sandbox"'
+  source: https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+connectivity_check:
+  command: >-
+    curl https://pub-api-eu.sandbox.cardlytics.com/v2/session/startSession
+    --cert client.crt --key client.key -H "Content-Type: application/json"
+    -d '{ "scopes": ["api:institution"] }'
+  expected: A 200 carrying a sessionToken.
+  source: https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+test_data:
+  magic_values: []
+  test_cards: []
+  test_clock: false
+  fixtures:
+    style: canned responses
+    description: >-
+      "The Sandbox API consists of pre-defined responses that allow you to
+      interact with and test your offer content prior to going into production."
+      Ads created in the sandbox do not actually serve.
+    covered_calls:
+    - Security API (session token)
+    - Customers API — customer profile
+    - Customers API — start customer session
+    - Customers API — opt customer in/out
+    - Ads API — GET Ads
+    - Ads API — GET Rewards
+    - Ads API — GET Redemptions
+    source: https://docs.cardlytics.com/ads/v2/integrations/sandbox-api-calls.html
+  identifiers:
+    note: >-
+      "You can use any Source Customer Identifier to create a Security token for
+      Sandbox API calls" — there is no reserved magic-id range.
+  extending: Additional sandbox endpoints must be requested through the account manager.
+integration_test_checklist:
+  source: https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html
+  steps:
+  - Verify connectivity against the /healthcheck endpoint.
+  - Confirm startSession, getAds and clientEvent for a known-good customer.
+  - Repeat the same three calls after the production network switch-on.

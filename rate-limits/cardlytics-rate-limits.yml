@@ -1,0 +1,71 @@
+generated: '2026-08-12'
+method: searched
+source:
+- https://platform.cardlytics.com/advertisers/docs/api-merchant-rest-api
+- https://platform.cardlytics.com/advertisers/docs/api-faqs
+- https://docs.cardlytics.com/ads/v2/error-handling/index.html
+- https://docs.cardlytics.com/poweredby/api-reference-authentication.html
+limit_count: 0
+note: >-
+  Cardlytics documents that rate limits EXIST and that exceeding them returns
+  429, but publishes no numeric limit any caller can rely on. Partner API quotas
+  ("a daily quota of the number of calls" and "an RPS, for example, 10 calls per
+  second") are provisioned per partner in the partner agreement — the "10 calls
+  per second" in the docs is explicitly an example, not a published ceiling, so
+  it is not recorded as a limit here. On the Publisher API the provider states
+  the opposite posture: "Cardlytics imposes no general rules around throttling
+  incoming requests" and "tries to never respond with this response code".
+  limit_count is therefore 0: an honest zero, not an unchecked field.
+limits:
+- scope: per-partner (Partner API, advertiser merchant/offer ingestion)
+  window: day
+  limit: null
+  provisioned: true
+  note: >-
+    "Every Partner will be provided with a daily quota of the number of calls
+    they can make, this should be ~ Number of merchant offers." The value is
+    per-partner and not published.
+  status_on_exhaustion: 429
+  source: https://platform.cardlytics.com/advertisers/docs/api-merchant-rest-api
+- scope: per-partner (Partner API)
+  window: second
+  limit: null
+  provisioned: true
+  note: >-
+    "Every Partner will be provided with an RPS, for example, 10 calls per
+    second." The example value is illustrative; the real RPS is assigned per
+    partner.
+  status_on_exhaustion: 429
+  source: https://platform.cardlytics.com/advertisers/docs/api-merchant-rest-api
+- scope: per-request payload cap (Partner API aggregate reporting)
+  window: per-request
+  limit: 1000
+  unit: offer IDs per report request
+  source: https://platform.cardlytics.com/advertisers/docs/api-faqs
+- scope: global (Publisher API v2, Powered by Cardlytics)
+  window: null
+  limit: null
+  note: >-
+    No general throttling rules imposed; publishers are nevertheless asked to
+    honor 429 with exponential backoff.
+  status_on_exhaustion: 429
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+response_headers: []
+response_headers_note: >-
+  No X-RateLimit-*, RateLimit-* or Retry-After response headers are documented on
+  any Cardlytics API, and none appear in any of the three published OpenAPI
+  documents. An agent gets no runtime budget signal — only a 429 after the fact.
+status_on_exhaustion: 429
+retry_guidance:
+  strategy: exponential backoff
+  documented: true
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+header_size_limits:
+- header: X-CDLX-Session
+  max_bytes: 512
+  behavior: silently truncated past 512 bytes
+  source: https://docs.cardlytics.com/ads/v1/common/custom-http-headers.html
+- header: X-CDLX-Meta
+  max_bytes: 512
+  behavior: silently truncated past 512 bytes
+  source: https://docs.cardlytics.com/ads/v1/common/custom-http-headers.html

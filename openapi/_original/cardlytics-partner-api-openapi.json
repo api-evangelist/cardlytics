@@ -1,0 +1,1190 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "partner-api",
+    "description": "Partner APIs",
+    "version": "2025-10-07"
+  },
+  "servers": [
+    {
+      "url": "https://api-sandbox.cardlytics.com",
+      "description": "Sandbox environment - Use this for API testing and development"
+    },
+    {
+      "url": "https://api.cardlytics.com",
+      "description": "Production environment - Documentation reference only, contact support for access"
+    }
+  ],
+  "paths": {
+    "/api/v1/idp/oauth2/token": {
+      "post": {
+        "summary": "Generate OAuth2 access token",
+        "description": "Obtain an access token using client credentials for API authentication",
+        "tags": [
+          "Authentication"
+        ],
+        "security": [],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "grant_type": {
+                    "type": "string",
+                    "enum": [
+                      "client_credentials"
+                    ],
+                    "description": "Must be 'client_credentials'"
+                  },
+                  "client_id": {
+                    "type": "string",
+                    "description": "Your client ID"
+                  },
+                  "client_secret": {
+                    "type": "string",
+                    "description": "Your client secret"
+                  }
+                },
+                "required": [
+                  "grant_type",
+                  "client_id",
+                  "client_secret"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Token generated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "access_token": {
+                      "type": "string",
+                      "description": "The access token"
+                    },
+                    "token_type": {
+                      "type": "string",
+                      "example": "Bearer"
+                    },
+                    "expires_in": {
+                      "type": "integer",
+                      "description": "Token expiration time in seconds"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - Invalid parameters"
+          },
+          "401": {
+            "description": "Unauthorized - Invalid client credentials"
+          }
+        }
+      }
+    },
+    "/api/v1/partner/merchants/{external_merchant_id}": {
+      "put": {
+        "summary": "Create or Update the Merchant using the partner-provided merchant ID",
+        "description": "Create or update merchant information. The external_merchant_id in the path must match the merchantId in the request body.",
+        "tags": [
+          "Merchants"
+        ],
+        "parameters": [
+          {
+            "name": "external_merchant_id",
+            "in": "path",
+            "description": "Partner-provided merchant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "67890"
+            },
+            "example": "67890"
+          }
+        ],
+        "requestBody": {
+          "description": "Merchant object that needs to be inserted or updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/MerchantPayload"
+              },
+              "example": {
+                "merchantId": "67890",
+                "merchantName": "Tony's Grill & Bar",
+                "merchantCategoryCode": 5812,
+                "merchantUrl": "www.tonysgrill.com",
+                "merchantSubCategories": [
+                  {
+                    "categoryType": "cuisine",
+                    "categoryItems": [
+                      "American",
+                      "BBQ",
+                      "Steakhouse"
+                    ]
+                  }
+                ],
+                "paymentChannels": [
+                  "instore"
+                ],
+                "stores": [
+                  {
+                    "storeId": "2047",
+                    "storeName": "Tony's Grill Downtown",
+                    "storeUrl": "www.tonysgrill.com/downtown",
+                    "address1": "456 Broadway Ave",
+                    "address2": "Suite 101",
+                    "city": "SPRINGFIELD",
+                    "state": "IL",
+                    "postalCode": "62701",
+                    "countryCode": "US",
+                    "latitude": "39.8017",
+                    "longitude": "-89.6437",
+                    "storePhoneNumbers": [
+                      "+12175559876"
+                    ],
+                    "storeEmails": [
+                      "info@tonysgrill.com"
+                    ],
+                    "processorMidChangedFlag": "N",
+                    "processorMidRecords": [
+                      {
+                        "paymentNetwork": "AmericanExpress",
+                        "processors": [
+                          {
+                            "processorName": "AmericanExpress",
+                            "amexMids": [
+                              {
+                                "seNumber": "9876543210"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "paymentNetwork": "MasterCard",
+                        "processors": [
+                          {
+                            "processorName": "Chase Paymentech",
+                            "mcAuthMids": [
+                              {
+                                "mcAuthLocationId": "556677888",
+                                "mcAuthAcquiringMid": "999888777666555",
+                                "mcAuthICA": "098765"
+                              }
+                            ],
+                            "mcClearingMids": [
+                              {
+                                "mcClearingLocationId": "445566777",
+                                "mcClearingAcquiringMid": "888777666555444",
+                                "mcClearingICA": "087654"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "paymentNetwork": "Visa",
+                        "processors": [
+                          {
+                            "processorName": "First Data",
+                            "processorId": "FD789",
+                            "visaMids": [
+                              {
+                                "vmid": "87651234",
+                                "vsid": "44332211"
+                              }
+                            ]
+                          },
+                          {
+                            "processorName": "Global Payments",
+                            "processorId": "GP456",
+                            "visaMids": [
+                              {
+                                "vmid": "13579246",
+                                "vsid": "66554433"
+                              }
+                            ]
+                          }
+                        ]
+                      },
+                      {
+                        "paymentNetwork": "Discover",
+                        "processors": [
+                          {
+                            "processorName": "Discover",
+                            "discoverMids": [
+                              {
+                                "discover": "7774032918456"
+                              },
+                              {
+                                "discover": "7774051297384"
+                              }
+                            ]
+                          }
+                        ]
+                      }
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Added to the queue for processing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request \u2013 possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n"
+          },
+          "500": {
+            "description": "Internal Server Error \u2013 An unexpected error occurred while processing the request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the Merchant using the partner-provided merchant ID",
+        "tags": [
+          "Merchants"
+        ],
+        "parameters": [
+          {
+            "name": "external_merchant_id",
+            "in": "path",
+            "description": "Partner-provided merchant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "67890"
+            },
+            "example": "67890"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted and queued for deletion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request \u2013 ID mismatch\n"
+          },
+          "500": {
+            "description": "Internal Server Error \u2013 An unexpected error occurred while processing the request"
+          }
+        }
+      }
+    },
+    "/api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}": {
+      "put": {
+        "summary": "Create or Update the Offer using the partner-provided merchant ID and offer ID",
+        "description": "Create or update offer information. The external_merchant_id and external_offer_id in the path must match the merchantId and offerId in the request body respectively.\n\n**Note**: If you don't have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.\n",
+        "tags": [
+          "Offers"
+        ],
+        "parameters": [
+          {
+            "name": "external_merchant_id",
+            "in": "path",
+            "description": "Partner's unique identifier of their Merchant as shared in the Merchant feed",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "67890"
+            },
+            "example": "67890"
+          },
+          {
+            "name": "external_offer_id",
+            "in": "path",
+            "description": "Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "OFFER-001"
+            },
+            "example": "OFFER-001"
+          }
+        ],
+        "requestBody": {
+          "description": "Offer object that needs to be inserted or updated",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OfferPayload"
+              },
+              "example": {
+                "offerId": "OFFER-001",
+                "merchantId": "67890",
+                "offerName": "Tony's Grill",
+                "assets": {
+                  "logo": {
+                    "type": "IMAGE",
+                    "value": {
+                      "large": {
+                        "url": "https://picsum.photos/627/627?random=1"
+                      }
+                    }
+                  },
+                  "largeRectangle": {
+                    "type": "IMAGE",
+                    "value": {
+                      "large": {
+                        "url": "https://picsum.photos/1200/627?random=1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "202": {
+            "description": "Accepted and queued for campaign creation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request \u2013 possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n"
+          },
+          "500": {
+            "description": "Internal Server Error \u2013 An unexpected error occurred while processing the request"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete the Offer using the partner-provided offer ID and merchant ID",
+        "description": "Delete an offer using the partner-provided identifiers.\n\n**Note**: If you don't have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.\n",
+        "tags": [
+          "Offers"
+        ],
+        "parameters": [
+          {
+            "name": "external_merchant_id",
+            "in": "path",
+            "description": "Partner's unique identifier of their Merchant as shared in the Merchant feed",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "67890"
+            },
+            "example": "67890"
+          },
+          {
+            "name": "external_offer_id",
+            "in": "path",
+            "description": "Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id.",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "OFFER-001"
+            },
+            "example": "OFFER-001"
+          }
+        ],
+        "responses": {
+          "202": {
+            "description": "Accepted and queued for deletion",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TraceResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request \u2013 ID mismatch\n"
+          },
+          "500": {
+            "description": "Internal Server Error \u2013 An unexpected error occurred while processing the request"
+          }
+        }
+      }
+    },
+    "/api/v1/partner/merchants/{external_merchant_id}/reports": {
+      "post": {
+        "summary": "Get merchant performance report (aggregate metrics)",
+        "description": "Returns aggregated performance metrics for a partner-provided merchant over a date range. Supports optional filtering by offer IDs. Defaults: cube=merchant_performance; timeRange.from defaults to 2 years back (max lookback); timeRange.to defaults to today's date.",
+        "tags": [
+          "Reports"
+        ],
+        "parameters": [
+          {
+            "name": "external_merchant_id",
+            "in": "path",
+            "description": "Partner-provided merchant identifier",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "default": "67890"
+            },
+            "example": "67890"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "description": "Optional filters. If `offerIds` is omitted or empty, metrics are returned for all offers under the merchant. `cube` currently supports only `merchant_performance`. `timeRange` is optional: `from` defaults to 2 years back (max lookback) and `to` defaults to today's date (YYYY-MM-DD).",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ReportRequest"
+              },
+              "example": {
+                "cube": "merchant_performance",
+                "offerIds": [],
+                "timeRange": {
+                  "from": "2023-10-01",
+                  "to": "2025-09-17"
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Aggregated performance for offers under the merchant.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ReportResponse"
+                },
+                "example": {
+                  "header": {
+                    "cube": "merchant_performance",
+                    "fields": [
+                      {
+                        "fieldName": "Partner Merchant Id",
+                        "fieldType": "DIM"
+                      },
+                      {
+                        "fieldName": "Partner Offer Id",
+                        "fieldType": "DIM"
+                      },
+                      {
+                        "fieldName": "Impressions",
+                        "fieldType": "FACT"
+                      },
+                      {
+                        "fieldName": "Purchases",
+                        "fieldType": "FACT"
+                      },
+                      {
+                        "fieldName": "Revenue",
+                        "fieldType": "FACT"
+                      },
+                      {
+                        "fieldName": "Reach",
+                        "fieldType": "FACT"
+                      },
+                      {
+                        "fieldName": "Activations",
+                        "fieldType": "FACT"
+                      }
+                    ],
+                    "maxRows": -1
+                  },
+                  "rows": [
+                    [
+                      "88d4d968-e922-sample-partner-merchant-id-f32a0eaa43ff",
+                      "2e1fd66d-72d7-sample-partner-offer-id-af82-b4bfd0aaa7ac",
+                      280568,
+                      14,
+                      714.87,
+                      172472,
+                      8005
+                    ],
+                    [
+                      "88d4d968-e922-sample-partner-merchant-id-f32a0eaa43ff",
+                      "5555d66d-72d7-sample-partner-offer-id-af82-343430aaa7ac",
+                      100568,
+                      8,
+                      14.22,
+                      2472,
+                      807
+                    ]
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request \u2013 Invalid parameters or date range."
+          },
+          "401": {
+            "description": "Unauthorized \u2013 Invalid or missing access token."
+          },
+          "500": {
+            "description": "Internal Server Error \u2013 An unexpected error occurred while processing the request."
+          }
+        }
+      }
+    },
+    "/api/v1/partner/redemptions": {
+      "get": {
+        "summary": "Get daily redemptions pre-signed URL",
+        "description": "Returns a pre-signed URL to download all redemptions for a specific day. The day must be in the past (UTC time). The pre-signed URL is valid for 60 minutes only.",
+        "tags": [
+          "Redemptions"
+        ],
+        "parameters": [
+          {
+            "name": "date",
+            "in": "query",
+            "description": "The date for which to retrieve redemptions (format: YYYY-MM-DD, must be a past date and not today or in the future).",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date",
+              "example": "2026-01-04"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Pre-signed URL generated successfully.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "url": {
+                      "type": "string",
+                      "description": "The pre-signed URL to download the redemptions file."
+                    }
+                  },
+                  "required": [
+                    "url"
+                  ]
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad Request - The date format is incorrect, or the date is today's date or in the future."
+          },
+          "500": {
+            "description": "Internal Server Error - An unexpected error occurred."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "TraceResponse": {
+        "type": "object",
+        "description": "Response containing the trace identifier",
+        "properties": {
+          "message": {
+            "type": "string",
+            "example": "Message description of the operation"
+          },
+          "trace_id": {
+            "type": "string",
+            "description": "Request trace identifier"
+          }
+        },
+        "required": [
+          "message",
+          "trace_id"
+        ]
+      },
+      "ReportRequest": {
+        "type": "object",
+        "description": "Request to retrieve aggregated performance per offer for a merchant.",
+        "properties": {
+          "cube": {
+            "type": "string",
+            "description": "Reporting cube to query. Only 'merchant_performance' is currently supported.",
+            "enum": [
+              "merchant_performance"
+            ],
+            "default": "merchant_performance"
+          },
+          "offerIds": {
+            "type": "array",
+            "description": "Optional list of partner offer IDs to filter. Empty or omitted returns all offers for the merchant.",
+            "items": {
+              "type": "string"
+            }
+          },
+          "timeRange": {
+            "type": "object",
+            "description": "Inclusive date range for the report (YYYY-MM-DD). If omitted: `from` defaults to 2 years back (max lookback) and `to` defaults to today's date.",
+            "properties": {
+              "from": {
+                "type": "string",
+                "format": "date",
+                "description": "Start date (inclusive)."
+              },
+              "to": {
+                "type": "string",
+                "format": "date",
+                "description": "End date (inclusive)."
+              }
+            },
+            "required": [
+              "from",
+              "to"
+            ]
+          }
+        }
+      },
+      "ReportField": {
+        "type": "object",
+        "description": "A field in the report header describing a dimension or metric.",
+        "properties": {
+          "fieldName": {
+            "type": "string"
+          },
+          "fieldType": {
+            "type": "string",
+            "enum": [
+              "DIM",
+              "FACT"
+            ]
+          }
+        },
+        "required": [
+          "fieldName",
+          "fieldType"
+        ]
+      },
+      "ReportHeader": {
+        "type": "object",
+        "description": "Metadata describing the report payload.",
+        "properties": {
+          "cube": {
+            "type": "string",
+            "description": "Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported."
+          },
+          "fields": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ReportField"
+            }
+          },
+          "maxRows": {
+            "type": "integer",
+            "description": "Maximum number of rows returned; -1 means no limit.",
+            "default": -1
+          }
+        },
+        "required": [
+          "cube",
+          "fields",
+          "maxRows"
+        ]
+      },
+      "ReportResponse": {
+        "type": "object",
+        "description": "Aggregated report response with a header and data rows.",
+        "properties": {
+          "header": {
+            "$ref": "#/components/schemas/ReportHeader"
+          },
+          "rows": {
+            "type": "array",
+            "description": "Tabular results; each row aligns with the header fields order.",
+            "items": {
+              "type": "array",
+              "items": {
+                "oneOf": [
+                  {
+                    "type": "string"
+                  },
+                  {
+                    "type": "number"
+                  },
+                  {
+                    "type": "integer"
+                  }
+                ]
+              }
+            }
+          }
+        },
+        "required": [
+          "header",
+          "rows"
+        ]
+      },
+      "OfferPayload": {
+        "type": "object",
+        "description": "A partner offer payload",
+        "properties": {
+          "offerId": {
+            "type": "string",
+            "description": "Partner\u2019s unique Offer Id for the Merchant"
+          },
+          "merchantId": {
+            "type": "string",
+            "description": "Partner\u2019s unique identifier of their Merchant as shared in the Merchant feed"
+          },
+          "offerName": {
+            "type": "string",
+            "description": "Offer Name"
+          },
+          "assets": {
+            "type": "object",
+            "description": "Two image assets (logo and largeRectangle).\n",
+            "properties": {
+              "logo": {
+                "$ref": "#/components/schemas/ImageAsset",
+                "description": "Logo image asset (627x627)"
+              },
+              "largeRectangle": {
+                "$ref": "#/components/schemas/ImageAsset",
+                "description": "Large rectangle image asset (1200x627)"
+              }
+            },
+            "required": [
+              "logo",
+              "largeRectangle"
+            ]
+          }
+        },
+        "required": [
+          "offerId",
+          "merchantId",
+          "offerName",
+          "assets"
+        ]
+      },
+      "ImageAsset": {
+        "type": "object",
+        "description": "An image asset with type and a single `large` payload",
+        "properties": {
+          "type": {
+            "type": "string",
+            "enum": [
+              "IMAGE"
+            ],
+            "description": "Must be 'IMAGE'"
+          },
+          "value": {
+            "type": "object",
+            "description": "Wrapper for the actual image payload",
+            "properties": {
+              "large": {
+                "$ref": "#/components/schemas/LargeImage"
+              }
+            },
+            "required": [
+              "large"
+            ]
+          }
+        },
+        "required": [
+          "type",
+          "value"
+        ]
+      },
+      "LargeImage": {
+        "type": "object",
+        "description": "The full-sized image. Exactly one of `url` or `content` must be present.\n",
+        "properties": {
+          "url": {
+            "type": "string",
+            "format": "uri",
+            "description": "URL to the image"
+          },
+          "content": {
+            "type": "string",
+            "description": "Data URL form of the image string (e.g., `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA`). Refer to RFC 2397 for details.\n"
+          }
+        },
+        "oneOf": [
+          {
+            "required": [
+              "url"
+            ]
+          },
+          {
+            "required": [
+              "content"
+            ]
+          }
+        ]
+      },
+      "MerchantPayload": {
+        "type": "object",
+        "properties": {
+          "merchantId": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Partner-provided merchant identifier"
+          },
+          "merchantName": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Registered name of the merchant or brand"
+          },
+          "parentMerchantId": {
+            "type": "string",
+            "description": "Any Parent of this merchant"
+          },
+          "merchantCategoryCode": {
+            "type": "number",
+            "description": "ISO 18245 4-digit MCC code"
+          },
+          "merchantSubCategories": {
+            "type": "array",
+            "description": "List of merchant sub-category objects",
+            "items": {
+              "type": "object",
+              "properties": {
+                "categoryType": {
+                  "type": "string",
+                  "description": "Ex: Cuisine"
+                },
+                "categoryItems": {
+                  "type": "array",
+                  "description": "Sub-category values (no special characters)",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "categoryType",
+                "categoryItems"
+              ]
+            }
+          },
+          "paymentChannels": {
+            "type": "array",
+            "description": "Indicates if this merchant accepts payments online or instore",
+            "items": {
+              "type": "string",
+              "enum": [
+                "online",
+                "instore"
+              ],
+              "minLength": 1
+            },
+            "minItems": 1
+          },
+          "paymentSubChannels": {
+            "type": "array",
+            "description": "Payment sub-channels (PayAtPump or Convenience)",
+            "items": {
+              "type": "string",
+              "enum": [
+                "PayAtPump",
+                "Convenience"
+              ]
+            }
+          },
+          "merchantUrl": {
+            "type": "string",
+            "description": "Merchant Website URL"
+          },
+          "merchantApps": {
+            "type": "array",
+            "description": "List of Online Apps used by Merchant",
+            "items": {
+              "type": "string"
+            }
+          },
+          "stores": {
+            "type": "array",
+            "description": "One or more store objects for this merchant",
+            "items": {
+              "type": "object",
+              "properties": {
+                "storeId": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Partner-provided store identifier"
+                },
+                "address1": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Street Address"
+                },
+                "address2": {
+                  "type": "string",
+                  "description": "Street Address (optional)"
+                },
+                "city": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "state": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "postalCode": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "countryCode": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "2-character country code (ISO 3166-1 alpha-2)"
+                },
+                "storeName": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Name of the store"
+                },
+                "locatedIn": {
+                  "type": "string",
+                  "description": "Business or venue the merchant is inside"
+                },
+                "storePhoneNumbers": {
+                  "type": "array",
+                  "description": "List of phone numbers of the store",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "storeUrl": {
+                  "type": "string",
+                  "description": "Store Website URL"
+                },
+                "storeEmails": {
+                  "type": "array",
+                  "description": "List of business email of the store",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "latitude": {
+                  "type": "string",
+                  "description": "The latitude coordinates of the merchant store location"
+                },
+                "longitude": {
+                  "type": "string",
+                  "description": "The longitude coordinates of the merchant store location"
+                },
+                "processorMidChangedFlag": {
+                  "type": "string",
+                  "minLength": 1,
+                  "description": "Y=Yes, N=No",
+                  "enum": [
+                    "Y",
+                    "N"
+                  ]
+                },
+                "processorMidRecords": {
+                  "type": "array",
+                  "description": "List of processor MID records",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "paymentNetwork": {
+                        "type": "string",
+                        "enum": [
+                          "Visa",
+                          "MasterCard",
+                          "AmericanExpress",
+                          "Discover"
+                        ],
+                        "description": "Payment network for this MID record"
+                      },
+                      "processors": {
+                        "type": "array",
+                        "minItems": 1,
+                        "description": "List of processor details for this payment network",
+                        "items": {
+                          "type": "object",
+                          "properties": {
+                            "processorName": {
+                              "type": "string",
+                              "minLength": 1,
+                              "description": "Name of the processor. When not available use \u201cUNKNOWN\u201d"
+                            },
+                            "processorId": {
+                              "type": "string",
+                              "description": "processor ID"
+                            },
+                            "amexMids": {
+                              "type": "array",
+                              "description": "paymentNetwork=AmericanExpress, \"amexMids\" array must contain at least one \"seNumber\" in the array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "seNumber": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "SE Number for Amex"
+                                  }
+                                }
+                              }
+                            },
+                            "visaMids": {
+                              "type": "array",
+                              "description": "paymentNetwork=VISA, \"visaMids\" array must contain at least one element with both \"vmid\" and \"vsid\"",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "vmid": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "Visa MID"
+                                  },
+                                  "vsid": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "Visa SID"
+                                  }
+                                }
+                              }
+                            },
+                            "mcAuthMids": {
+                              "type": "array",
+                              "description": "paymentNetwork=MasterCard, at least one of the \"mcAuthMids\" array field or \"mcClearingMids\" array field is present",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "mcAuthLocationId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "MasterCard Auth Location ID. Required for mcAuthMids"
+                                  },
+                                  "mcAuthAcquiringMid": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "MasterCard Auth Acquiring MID. Required for mcAuthMids"
+                                  },
+                                  "mcAuthICA": {
+                                    "type": "string",
+                                    "description": "MasterCard Auth ICA (optional)"
+                                  }
+                                }
+                              }
+                            },
+                            "mcClearingMids": {
+                              "type": "array",
+                              "description": "paymentNetwork=MasterCard, at least one of the \"mcAuthMids\" array field or \"mcClearingMids\" array field is present",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "mcClearingLocationId": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "MasterCard Clearing Location ID. Required for mcClearingMids"
+                                  },
+                                  "mcClearingAcquiringMid": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "MasterCard Clearing Acquiring MID. Required for mcClearingMids"
+                                  },
+                                  "mcClearingICA": {
+                                    "type": "string",
+                                    "description": "MasterCard Clearing ICA (optional)"
+                                  }
+                                }
+                              }
+                            },
+                            "discoverMids": {
+                              "type": "array",
+                              "description": "paymentNetwork=Discover, \"discoverMids\" array must contain at least one \"discover\" in the array",
+                              "items": {
+                                "type": "object",
+                                "properties": {
+                                  "discover": {
+                                    "type": "string",
+                                    "minLength": 1,
+                                    "description": "Discover MID"
+                                  }
+                                }
+                              }
+                            }
+                          },
+                          "required": [
+                            "processorName"
+                          ]
+                        }
+                      }
+                    },
+                    "required": [
+                      "paymentNetwork",
+                      "processors"
+                    ]
+                  },
+                  "minItems": 1
+                }
+              },
+              "required": [
+                "storeId",
+                "address1",
+                "city",
+                "state",
+                "postalCode",
+                "countryCode",
+                "storeName",
+                "processorMidChangedFlag",
+                "processorMidRecords"
+              ],
+              "minProperties": 1
+            },
+            "minItems": 1
+          }
+        },
+        "required": [
+          "merchantId",
+          "merchantName",
+          "paymentChannels",
+          "stores"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "oauth2": {
+        "type": "oauth2",
+        "flows": {
+          "clientCredentials": {
+            "tokenUrl": "/v1/idp/oauth2/token",
+            "scopes": {
+              "openid": "openid"
+            }
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "oauth2": [
+        "openid"
+      ]
+    }
+  ],
+  "x-readme": {
+    "explorer-enabled": true,
+    "proxy-enabled": true
+  }
+}

@@ -1,0 +1,148 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/cardlytics-campaign-build-api-openapi.yml,
+  openapi/cardlytics-publisher-api-openapi.yml,
+  openapi/cardlytics-partner-api-openapi.yml
+summary: >-
+  Derived from schema $ref links and id-reference fields across the three
+  published OpenAPI documents (101 schemas total). Cardlytics runs three
+  disjoint object models over one data core: an advertiser campaign hierarchy
+  (Account > Campaign > AdGroup > Ad > Reward), a publisher consumer model
+  (Institution/Portfolio > Customer > Account > Card, plus Ad and Redemption),
+  and a thin partner ingestion model (Merchant > Offer). The two ends never
+  share an identifier in the public specs — an Ad in the advertiser model has an
+  adId, and the publisher Ad schema declares no id field at all — so the
+  advertiser-to-consumer join is internal and not exposed.
+domains:
+- name: advertiser-campaign
+  spec: openapi/cardlytics-campaign-build-api-openapi.yml
+  root: Account
+  id_convention: numeric/string ids named <entity>Id (accountId, campaignId, adGroupId, adId, audienceId, rewardId, pricingModelId)
+  entities:
+  - {name: Account, schema: null, note: 'Not a schema — accountId is the tenancy path segment on 48 operations.'}
+  - {name: Campaign, schema: GetCampaignResourceModel}
+  - {name: AdGroup, schema: GetAdGroupResourceModel}
+  - {name: Ad, schema: GetAdResourceModel}
+  - {name: Audience, schema: GetAudienceResourceModel}
+  - {name: CustomAudience, schema: GetCustomAudienceResourceModel}
+  - {name: Reward, schema: GetRewardResourceModel}
+  - {name: PricingModel, schema: GetPricingModelResourceModel}
+  - {name: RedeemingMerchant, schema: GetRedeemingMerchantResourceModel}
+  - {name: CampaignProjection, schema: GetCampaignProjectionResourceModel}
+  - {name: CampaignVersion, schema: GetCampaignVersionResourceModel}
+  - {name: AuditLog, schema: GetAuditLogResourceModel}
+  - {name: Geo, schema: GeoSearchResourceModel}
+  - {name: PurchaseCategory, schema: GetPurchaseCategoryResourceModel}
+  - {name: ValidationRuleSet, schema: GetValidationDefinitionResourceModel}
+- name: publisher-consumer
+  spec: openapi/cardlytics-publisher-api-openapi.yml
+  root: Customer
+  id_convention: >-
+    Publisher-issued ids prefixed `source` (sourceCustomerId, sourceAccountId,
+    sourcePortfolioId) alongside Cardlytics-issued institutionId and
+    organizationId. Every top-level response also carries requestId.
+  entities:
+  - {name: Customer, schema: Customer}
+  - {name: Account, schema: Account}
+  - {name: Card, schema: Card}
+  - {name: Portfolio, schema: Portfolio}
+  - {name: Ad, schema: Ad}
+  - {name: AdReward, schema: AdReward}
+  - {name: Redemption, schema: Redemption}
+  - {name: RewardSummary, schema: RewardSummary}
+  - {name: StoreLocation, schema: StoreLocation}
+  - {name: SessionToken, schema: StartSessionResponse}
+- name: partner-ingestion
+  spec: openapi/cardlytics-partner-api-openapi.yml
+  root: Merchant
+  id_convention: >-
+    Partner-supplied external keys in the path (external_merchant_id,
+    external_offer_id) mirrored by merchantId/offerId in the payloads; snake_case
+    here versus camelCase everywhere else in the platform.
+  entities:
+  - {name: Merchant, schema: MerchantPayload}
+  - {name: Offer, schema: OfferPayload}
+  - {name: ImageAsset, schema: ImageAsset}
+  - {name: Report, schema: ReportResponse}
+  - {name: Trace, schema: TraceResponse}
+relationships:
+- {from: Campaign, to: Account, type: belongs_to, via: accountId}
+- {from: Campaign, to: CampaignStatus, type: has_one, via: $ref}
+- {from: Campaign, to: CampaignObjective, type: has_one, via: $ref}
+- {from: Campaign, to: CampaignPricingModel, type: has_one, via: $ref}
+- {from: Campaign, to: CampaignType, type: has_one, via: $ref}
+- {from: Campaign, to: Currency, type: has_one, via: $ref}
+- {from: Campaign, to: ScheduleType, type: has_one, via: $ref}
+- {from: Campaign, to: AdGroup, type: has_many, via: 'campaignId (GET /v6/accounts/{accountId}/AdGroups)'}
+- {from: Campaign, to: Ad, type: has_many, via: 'campaignId (GET /v7/accounts/{accountId}/campaigns/{campaignId}/Ads)'}
+- {from: Campaign, to: CampaignVersion, type: has_many, via: 'GET /v7/accounts/{accountId}/Campaigns/{campaignId}/versions'}
+- {from: Campaign, to: CampaignProjection, type: has_many, via: campaignId}
+- {from: AdGroup, to: Campaign, type: belongs_to, via: campaignId}
+- {from: AdGroup, to: Account, type: belongs_to, via: accountId}
+- {from: AdGroup, to: Audience, type: belongs_to, via: audienceId}
+- {from: AdGroup, to: AdGroup, type: belongs_to, via: parentAdGroupId}
+- {from: AdGroup, to: PlacementLocation, type: has_one, via: $ref}
+- {from: Ad, to: AdGroup, type: belongs_to, via: adGroupId}
+- {from: Ad, to: Account, type: belongs_to, via: accountId}
+- {from: Ad, to: Creative, type: belongs_to, via: creativeId}
+- {from: Ad, to: RedeemingMerchant, type: has_many, via: 'GET /v7/Ads/{adId}/RedeemingMerchants'}
+- {from: Ad, to: Reward, type: has_many, via: adId}
+- {from: Audience, to: Account, type: belongs_to, via: accountId}
+- {from: Audience, to: CustomAudience, type: has_one, via: $ref}
+- {from: Audience, to: GeoLocations, type: has_one, via: $ref}
+- {from: Audience, to: PurchaseBehavior, type: has_one, via: $ref}
+- {from: Audience, to: Segment, type: has_many, via: selectedSegmentIds}
+- {from: PricingModel, to: AdGroup, type: belongs_to, via: adGroupId}
+- {from: PricingModel, to: Account, type: belongs_to, via: accountId}
+- {from: PricingModel, to: Currency, type: has_one, via: $ref}
+- {from: Reward, to: Ad, type: belongs_to, via: adId}
+- {from: Reward, to: Account, type: belongs_to, via: accountId}
+- {from: Reward, to: RewardTemplate, type: has_one, via: $ref}
+- {from: Reward, to: RewardType, type: has_one, via: $ref}
+- {from: Reward, to: StoreLocationType, type: has_one, via: $ref}
+- {from: RedeemingMerchant, to: Brand, type: belongs_to, via: brandId}
+- {from: RedeemingMerchant, to: Segment, type: has_one, via: $ref}
+- {from: Geo, to: GeoType, type: has_one, via: $ref}
+- {from: PurchaseCategory, to: Country, type: has_many, via: countryIds}
+- {from: Customer, to: Account, type: has_many, via: $ref}
+- {from: Customer, to: Portfolio, type: has_one, via: $ref}
+- {from: Customer, to: Institution, type: belongs_to, via: institutionId}
+- {from: Customer, to: Organization, type: belongs_to, via: organizationId}
+- {from: Account, to: Card, type: has_many, via: $ref}
+- {from: Account, to: Customer, type: has_many, via: sourceCustomerIds}
+- {from: Account, to: Customer, type: has_one, via: primarySourceCustomerId}
+- {from: Account, to: Portfolio, type: belongs_to, via: sourcePortfolioId}
+- {from: Card, to: Account, type: belongs_to, via: sourceAccountId}
+- {from: Card, to: Customer, type: belongs_to, via: sourceCustomerId}
+- {from: Portfolio, to: Institution, type: belongs_to, via: institutionId}
+- {from: GetAdsResponse, to: Ad, type: has_many, via: $ref}
+- {from: GetAdsResponse, to: AdRankings, type: has_one, via: $ref}
+- {from: GetAdsResponse, to: CategoryGroup, type: has_many, via: $ref}
+- {from: GetAdsResponse, to: StoreLocation, type: has_many, via: $ref}
+- {from: Ad, to: AdAssetList, type: has_one, via: $ref}
+- {from: Ad, to: AdReward, type: has_one, via: $ref}
+- {from: AdAssetList, to: CallsToAction, type: has_one, via: $ref}
+- {from: AdAssetList, to: Image, type: has_many, via: $ref}
+- {from: AdAssetList, to: Text, type: has_many, via: $ref}
+- {from: AdReward, to: PurchaseRequirement, type: has_one, via: $ref}
+- {from: Redemption, to: Ad, type: belongs_to, via: adId}
+- {from: Redemption, to: Customer, type: belongs_to, via: sourceCustomerId}
+- {from: Redemption, to: Account, type: belongs_to, via: sourceAccountId}
+- {from: Redemption, to: Transaction, type: belongs_to, via: transactionId}
+- {from: CustomerAdRedemptionResponse, to: Ad, type: has_many, via: $ref}
+- {from: CustomerAdRedemptionResponse, to: Redemption, type: has_many, via: $ref}
+- {from: RewardSummary, to: RewardSummaryTotals, type: has_many, via: $ref}
+- {from: StoreLocation, to: StoreLocationAddress, type: has_one, via: $ref}
+- {from: Offer, to: Merchant, type: belongs_to, via: merchantId}
+- {from: Offer, to: ImageAsset, type: has_one, via: $ref}
+- {from: ImageAsset, to: LargeImage, type: has_one, via: $ref}
+- {from: Merchant, to: Merchant, type: belongs_to, via: parentMerchantId}
+- {from: Report, to: ReportHeader, type: has_one, via: $ref}
+- {from: ReportHeader, to: ReportField, type: has_many, via: $ref}
+notes:
+- The Campaign Build API splits every entity into Get/Post/Put resource models rather than sharing one schema, so the read and write shapes of the same object are separate types.
+- ProblemDetails is declared in the Campaign Build components but is not referenced by any response — the 4xx responses attach no schema at all.
+- The publisher Ad schema carries no identifier field, so a client cannot correlate an ad returned by getAds with the adId used in Redemption without an out-of-band mapping.
+- The Partner API is the only surface that keys objects on partner-supplied external ids, which is what makes its PUT operations upsertable.
+render: null

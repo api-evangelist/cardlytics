@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cardlytics Campaign Build API
+  version: 1.0.0
+extends: openapi/cardlytics-campaign-build-api-openapi.yml
+x-generated: '2026-08-12'
+x-method: generated
+x-source: API Evangelist enrichment pipeline — derived from the harvested spec plus the provider docs
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: cardlytics
+    x-apievangelist-api: Cardlytics Campaign Build API
+    x-apievangelist-harvested-from: https://dash.readme.com/api/v1/api-registry/ (Cardlytics ReadMe developer
+      hub, platform.cardlytics.com)
+    x-apievangelist-notes: 'Ads Manager advertiser campaign object model: campaigns, ad groups, ads, audiences,
+      rewards, pricing models, geo.'
+    x-apievangelist-artifacts:
+      authentication: authentication/cardlytics-authentication.yml
+      scopes: scopes/cardlytics-scopes.yml
+      conventions: conventions/cardlytics-conventions.yml
+      errors: errors/cardlytics-problem-types.yml
+      lifecycle: lifecycle/cardlytics-lifecycle.yml
+      rate_limits: rate-limits/cardlytics-rate-limits.yml
+      sandbox: sandbox/cardlytics-sandbox.yml
+      data_model: data-model/cardlytics-data-model.yml
+      conformance: conformance/cardlytics-conformance.yml
+      webhooks: asyncapi/cardlytics-publisher-webhooks.yml
+    x-apievangelist-observed-gaps:
+    - operationId missing on all 74 operations
+    - no servers[] block — the API host is not named anywhere in the document
+    - oauth2 authorization server is the PRE-PRODUCTION Cognito pool
+    - 4xx responses declare no schema; ProblemDetails is defined but never referenced

@@ -1,22 +1,32 @@
-generated: '2026-07-18'
+generated: '2026-08-12'
 method: probed
 source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
 hosts:
 - host: www.cardlytics.com
   https: true
   tls_version: TLSv1.3
-  cert_expires: Aug 28 21:59:33 2026 GMT
+  cert_expires: Oct 27 04:58:14 2026 GMT
   hsts: true
   hsts_max_age: 31536000
+- host: api-sandbox.cardlytics.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Jan 12 23:59:59 2027 GMT
+  hsts: null
+- host: api.cardlytics.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Mar 13 23:59:59 2027 GMT
+  hsts: null
 domains:
 - domain: cardlytics.com
   dnssec: false
   caa:
-  - 0 issue "pki.goog; cansignhttpexchanges=yes"
   - 0 issuewild "amazon.com"
   - 0 issuewild "trust-provider.com"
   - 0 issue "amazon.com"
   - 0 issue "letsencrypt.org"
+  - 0 issue "pki.goog; cansignhttpexchanges=yes"
   spf: true
   dmarc: true
   dmarc_policy: quarantine

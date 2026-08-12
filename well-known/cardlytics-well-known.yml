@@ -1,24 +1,94 @@
-generated: '2026-07-18'
-method: searched
-source: probe of /.well-known/ on cardlytics hosts
+generated: '2026-08-12'
+method: probed
+source: live probe of /.well-known/ on every Cardlytics website, docs and API host
 notes: >-
-  No public /.well-known/ discovery documents were served. The platform host
-  redirects /.well-known/security.txt to its login landing page (not a valid
-  RFC 9116 document). No 200 responses were captured, so no WellKnown pointer
-  is wired.
+  One real document was served: an RFC 9727 API Catalog (application/linkset+json)
+  at https://platform.cardlytics.com/.well-known/api-catalog, published by the
+  ReadMe-hosted developer hub. It anchors the two child developer projects
+  (advertisers, publisher-integrations) and points at their /reference pages.
+  Note the defect: the two child service-desc links the catalog itself advertises
+  (/advertisers/.well-known/api-catalog and
+  /publisher-integrations/.well-known/api-catalog) both return 404, so the catalog
+  is one level deep only. No security.txt is served on any host — the API hosts
+  (api.cardlytics.com, api-sandbox.cardlytics.com) answer 403 Forbidden to every
+  anonymous request including /.well-known/*, because partner traffic is
+  IP-allow-listed. No OIDC or OAuth authorization-server metadata is published
+  anonymously even though both partner and advertiser APIs use OAuth 2.0.
 hosts:
-- host: https://www.cardlytics.com
-  documents:
-  - path: /.well-known/security.txt
-    status: 404
-  - path: /.well-known/api-catalog
-    status: 404
 - host: https://platform.cardlytics.com
   documents:
+  - path: /.well-known/api-catalog
+    status: 200
+    content_type: application/linkset+json
+    file: cardlytics-api-catalog.json
+    note: RFC 9727 linkset naming the advertisers and publisher-integrations developer projects
   - path: /.well-known/security.txt
     status: 302
-    note: redirects to https://platform.cardlytics.com/ (login), not a security.txt
+    note: redirects to the hub landing page; not an RFC 9116 document
   - path: /.well-known/openid-configuration
     status: 404
   - path: /.well-known/oauth-authorization-server
     status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 302
+  - path: /.well-known/agent-card.json
+    status: 302
+    note: SPA/docs catch-all redirect, not an agent card
+- host: https://platform.cardlytics.com/advertisers
+  documents:
+  - path: /.well-known/api-catalog
+    status: 404
+    note: advertised by the parent catalog as service-desc, but not served
+- host: https://platform.cardlytics.com/publisher-integrations
+  documents:
+  - path: /.well-known/api-catalog
+    status: 404
+    note: advertised by the parent catalog as service-desc, but not served
+- host: https://www.cardlytics.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: https://api.cardlytics.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/oauth-protected-resource
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  - path: /.well-known/agent-card.json
+    status: 403
+  note: >-
+    Production partner API gateway. Every anonymous request returns
+    {"message":"Forbidden"} — access is IP-allow-listed and OAuth-gated.
+- host: https://api-sandbox.cardlytics.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 403
+  - path: /.well-known/openid-configuration
+    status: 403
+  - path: /.well-known/oauth-authorization-server
+    status: 403
+  - path: /.well-known/api-catalog
+    status: 403
+  note: Sandbox partner API gateway; same 403 posture as production.

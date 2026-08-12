@@ -1,0 +1,32 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cardlytics Partner API
+  version: 1.0.0
+extends: openapi/cardlytics-partner-api-openapi.yml
+x-generated: '2026-08-12'
+x-method: generated
+x-source: API Evangelist enrichment pipeline — derived from the harvested spec plus the provider docs
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: cardlytics
+    x-apievangelist-api: Cardlytics Partner API
+    x-apievangelist-harvested-from: https://dash.readme.com/api/v1/api-registry/ (Cardlytics ReadMe developer
+      hub, platform.cardlytics.com)
+    x-apievangelist-notes: Advertiser partner merchant + offer ingestion, aggregate reporting, and daily
+      redemption feed.
+    x-apievangelist-artifacts:
+      authentication: authentication/cardlytics-authentication.yml
+      scopes: scopes/cardlytics-scopes.yml
+      conventions: conventions/cardlytics-conventions.yml
+      errors: errors/cardlytics-problem-types.yml
+      lifecycle: lifecycle/cardlytics-lifecycle.yml
+      rate_limits: rate-limits/cardlytics-rate-limits.yml
+      sandbox: sandbox/cardlytics-sandbox.yml
+      data_model: data-model/cardlytics-data-model.yml
+      conformance: conformance/cardlytics-conformance.yml
+      webhooks: asyncapi/cardlytics-publisher-webhooks.yml
+    x-apievangelist-observed-gaps:
+    - operationId missing on all 7 operations
+    - no securitySchemes applied at operation level for non-auth paths
+    - tokenUrl is relative (/v1/idp/oauth2/token) while the paths are under /api/v1

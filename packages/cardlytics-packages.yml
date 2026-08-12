@@ -1,0 +1,83 @@
+generated: '2026-08-12'
+method: searched
+source:
+- https://docs.cardlytics.com/sdk/mobile-sdk.html
+- https://docs.cardlytics.com/sdk/web-sdk.html
+- https://docs.cardlytics.com/sdk/unified-sdk-releases.html
+- https://docs.cardlytics.com/poweredby/mobile-sdk-releases.html
+summary: >-
+  Cardlytics ships first-party mobile (iOS, Android) and web SDKs for the
+  Powered by Cardlytics / Unified rewards experience. NONE of them is published
+  to a public package registry — there is no npm, PyPI, Maven Central, NuGet,
+  RubyGems, Packagist, crates.io or pkg.go.dev entry, and the GitHub
+  organization github.com/cardlytics returns 404. Distribution runs through
+  Cardlytics-controlled hosts, and every one of those hosts is now dead or
+  redirected, so the published install instructions cannot be followed by a
+  reader today. There is no server-side SDK in any language for the Partner,
+  Publisher or Campaign Build REST APIs.
+registry_probes:
+- {registry: npm, query: 'cdlx, cardlytics, @cardlytics/sdk', result: 404 — not published}
+- {registry: cocoapods-trunk, query: PoweredByCDLX, result: 404 — "No pod found with the specified name"}
+- {registry: github, query: 'orgs/cardlytics, cardlytics/powered-by-cdlx-ios-releases', result: 404 — no public org or repo}
+- {registry: jfrog-artifactory, query: 'https://cdlx.jfrog.io/cdlx/libs/com/cdlx/poweredby/maven-metadata.xml', result: '302 to the JFrog marketing landing page — the instance no longer serves the repository'}
+- {registry: cdn, query: 'https://poweredby-sdk-release.cdlx.com/ios/PoweredByCDLX-Carthage.json', result: NXDOMAIN — the host does not resolve}
+packages:
+- language: swift
+  platform: ios
+  registry: cdn
+  name: PoweredByCDLX
+  distribution: precompiled xcframework
+  url: https://poweredby-sdk-release.cdlx.com/ios/<major.minor.patch>/PoweredByCDLX.zip
+  install: Direct download, or CocoaPods (pod 'PoweredByCDLX'), Carthage, or Swift Package Manager
+  official: true
+  version: null
+  published: null
+  note: >-
+    version null because the distribution host poweredby-sdk-release.cdlx.com no
+    longer resolves in DNS, the CocoaPods trunk has no PoweredByCDLX pod, and the
+    documented SPM source github.com/cardlytics/powered-by-cdlx-ios-releases.git
+    returns 404. There is no registry metadata endpoint left to query. The docs
+    URL is version-templated (<major.minor.patch>), so a consumer cannot resolve
+    a version from it either. Latest version named anywhere in the docs is 3.0.2
+    (iOS, 2024-04-30) on the Powered By release notes.
+  requirements: Xcode 13.0+, compiled with the iOS 15 SDK, targets iOS 13+
+- language: kotlin
+  platform: android
+  registry: maven
+  name: com.cdlx:poweredby
+  repository: https://cdlx.jfrog.io/cdlx/libs
+  install: implementation('com.cdlx:poweredby:{latest_version}')
+  official: true
+  version: null
+  published: null
+  note: >-
+    version null because the Artifactory instance at cdlx.jfrog.io now 302s to
+    the JFrog marketing landing page rather than serving
+    com/cdlx/poweredby/maven-metadata.xml, and the artifact is not mirrored to
+    Maven Central. The docs coordinate is unpinned ({latest_version}), so a
+    consumer cannot tell what they would get either. Latest version named in the
+    release notes is 3.0.7 (Android-only, 2024-09-25).
+  requirements: minSdkVersion 21, targetSdkVersion 33, Kotlin 1.6+, RxJava 1.2.0
+- language: javascript
+  platform: web
+  registry: cdn
+  name: cdlx.js
+  distribution: script tag loaded from the partner's own page
+  install: '<script src="./cdlx.js"></script>'
+  official: true
+  version: null
+  published: null
+  note: >-
+    version null because the loader is documented as a relative script reference
+    the partner self-hosts — there is no registry, no CDN URL, and no pinned
+    version in the published integration guide. Cardlytics distributes the file
+    to partners directly.
+  components: 'Mounts into #cdlx-widget or #cdlx-rewards-hub with data-secToken and an optional data-theme JSON URL.'
+release_history_source: https://docs.cardlytics.com/poweredby/mobile-sdk-releases.html
+release_history_note: >-
+  The Powered By Cardlytics mobile SDK release notes run from 2.6.0 to 3.0.7,
+  latest entry 2024-09-25 (Android) / 2024-04-30 (iOS). The separate Unified SDK
+  release page lists only "Release 1.0 — Initial release of iOS, Android, and
+  Web Unified SDKs" with no date. On both counts the newest first-party client
+  release predates the Partner API it would sit alongside (spec version
+  2025-10-07) by roughly a year.

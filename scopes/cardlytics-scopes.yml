@@ -1,0 +1,73 @@
+generated: '2026-08-12'
+method: searched
+source: openapi/cardlytics-campaign-build-api-openapi.yml, openapi/cardlytics-partner-api-openapi.yml
+docs: https://docs.cardlytics.com/ads/v2/getting-started/get-session-token.html
+notes: >-
+  Two scope vocabularies exist and they are unrelated. The OpenAPI-declared
+  OAuth 2.0 schemes (partner API, campaign build API) declare only `openid`,
+  which is an OIDC marker rather than a permission model — Cardlytics states
+  that "API scopes" exist as an authorization control for partners but does not
+  publish their names. The Publisher API v2 session token carries a genuine,
+  documented two-scope model (api:institution, api:customer) requested in the
+  startSession body and encoded into a `scope` claim.
+schemes:
+- name: oauth2
+  source: openapi/cardlytics-partner-api-openapi.yml
+  api: Partner API
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /v1/idp/oauth2/token
+- name: oauth2-cognito
+  source: openapi/cardlytics-campaign-build-api-openapi.yml
+  api: Campaign Build API
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+    tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+- name: session-token
+  source: https://docs.cardlytics.com/ads/v2/getting-started/get-session-token.html
+  api: Publisher API v2
+  flows:
+  - flow: custom
+    tokenUrl: /v2/session/startSession
+    note: >-
+      POST a JSON body with scopes[] (plus sourceCustomerId for customer-level
+      scopes); the response returns a sessionToken sent on later calls as the
+      X-CDLX-Session-Token header.
+scopes:
+- scope: openid
+  description: openid
+  flows:
+  - authorizationCode
+  - clientCredentials
+  sources:
+  - openapi/cardlytics-campaign-build-api-openapi.yml
+  - openapi/cardlytics-partner-api-openapi.yml
+- scope: read
+  description: Declared on Campaign Build API operation security requirements.
+  sources:
+  - openapi/cardlytics-campaign-build-api-openapi.yml
+- scope: api:institution
+  description: >-
+    Institution-level access. Create or update the institution's customer,
+    account and card data, and send Cardlytics transaction information. Used for
+    server-side Data API onboarding; no customer context required.
+  apis:
+  - Data APIs
+  flows:
+  - custom
+  sources:
+  - https://docs.cardlytics.com/ads/v2/getting-started/get-session-token.html
+- scope: api:customer
+  description: >-
+    Customer-level access, on behalf of one end customer. Requires a
+    sourceCustomerId on the startSession request. Grants targeted ad access,
+    customer profile reads, and event logging for that customer's session.
+  apis:
+  - Ads
+  - Customer Profile APIs
+  - Events APIs
+  flows:
+  - custom
+  sources:
+  - https://docs.cardlytics.com/ads/v2/getting-started/get-session-token.html

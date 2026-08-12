@@ -10,30 +10,39 @@ description: >-
   channels via publisher APIs and SDKs. The company also operates the Dosh
   card-linked network and the Bridg offline purchase-intelligence business,
   giving advertisers person-level measurement across online and in-store spend.
-  Cardlytics is a public company (NASDAQ: CDLX) and its platform is an enterprise,
+  Cardlytics publishes three OpenAPI 3.0.1 definitions through its ReadMe
+  developer hub — a Partner API for advertiser merchant and offer ingestion,
+  reporting and a daily redemption feed; a Campaign Build API covering the Ads
+  Manager campaign object model; and a Publisher API v2 for the bank-side
+  rewards experience — alongside iOS, Android and web SDKs. Nothing is
+  self-service: every credential is issued by an account manager under a partner
+  agreement, and the API hosts answer 403 to anonymous callers. Cardlytics is a
+  public company (NASDAQ: CDLX) and its platform is an enterprise,
   partnership-based product rather than a self-service developer API.
 accessModel:
-  pricing: unknown
-  onboarding: unknown
+  pricing: enterprise
+  onboarding: contact-sales
   trial: false
   try_now: false
   public: false
-  label: Unknown
-  confidence: low
-  source: []
-  generated: '2026-07-22'
-  method: derived
+  label: Enterprise, partner-gated
+  confidence: high
+  source:
+  - https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+  generated: '2026-08-12'
+  method: searched
 image: https://cdn.prod.website-files.com/647efc90c29ecb765fcd4f1a/6481aadd2b75cd4512df022a_cardlytics_open_graph_01.png
 url: https://raw.githubusercontent.com/api-evangelist/cardlytics/refs/heads/main/apis.yml
 x-type: company
 x-source: vc-portfolio
 x-backed-by:
 - canaan-partners
-x-tier: stub
-x-tier-reason: portfolio-lead
+x-tier: enriched
+x-tier-reason: three published OpenAPI definitions harvested from the ReadMe developer hub
 specificationVersion: '0.20'
 created: '2026-07-17'
-modified: '2026-07-18'
+modified: '2026-08-12'
 tags:
 - Company
 - Advertising
@@ -43,21 +52,171 @@ tags:
 - Financial Services
 - Loyalty and Rewards
 - Marketing
-apis: []
+- Banking
+- Retail Media
+- Attribution
+- Offers
+apis:
+- name: Cardlytics Partner API
+  description: >-
+    The advertiser-partner integration surface. Partners upsert and delete
+    merchants and offers keyed on their own external identifiers, pull aggregate
+    merchant/offer performance metrics (impressions, purchases, revenue, reach,
+    activations), and fetch a pre-signed URL for the daily redemption feed.
+    OAuth 2.0 client credentials; 7 operations across 5 paths.
+  humanURL: https://platform.cardlytics.com/advertisers/reference
+  baseURL: https://api.cardlytics.com
+  tags:
+  - Advertising
+  - Offers
+  - Merchants
+  - Reporting
+  properties:
+  - type: OpenAPI
+    url: openapi/cardlytics-partner-api-openapi.yml
+  - type: OpenAPI
+    url: openapi/_original/cardlytics-partner-api-openapi.json
+  - type: Overlay
+    url: overlays/cardlytics-partner-api-overlay.yaml
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: APIReference
+    url: https://platform.cardlytics.com/advertisers/reference
+  - type: GettingStarted
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: Sandbox
+    url: https://api-sandbox.cardlytics.com
+  - type: ChangeLog
+    url: https://platform.cardlytics.com/advertisers/changelog
+- name: Cardlytics Campaign Build API
+  description: >-
+    The Ads Manager campaign object model — Campaigns, AdGroups, Ads, Audiences,
+    AudienceReach, Rewards, PricingModels, RedeemingMerchants, Geo, PurchaseCategories,
+    AuditLogs and per-entity validation rule sets. 74 operations across 57 paths,
+    versioned per resource from v5 to v8, secured with an OAuth 2.0 authorization
+    code flow against an Amazon Cognito user pool.
+  humanURL: https://platform.cardlytics.com/advertisers
+  baseURL: https://api.cardlytics.com
+  tags:
+  - Advertising
+  - Campaigns
+  - Audiences
+  - Ads
+  properties:
+  - type: OpenAPI
+    url: openapi/cardlytics-campaign-build-api-openapi.yml
+  - type: OpenAPI
+    url: openapi/_original/cardlytics-campaign-build-api-openapi.json
+  - type: Overlay
+    url: overlays/cardlytics-campaign-build-api-overlay.yaml
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers
+  - type: APIReference
+    url: https://platform.cardlytics.com/advertisers/reference
+  x-note: >-
+    The published specification declares no servers[] block, so the host is not
+    named in the contract. baseURL records the production Cardlytics API host
+    named in the sibling Partner API specification and the advertiser docs; the
+    Campaign Build spec's only host reference is a PRE-PRODUCTION Amazon Cognito
+    authorization server (advertiser-auth-preprod), which Cardlytics should
+    replace with the production authorization server and a real servers[] block.
+- name: Cardlytics Publisher API v2
+  description: >-
+    The bank-side rewards platform API. A publisher opens an institution- or
+    customer-scoped session, retrieves ranked targeted card-linked offers for a
+    customer, and reads that customer's profile, reward summary and redemption
+    history. Requires mutual TLS with a Cardlytics-signed client certificate plus
+    an IP allow list, then an X-CDLX-Session-Token header.
+  humanURL: https://platform.cardlytics.com/publisher-integrations
+  baseURL: https://pub-api-us.prod.cardlytics.com
+  tags:
+  - Banking
+  - Rewards
+  - Offers
+  - Financial Services
+  properties:
+  - type: OpenAPI
+    url: openapi/cardlytics-publisher-api-openapi.yml
+  - type: OpenAPI
+    url: openapi/_original/cardlytics-publisher-api-openapi.json
+  - type: Overlay
+    url: overlays/cardlytics-publisher-api-overlay.yaml
+  - type: Documentation
+    url: https://platform.cardlytics.com/publisher-integrations
+  - type: APIReference
+    url: https://platform.cardlytics.com/publisher-integrations/reference
+  - type: GettingStarted
+    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
+  - type: Sandbox
+    url: https://pub-api-us.sandbox.cardlytics.com
+  - type: Webhooks
+    url: asyncapi/cardlytics-publisher-webhooks.yml
+  x-note: >-
+    The published specification's servers[] block names the UK PRE-PRODUCTION
+    host https://publisher-uk-fiuat.cardlytics.com. baseURL records the US
+    production host documented in the mTLS connectivity guide
+    (https://pub-api-us.prod.cardlytics.com/healthcheck); the EU production host
+    is https://pub-api-eu.prod.cardlytics.com.
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
 common:
+- type: AgenticAccess
+  url: agentic-access/cardlytics-agentic-access.yml
+- type: OAuthScopes
+  url: scopes/cardlytics-scopes.yml
+- type: Authentication
+  url: authentication/cardlytics-authentication.yml
 - type: DomainSecurity
   url: security/cardlytics-domain-security.yml
+- type: Conventions
+  url: conventions/cardlytics-conventions.yml
+- type: ErrorCatalog
+  url: errors/cardlytics-problem-types.yml
+- type: Lifecycle
+  url: lifecycle/cardlytics-lifecycle.yml
+- type: Deprecation
+  url: https://docs.cardlytics.com/sdk/unified-sdk-releases.html
+- type: ChangeLog
+  url: changelog/cardlytics-changelog.yml
+- type: RateLimits
+  url: rate-limits/cardlytics-rate-limits.yml
+- type: Plans
+  url: plans/cardlytics-plans-pricing.yml
+- type: Sandbox
+  url: sandbox/cardlytics-sandbox.yml
+- type: Packages
+  url: packages/cardlytics-packages.yml
+- type: SDKs
+  url: packages/cardlytics-packages.yml
+- type: Components
+  url: components/cardlytics-components.yml
+- type: DataModel
+  url: data-model/cardlytics-data-model.yml
+- type: Conformance
+  url: conformance/cardlytics-conformance.yml
+- type: Webhooks
+  url: asyncapi/cardlytics-publisher-webhooks.yml
+- type: AgentSkill
+  url: skills/_index.yml
+- type: LLMsTxt
+  url: llms/cardlytics-llms.txt
+- type: WellKnown
+  url: well-known/cardlytics-well-known.yml
+- type: APICatalog
+  url: https://platform.cardlytics.com/.well-known/api-catalog
 - type: Website
   url: https://www.cardlytics.com/
 - type: DeveloperPortal
   url: https://platform.cardlytics.com/
 - type: Documentation
   url: https://platform.cardlytics.com/
+- type: APIReference
+  url: https://platform.cardlytics.com/advertisers/reference
+- type: GettingStarted
+  url: https://platform.cardlytics.com/advertisers/docs/api-get-started
 - type: Login
   url: https://platform.cardlytics.com/
 - type: Blog
@@ -73,7 +232,12 @@ common:
 - type: Compliance
   url: https://www.cardlytics.com/trust-center
 x-enrichment:
-  date: '2026-07-19'
-  status: backfilled
+  date: '2026-08-12'
+  status: enriched
+  artifacts_added: 30
   pass: local-v1
-  note: backfilled from .gitignore signal + verified work evidence
+  note: >-
+    Contract discovery beat the JS-rendered docs host — three real OpenAPI 3.0.1
+    definitions were live in the ReadMe api-registry behind
+    platform.cardlytics.com, plus a full legacy documentation snapshot at
+    docs.cardlytics.com. Prior rounds recorded no API surface.

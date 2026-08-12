@@ -1,0 +1,75 @@
+generated: '2026-08-12'
+method: searched
+source:
+- https://docs.cardlytics.com/sdk/web-sdk.html
+- https://docs.cardlytics.com/sdk/web-sdk-module-widget.html
+- https://docs.cardlytics.com/sdk/web-sdk-theming.html
+- https://docs.cardlytics.com/poweredby/pb-mobile-sdk.html
+- https://docs.cardlytics.com/poweredby/web-experience.html
+summary: >-
+  Cardlytics' primary integration path for banks and marketplaces is not the REST
+  API at all — it is a set of drop-in, Cardlytics-hosted UI surfaces mounted into
+  the partner's own app or web page. The partner supplies a container element and
+  a per-user security token; Cardlytics renders the offers experience inside it.
+  Theming is externalized to a JSON config URL.
+loaders:
+- name: cdlx.js
+  platform: web
+  usage: '<script src="./cdlx.js"></script> placed at the bottom of the page, after the container elements'
+  note: Self-hosted by the partner; Cardlytics distributes the file directly.
+- name: PoweredByCDLX
+  platform: ios
+  usage: 'CDLX.initialize(applicationId:)'
+- name: PoweredByCDLX
+  platform: android
+  usage: 'PoweredByCDLX.initialize(applicationId, applicationContext)'
+families:
+- family: Web rewards surfaces
+  platform: web
+  components:
+  - name: cdlx-widget
+    selector: '<div id="cdlx-widget" data-secToken="..."></div>'
+    description: Offers widget container; the compact offers surface.
+  - name: cdlx-rewards-hub
+    selector: '<div id="cdlx-rewards-hub" data-secToken="..." data-theme="<theme.json url>"></div>'
+    description: Full rewards experience container.
+  attributes:
+  - {name: data-secToken, description: Per-user security token retrieved by a server-to-server call to the Ad Server API. Different for every user.}
+  - {name: data-theme, description: URL of a theme JSON document controlling look, feel and copy. Falls back to a default theme when absent.}
+  - {name: data-config, description: URL of the customization JSON for look, feel and copy modifications.}
+  error_behavior: >-
+    Any API failure renders a fixed in-widget message ("We are having difficulty
+    retrieving your information. Please try again shortly."), fully configurable
+    through the theming layer.
+- family: Powered by Cardlytics mobile modules
+  platform: ios, android
+  description: Optional SDK modules composing the in-app rewards experience.
+  components:
+  - {name: Account Summary, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-account-summary.html}
+  - {name: Browsers, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-browsers.html}
+  - {name: Card Management, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-card-management.html}
+  - {name: Card Vaulting, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-card-vaulting.html}
+  - {name: Custom Callbacks, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-custom-callbacks.html}
+  - {name: Deep Linking, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-deep-linking.html}
+  - {name: Errors, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-errors.html}
+  - {name: Location, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-location.html}
+  - {name: Locked Offers, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-locked-offers.html}
+  - {name: Push, source: https://docs.cardlytics.com/poweredby/mobile-sdk-module-push.html}
+  requirements:
+    ios: Google Maps key required for the map offers surface (Android); privacy manifest shipped from 3.0.1.
+    android: Google Maps key must be supplied via the application manifest.
+- family: Unified SDK widget
+  platform: ios, android, web
+  components:
+  - {name: Widget module, source: https://docs.cardlytics.com/sdk/mobile-sdk-module-widget.html}
+  - {name: Web widget module, source: https://docs.cardlytics.com/sdk/web-sdk-module-widget.html}
+theming:
+  mechanism: external JSON theme document referenced by URL
+  sources:
+  - https://docs.cardlytics.com/sdk/web-sdk-theming.html
+  - https://docs.cardlytics.com/sdk/mobile-sdk-theming.html
+  - https://docs.cardlytics.com/poweredby/web-theming.html
+  note: >-
+    From SDK 3.0.0 (Android) XML-based theming was removed — theming requires an
+    explicit setTheme() call, which is recorded as a breaking change in the
+    release notes.

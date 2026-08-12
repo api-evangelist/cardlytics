@@ -1,0 +1,143 @@
+generated: '2026-08-12'
+method: searched
+source: >-
+  https://docs.cardlytics.com/ads/v2/error-handling/index.html,
+  https://docs.cardlytics.com/ads/v1/common/custom-http-headers.html,
+  https://docs.cardlytics.com/ads/v1/common/versions.html,
+  https://docs.cardlytics.com/ads/v2/api/index.html,
+  https://platform.cardlytics.com/advertisers/docs/api-merchant-rest-api,
+  openapi/cardlytics-campaign-build-api-openapi.yml,
+  openapi/cardlytics-partner-api-openapi.yml,
+  openapi/cardlytics-publisher-api-openapi.yml
+summary: >-
+  Cardlytics runs a plain JSON-over-HTTPS REST surface with URL-path major
+  versioning, no hypermedia, no envelope on success, and a small set of X-CDLX-*
+  custom headers for tracing. There is no idempotency-key contract anywhere in
+  the published surface.
+transport:
+  protocol: HTTPS only
+  content_type: application/json
+  note: >-
+    Most endpoints accept POST only and application/json only; a 415 is returned
+    for other media types and a 405 for other methods. Publisher traffic must
+    additionally originate from allow-listed static IPs over mTLS.
+authentication:
+  see: authentication/cardlytics-authentication.yml
+  styles:
+  - OAuth 2.0 client credentials (partner API)
+  - OAuth 2.0 authorization code (campaign build API, CSR API with PKCE)
+  - mTLS + IP allow list, then an X-CDLX-Session-Token header (publisher API v2)
+  - HS256 JWT signed with a shared secretKey (Powered by Cardlytics webhooks)
+idempotency:
+  supported: false
+  idempotency_key_header: null
+  note: >-
+    Cardlytics documents no Idempotency-Key header or request-id-based replay
+    protection, and none appears in any of the three published OpenAPI documents.
+    The closest thing is natural-key upsert on the Partner API: PUT
+    /api/v1/partner/merchants/{external_merchant_id} and PUT
+    .../offers/{external_offer_id} are create-or-update against a
+    PARTNER-SUPPLIED identifier, so a repeated PUT with the same body converges
+    on the same state, and DELETE against the same id is likewise repeatable.
+    That is HTTP method idempotency by natural key, not a retry-safety contract:
+    non-idempotent POST operations (startSession, getAds, clientEvent, campaign
+    projection, campaign/ad/adgroup duplicate and clone) have no replay
+    protection at all, and /duplicate explicitly creates N new objects per call.
+pagination:
+  style: page-number
+  applies_to: Campaign Build API collection endpoints
+  params:
+  - name: Page
+    in: query
+    type: integer
+  - name: PerPage
+    in: query
+    type: integer
+  - name: OrderBy
+    in: query
+    type: string
+  - name: filter
+    in: query
+    type: string
+    note: server-side filter expression on collection endpoints
+  response_fields: null
+  note: >-
+    The Publisher API v2 and Partner API expose no pagination parameters; the
+    Partner reporting endpoint instead caps a request at 1000 offer IDs and the
+    redemptions endpoint returns a pre-signed URL to a daily file.
+field_expansion:
+  supported: partial
+  note: >-
+    No generic expand/fields parameter. A handful of boolean include flags exist
+    on Campaign Build API reads (includeGeo, IncludeChildren, isUserSavedAudience).
+metadata:
+  supported: true
+  header: X-CDLX-Meta
+  limit_bytes: 512
+  note: >-
+    Client metadata header on Ad Server endpoints; silently truncated at 512
+    bytes.
+request_tracing:
+  header: X-CDLX-Request-Id
+  echoed: true
+  note: >-
+    Accepted on all APIs for tracing and debugging. Every endpoint returns the
+    value back as `requestId` in the response; when the header is absent the API
+    generates a random UUID. Error bodies also carry `requestId`.
+  additional_headers:
+  - name: X-CDLX-Session
+    description: Client-supplied session id, echoed into error messages; truncated at 512 bytes.
+  - name: X-CDLX-Session-Token
+    description: The publisher session JWT.
+  - name: X-CDLX-Institution-Id
+    description: Institution selector on one publisher operation.
+versioning:
+  scheme: uri-path
+  current:
+    partner_api: /api/v1
+    publisher_api: /v2
+    campaign_build_api: per-resource — /v5 AuditLogs, /v6 AdGroups + Geo + PricingModels + AudienceReach, /v7 Ads + Campaigns, /v8 Audiences
+  policy: >-
+    The major version in the URL increments only on a breaking change — changing
+    an endpoint's HTTP verb, removing or renaming a request/response property, or
+    changing a response property's JSON type. Minor non-breaking changes do not
+    move the URL version.
+  docs: https://docs.cardlytics.com/ads/v1/common/versions.html
+  note: >-
+    The Campaign Build API version-per-resource pattern means a single client
+    holds four different path versions at once; the OpenAPI carries no info.version
+    beyond "latest". The Partner API instead date-stamps its spec (info.version
+    2025-10-07) while keeping /api/v1 in the path.
+error_envelope:
+  see: errors/cardlytics-problem-types.yml
+  format: custom-json
+  rfc9457: false
+  publisher_v2_shape:
+    type: distinct error type name (e.g. ValidationException)
+    title: brief human title
+    status: numeric HTTP status
+    validationErrors: array of field-level validation strings
+    requestId: echoed trace id
+  ad_server_v1_shape:
+    error.message: human-readable, not for parsing
+    error.code: string form of the status (e.g. InternalServerError)
+    error.innerError: always null in production
+    error.clientSessionId: client-supplied session id
+    error.serverSessionId: server-generated session id
+rate_limit_signaling:
+  see: rate-limits/cardlytics-rate-limits.yml
+  response_headers: []
+  status_on_exhaustion: 429
+  retry_after: false
+  note: >-
+    Cardlytics documents a 429 on partner daily-quota or RPS exhaustion and asks
+    clients to implement exponential backoff, but publishes no X-RateLimit-*,
+    RateLimit-* or Retry-After response headers — an agent has no runtime signal
+    of remaining budget.
+cross_links:
+  errors: errors/cardlytics-problem-types.yml
+  lifecycle: lifecycle/cardlytics-lifecycle.yml
+  authentication: authentication/cardlytics-authentication.yml
+  scopes: scopes/cardlytics-scopes.yml
+  rate_limits: rate-limits/cardlytics-rate-limits.yml
+  sandbox: sandbox/cardlytics-sandbox.yml

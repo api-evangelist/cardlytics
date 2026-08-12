@@ -1,0 +1,33 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for Cardlytics Publisher API v2
+  version: 1.0.0
+extends: openapi/cardlytics-publisher-api-openapi.yml
+x-generated: '2026-08-12'
+x-method: generated
+x-source: API Evangelist enrichment pipeline — derived from the harvested spec plus the provider docs
+actions:
+- target: $.info
+  update:
+    x-apievangelist-slug: cardlytics
+    x-apievangelist-api: Cardlytics Publisher API v2
+    x-apievangelist-harvested-from: https://dash.readme.com/api/v1/api-registry/ (Cardlytics ReadMe developer
+      hub, platform.cardlytics.com)
+    x-apievangelist-notes: 'Financial-institution rewards platform: session, ads, customer profile, rewards,
+      redemptions.'
+    x-apievangelist-artifacts:
+      authentication: authentication/cardlytics-authentication.yml
+      scopes: scopes/cardlytics-scopes.yml
+      conventions: conventions/cardlytics-conventions.yml
+      errors: errors/cardlytics-problem-types.yml
+      lifecycle: lifecycle/cardlytics-lifecycle.yml
+      rate_limits: rate-limits/cardlytics-rate-limits.yml
+      sandbox: sandbox/cardlytics-sandbox.yml
+      data_model: data-model/cardlytics-data-model.yml
+      conformance: conformance/cardlytics-conformance.yml
+      webhooks: asyncapi/cardlytics-publisher-webhooks.yml
+    x-apievangelist-observed-gaps:
+    - no 4xx/5xx responses declared on any operation
+    - no securitySchemes despite requiring mTLS plus an X-CDLX-Session-Token header
+    - servers[] names the UK pre-production host (publisher-uk-fiuat) rather than a production host
+    - info.version is "v0" and info.title is the generator default "OpenAPI definition"

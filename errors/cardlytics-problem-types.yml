@@ -1,0 +1,129 @@
+generated: '2026-08-12'
+method: derived
+source: >-
+  openapi/cardlytics-campaign-build-api-openapi.yml,
+  openapi/cardlytics-partner-api-openapi.yml,
+  https://docs.cardlytics.com/ads/v2/error-handling/index.html,
+  https://docs.cardlytics.com/ads/v1/common/http-responses.html
+format: custom-json
+rfc9457: false
+note: >-
+  Cardlytics does not use RFC 9457 problem+json. It publishes two different
+  hand-rolled error envelopes and a third, undocumented one on the Campaign
+  Build API (whose 4xx responses declare text/plain, application/json and
+  text/json with no schema attached). Every documented error carries a request
+  correlation id, which is the one consistent piece of the surface.
+envelopes:
+- name: publisher-v2
+  applies_to: Publisher API v2, Powered by Cardlytics webhooks
+  media_type: application/json
+  fields:
+  - {field: type, description: The distinct error type name that occurred}
+  - {field: title, description: Brief human-readable title for the exception}
+  - {field: status, description: Numeric HTTP status code}
+  - {field: validationErrors, description: Array of field-level validation messages, when any}
+  - {field: requestId, description: Echo of X-CDLX-Request-Id, or a server-generated UUID}
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+- name: ad-server-v1
+  applies_to: Ad Server v1 API
+  media_type: application/json
+  fields:
+  - {field: error.message, description: Human-readable message; for 500s a generic boilerplate string}
+  - {field: error.code, description: String form of the HTTP status, e.g. Forbidden, InternalServerError, MethodNotAllowed}
+  - {field: error.innerError, description: Always null in production; populated in test deployments}
+  - {field: error.clientSessionId, description: Client-supplied X-CDLX-Session value}
+  - {field: error.serverSessionId, description: Server-generated session id for log correlation}
+  source: https://docs.cardlytics.com/ads/v1/common/http-responses.html
+- name: partner-api
+  applies_to: Partner API
+  media_type: application/json
+  fields:
+  - {field: message, description: Outcome message, e.g. "Request accepted for processing"}
+  - {field: trace_id, description: Correlation id, e.g. req-98765}
+  source: https://platform.cardlytics.com/advertisers/docs/api-merchant-rest-api
+problem_types:
+- type: HttpMessageNotReadable
+  status: 400
+  title: Request could not be parsed
+  remediation: Send a well-formed application/json body.
+  envelope: publisher-v2
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+- type: ValidationException
+  status: 400
+  title: Bad request
+  description: Request contains missing or invalid parameters; validationErrors[] names the offending fields.
+  envelope: publisher-v2
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+- type: SessionValidationException
+  status: 401
+  title: Session expired or invalid
+  remediation: Request a new session token via POST /v2/session/startSession and retry.
+  envelope: publisher-v2
+  note: >-
+    Documented inconsistently by the provider — the Error Types table lists this
+    as code 500 while the worked example in the same page returns status 401.
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+- type: InternalServerError
+  status: 500
+  title: Internal Server Error
+  description: Generic internal server error; no detail is exposed for security reasons.
+  envelope: publisher-v2
+  source: https://docs.cardlytics.com/ads/v2/error-handling/index.html
+http_statuses:
+- {status: 200, meaning: Success. Body may still carry additional context or error conditions.}
+- {status: 301, meaning: Moved Permanently. Clients are not required to follow redirects; following one is recommended.}
+- {status: 302, meaning: Found. Same guidance as 301.}
+- {status: 400, meaning: Invalid request — missing required fields, schema validation failure, or an id in the route that does not match the body.}
+- {status: 401, meaning: Request does not include required credentials, or the session/access token is invalid or expired.}
+- {status: 403, meaning: Caller is not allowed to invoke the endpoint. On the Ad Server v1 API also returned for an expired security token.}
+- {status: 404, meaning: Resource not found, or the URL does not route to an existing endpoint.}
+- {status: 405, meaning: Method not allowed. Most Cardlytics endpoints accept POST only.}
+- {status: 415, meaning: Unsupported media type. Most endpoints accept application/json only.}
+- {status: 429, meaning: Throttled — partner daily quota or RPS exceeded. Retry with exponential backoff.}
+- {status: 500, meaning: Unknown or unhandled server error.}
+- {status: 501, meaning: Endpoint does not understand the request passed.}
+- {status: 503, meaning: Service down for maintenance or other reasons.}
+derived_operation_errors:
+- source_spec: openapi/cardlytics-campaign-build-api-openapi.yml
+  note: >-
+    The Campaign Build API attaches no error schema to any 4xx; the descriptions
+    below are the only machine-readable error semantics it publishes.
+  responses:
+  - {status: 403, description: Forbidden, occurrences: 36}
+  - {status: 403, description: Temporarily disabled., occurrences: 1}
+  - {status: 404, description: The Campaign was not found., occurrences: 12}
+  - {status: 404, description: The AdGroup was not found., occurrences: 6}
+  - {status: 404, description: The Ad Group was not found., occurrences: 1}
+  - {status: 404, description: The Ad was not found., occurrences: 6}
+  - {status: 404, description: The Ad was not found or does not contain RedeemingMerchant information., occurrences: 1}
+  - {status: 404, description: The PricingModel was not found., occurrences: 4}
+  - {status: 404, description: The Reward was not found., occurrences: 4}
+  - {status: 404, description: No reward was found for this Ad., occurrences: 1}
+  - {status: 404, description: The Audience was not found., occurrences: 4}
+  - {status: 404, description: The Redeeming Merchant List was not found., occurrences: 1}
+  - {status: 404, description: The Purchase Category was not found., occurrences: 1}
+  - {status: 404, description: Not Found, occurrences: 3}
+  - {status: 400, description: 'Bad request. For example, some validation rules were violated during the request', occurrences: 3}
+  - {status: 400, description: Bad Request, occurrences: 3}
+  - {status: 400, description: The CampaignId specified in the route does not match the value specified in the request body., occurrences: 3}
+  - {status: 400, description: The adId specified in the route does not match the value specified in the request body., occurrences: 2}
+  - {status: 400, description: The adGroupId specified in the route does not match the value specified in the request body., occurrences: 1}
+  - {status: 400, description: The Audience specified in the route does not match the value specified in the request body., occurrences: 1}
+  - {status: 400, description: The rewardId specified in the route does not match the value specified in the request body., occurrences: 1}
+  - {status: 400, description: The Campaign is not in Draft Status., occurrences: 1}
+  - {status: 400, description: The Ad Group is not in Draft Status., occurrences: 1}
+  - {status: 400, description: The Ad is not in Draft Status., occurrences: 1}
+  - {status: 400, description: The duplicates specified in the query string does not match the expected value between 1 .. 100., occurrences: 1}
+  - {status: 400, description: Invalid criteria were specified in the request body., occurrences: 1}
+  - {status: 400, description: The filter parameters were incorrect or invalid., occurrences: 1}
+  - {status: 400, description: The Campaign Bad request when project does not follow the validation rules.., occurrences: 1}
+- source_spec: openapi/cardlytics-partner-api-openapi.yml
+  responses:
+  - {status: 400, description: 'Bad Request — invalid input (schema validation failure) or ID mismatch', occurrences: 4}
+  - {status: 400, description: Bad Request — invalid parameters or date range, occurrences: 2}
+  - {status: 400, description: "Bad Request — the date format is incorrect, or the date is today's date or in the future", occurrences: 1}
+  - {status: 401, description: Unauthorized — invalid client credentials, or invalid/missing access token, occurrences: 2}
+  - {status: 500, description: Internal Server Error — an unexpected error occurred while processing the request, occurrences: 6}
+gaps:
+- The Publisher API v2 OpenAPI (openapi/cardlytics-publisher-api-openapi.yml) declares NO 4xx or 5xx responses on any of its five operations, so the error contract documented in prose is absent from the machine-readable spec.
+- No error type registry URI, no per-error documentation anchors, and no stable machine-readable error codes on the Campaign Build API.

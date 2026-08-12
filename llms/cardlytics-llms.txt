@@ -1,0 +1,75 @@
+# Cardlytics
+
+> Cardlytics (NASDAQ: CDLX) is a commerce media platform. It uses first-party purchase data from
+> its financial-institution partners to place card-linked offers inside banking apps, and measures
+> them with closed-loop attribution. Three separate developer surfaces exist: an advertiser Partner
+> API for merchant/offer ingestion and reporting, a Campaign Build API behind Ads Manager, and a
+> Publisher API v2 plus mobile/web SDKs that banks embed. Nothing is self-service — every credential
+> is issued by a Cardlytics account manager under a partner agreement.
+
+generated: 2026-08-12
+method: generated
+source: apis.yml + the artifacts in this repository; Cardlytics publishes no llms.txt of its own
+  (probed https://www.cardlytics.com/llms.txt 404, https://platform.cardlytics.com/llms.txt 404,
+  https://docs.cardlytics.com/llms.txt returns the docs HTML shell).
+
+## Access model
+
+- No public pricing, no free tier, no trial, no sign-up. Enterprise, contract-first.
+- Advertiser partner APIs: OAuth 2.0 client credentials; client id/secret issued per partner; optional IP allow-listing.
+- Publisher API v2: mutual TLS with a Cardlytics-signed client certificate AND a source-IP allow list, then a session token (`X-CDLX-Session-Token`) obtained from `POST /v2/session/startSession`.
+- Powered by Cardlytics webhooks: HS256 JWT signed with a shared secretKey, `sub` = MD5 of the JSON body.
+- CSR/servicing API: OAuth 2.0 (client credentials, or authorization code with PKCE against Ping Identity, federated to the bank's IdP).
+
+## APIs
+
+- [Cardlytics Partner API](https://platform.cardlytics.com/advertisers/reference): merchant ingestion, offer ingestion, aggregate performance reporting, daily redemption feed. Base `https://api.cardlytics.com`, sandbox `https://api-sandbox.cardlytics.com`.
+- [Cardlytics Campaign Build API](https://platform.cardlytics.com/advertisers): the Ads Manager campaign object model — Campaigns, AdGroups, Ads, Audiences, AudienceReach, Rewards, PricingModels, Geo, AuditLogs. 74 operations across path versions v5–v8.
+- [Cardlytics Publisher API v2](https://platform.cardlytics.com/publisher-integrations): startSession, getAds, customer profile, reward summary, ad redemptions. Production `https://pub-api-us.prod.cardlytics.com` (US) and `https://pub-api-eu.prod.cardlytics.com` (EU).
+- [Powered by Cardlytics](https://docs.cardlytics.com/poweredby/index.html): marketplace integration — notify-transaction, notify-reward, notify-enrollment webhooks plus the mobile SDK.
+- [CSR API](https://docs.cardlytics.com/csr/index.html): customer-service tooling — offers, redemptions, tickets, transactions, resource locks.
+
+## Specs
+
+- [Partner API OpenAPI 3.0.1](openapi/cardlytics-partner-api-openapi.yml) — 5 paths, 7 operations, spec version 2025-10-07
+- [Campaign Build API OpenAPI 3.0.1](openapi/cardlytics-campaign-build-api-openapi.yml) — 57 paths, 74 operations
+- [Publisher API v2 OpenAPI 3.0.1](openapi/cardlytics-publisher-api-openapi.yml) — 5 paths, 5 operations
+- Verbatim harvest: [openapi/_original/](openapi/_original/)
+- No AsyncAPI, no GraphQL, no gRPC/protobuf, no MCP server, no A2A agent card.
+
+## Artifacts
+
+- [Authentication](authentication/cardlytics-authentication.yml) — four distinct auth models across four API families
+- [OAuth scopes](scopes/cardlytics-scopes.yml) — `openid`, `read`; publisher session scopes `api:institution`, `api:customer`
+- [Conventions](conventions/cardlytics-conventions.yml) — versioning, pagination, tracing headers, error envelope; NO idempotency key
+- [Error catalog](errors/cardlytics-problem-types.yml) — two bespoke envelopes, not RFC 9457
+- [Rate limits](rate-limits/cardlytics-rate-limits.yml) — 429 documented, no numeric limit published, no rate-limit response headers
+- [Lifecycle](lifecycle/cardlytics-lifecycle.yml) — URI-path versioning with a breaking-change definition; no SLA; status page inactive
+- [Changelog](changelog/cardlytics-changelog.yml) — dated monthly advertiser changelog with an RSS feed
+- [Sandbox](sandbox/cardlytics-sandbox.yml) — two sandboxes, mTLS-provisioned, canned responses, no test cards
+- [Webhooks / events](asyncapi/cardlytics-publisher-webhooks.yml) — partner-hosted receivers, real-time messaging
+- [Data model](data-model/cardlytics-data-model.yml) — 101 schemas over three disjoint object models
+- [Packages / SDKs](packages/cardlytics-packages.yml) — iOS, Android, Web; none on a public registry, both documented distribution hosts are dead
+- [Embedded components](components/cardlytics-components.yml) — `cdlx-widget`, `cdlx-rewards-hub`, mobile modules
+- [Conformance](conformance/cardlytics-conformance.yml)
+- [Well-known](well-known/cardlytics-well-known.yml) — RFC 9727 API catalog at platform.cardlytics.com
+- [Domain security](security/cardlytics-domain-security.yml)
+- [Trust center](security/cardlytics-trust-center.yml) — SOC 1, SOC 2, SOX
+- [Agentic access](agentic-access/cardlytics-agentic-access.yml) — 86 classified operations
+- [Agent skills](skills/_index.yml)
+
+## Docs
+
+- [Developer hub](https://platform.cardlytics.com/)
+- [Advertiser platform](https://platform.cardlytics.com/advertisers)
+- [Publisher integrations](https://platform.cardlytics.com/publisher-integrations)
+- [Legacy documentation snapshot](https://docs.cardlytics.com/) — still the only home of the v1 Ad Server, CSR, Powered by Cardlytics and SDK references
+- [Advertiser changelog](https://platform.cardlytics.com/advertisers/changelog)
+- [Trust center](https://www.cardlytics.com/trust-center)
+
+## Caveats for agents
+
+- Every host that actually serves the APIs (`api.cardlytics.com`, `api-sandbox.cardlytics.com`) answers `403 {"message":"Forbidden"}` to anonymous requests. There is no unauthenticated call to make.
+- The Campaign Build and Publisher specs carry no `operationId` on any operation; only the Publisher API declares them (`startSession`, `getAds`, `getRewardsSummary`, `getCustomerProfile`, `getCustomerAdRedemptions`).
+- The Campaign Build spec publishes a PRE-PRODUCTION Amazon Cognito authorization server and no `servers[]` block at all.
+- `POST .../duplicate` and `.../clone` operations create new objects on every call and have no replay protection. Do not retry them blind.

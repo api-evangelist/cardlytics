@@ -1,0 +1,35 @@
+generated: '2026-08-12'
+method: generated
+source: >-
+  openapi/cardlytics-publisher-api-openapi.yml, openapi/cardlytics-partner-api-openapi.yml,
+  plus the Cardlytics developer hub and legacy documentation
+note: >-
+  Grounded only in operations that exist verbatim in the harvested specs. The Publisher API v2
+  is the only Cardlytics spec that declares operationIds, so the publisher skill binds to those;
+  the Partner API skills bind to METHOD + path because the spec publishes no operationIds. No
+  skill is grounded in the Campaign Build API — it declares no operationIds and no servers[]
+  block, so there is no verifiable host to call.
+skills:
+- file: cardlytics-serve-offers-to-a-customer.md
+  name: Serve Cardlytics offers to a bank customer
+  api: openapi/cardlytics-publisher-api-openapi.yml
+  operations: [startSession, getAds, getCustomerProfile, getRewardsSummary, getCustomerAdRedemptions]
+  audience: publisher / financial institution
+- file: cardlytics-ingest-merchants-and-offers.md
+  name: Ingest merchants and offers into Cardlytics
+  api: openapi/cardlytics-partner-api-openapi.yml
+  operations:
+  - POST /api/v1/idp/oauth2/token
+  - PUT /api/v1/partner/merchants/{external_merchant_id}
+  - DELETE /api/v1/partner/merchants/{external_merchant_id}
+  - PUT /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}
+  - DELETE /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}
+  audience: advertiser partner
+- file: cardlytics-report-and-reconcile-redemptions.md
+  name: Pull Cardlytics performance reports and reconcile daily redemptions
+  api: openapi/cardlytics-partner-api-openapi.yml
+  operations:
+  - POST /api/v1/idp/oauth2/token
+  - POST /api/v1/partner/merchants/{external_merchant_id}/reports
+  - GET /api/v1/partner/redemptions
+  audience: advertiser partner

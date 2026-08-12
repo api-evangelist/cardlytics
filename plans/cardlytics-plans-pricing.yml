@@ -1,0 +1,44 @@
+generated: '2026-08-12'
+method: searched
+source:
+- https://www.cardlytics.com/
+- https://platform.cardlytics.com/advertisers/docs/api-get-started
+- https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+plan_count: 0
+public_pricing: false
+self_service: false
+free_tier: false
+trial: false
+note: >-
+  Cardlytics publishes no plans, tiers, or list prices for any of its APIs, and
+  serves no pricing page — https://www.cardlytics.com/pricing returns 404.
+  Access to every API family is enterprise, contract-first and relationship-
+  gated: the advertiser getting-started guide ends with "Contact your Cardlytics
+  representative to begin your integration journey today!", and the publisher
+  sandbox guide states that a partner must "reach out to your assigned account
+  manager or integration consultant" before access can be provisioned. Credentials
+  (OAuth client id/secret, signed mTLS client certificates, SDK applicationId and
+  secretKey) are issued by Cardlytics staff, never self-serve. plan_count: 0 is
+  the finding, not a gap in the probe.
+commercial_model:
+  buyers:
+  - advertisers and advertiser partners (campaign spend, priced per campaign pricing model)
+  - publishers / financial institutions (revenue share on the rewards program)
+  pricing_surface_in_api: >-
+    The Campaign Build API exposes PricingModels as first-class objects
+    (/v6/accounts/{accountId}/PricingModels), i.e. campaign price types are
+    negotiated commercial data inside the platform rather than a published
+    API price list. The August 2025 changelog records the end-of-life of the
+    Cost per Engagement (CPE) price type, confirming price types are a managed,
+    versioned product surface.
+  public_company: 'NASDAQ: CDLX — pricing and take-rate detail is disclosed in SEC filings, not on the developer surface.'
+plans: []
+evidence:
+- url: https://www.cardlytics.com/pricing
+  status: 404
+- url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  status: 200
+  finding: '"Contact your Cardlytics representative to begin your integration journey today!"'
+- url: https://docs.cardlytics.com/ads/v2/integrations/sandbox-quickstart-guide.html
+  status: 200
+  finding: Sandbox access requires an assigned account manager or integration consultant.

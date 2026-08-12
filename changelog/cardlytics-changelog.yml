@@ -1,0 +1,100 @@
+generated: '2026-08-12'
+method: searched
+source: https://platform.cardlytics.com/advertisers/changelog.rss
+docs:
+- https://platform.cardlytics.com/advertisers/changelog
+- https://platform.cardlytics.com/publisher-integrations/changelog
+feeds:
+- url: https://platform.cardlytics.com/advertisers/changelog.rss
+  format: RSS 2.0
+  status: 200
+  entries: 9
+- url: https://platform.cardlytics.com/publisher-integrations/changelog.rss
+  format: RSS 2.0
+  status: 200
+  entries: 1
+scheme: dated-monthly
+note: >-
+  The advertiser platform keeps a real, dated, RSS-published changelog on a
+  roughly monthly cadence. The publisher-integrations project has a changelog
+  surface but only one entry, last touched 2025-01-23, so publisher-side API
+  changes are effectively unannounced. Entries are product release notes rather
+  than API version records — none names an API version or flags breaking
+  changes explicitly, apart from the CPE end-of-life notice.
+current_version:
+  partner_api: '2025-10-07'
+  note: >-
+    Taken from info.version of the published Partner API OpenAPI. The Campaign
+    Build API declares info.version "latest" and the Publisher API "v0", so
+    neither publishes a resolvable version.
+entries:
+- date: '2026-08-07'
+  title: August, 2026
+  url: https://platform.cardlytics.com/advertisers/changelog/august-2026
+  highlights:
+  - Ads Manager Reporting v3 launch
+  breaking: false
+- date: '2026-04-22'
+  title: April, 2026
+  url: https://platform.cardlytics.com/advertisers/changelog/april-2026
+  highlights:
+  - Invite and reset-password email updates
+  breaking: false
+- date: '2026-04-01'
+  title: March, 2026
+  url: https://platform.cardlytics.com/advertisers/changelog/march-2026
+  highlights:
+  - Aggregated ad group reporting dimension
+  breaking: false
+- date: '2026-01-07'
+  title: January, 2026
+  url: https://platform.cardlytics.com/advertisers/changelog/january-2026
+  highlights:
+  - Redemption Feed API
+  - Refreshed Ads Manager access setup and recovery user guides
+  additions: true
+  breaking: false
+- date: '2025-11-04'
+  title: November, 2025
+  url: https://platform.cardlytics.com/advertisers/changelog/november-6-2025
+  highlights:
+  - Purchase Channel Spend Reporting
+  breaking: false
+- date: '2025-10-03'
+  title: September, 2025
+  url: https://platform.cardlytics.com/advertisers/changelog/september-2025
+  highlights:
+  - Performance Reporting API
+  additions: true
+  breaking: false
+- date: '2025-08-06'
+  title: August, 2025
+  url: https://platform.cardlytics.com/advertisers/changelog/august-2025
+  highlights:
+  - 'End of life: Cost per Engagement (CPE) price type'
+  breaking: true
+- date: '2025-07-22'
+  title: July, 2025
+  url: https://platform.cardlytics.com/advertisers/changelog/july-2025
+  highlights:
+  - Advertiser Partner API v1 launch
+  - Revamped Advertiser Platform docs hub
+  additions: true
+  breaking: false
+- date: '2025-03-10'
+  title: March, 2025
+  url: https://platform.cardlytics.com/advertisers/changelog/march-2025
+  highlights:
+  - Ads Manager scheduled email reports format change
+  breaking: false
+- date: '2025-01-23'
+  title: Cardlytics — Release Notes (publisher integrations)
+  url: https://platform.cardlytics.com/publisher-integrations/changelog/release-notes
+  highlights:
+  - Standing release-notes page for the publisher platform; the only entry in this feed.
+  breaking: false
+legacy:
+  source: https://docs.cardlytics.com/ads/v2/release-notes/v2.1.0.html
+  entries:
+  - {date: '2024-01-09', highlight: 'Release of the v2.0 developer documentation suite'}
+  - {date: '2023-11-15', highlight: 'Release of the preliminary v2.0 developer documentation suite'}

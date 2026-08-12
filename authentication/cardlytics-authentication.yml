@@ -1,0 +1,108 @@
+generated: '2026-08-12'
+method: searched
+source: openapi/cardlytics-campaign-build-api-openapi.yml, openapi/cardlytics-partner-api-openapi.yml, openapi/cardlytics-publisher-api-openapi.yml
+docs:
+- https://platform.cardlytics.com/advertisers/docs/api-get-started
+- https://docs.cardlytics.com/ads/v2/getting-started/get-session-token.html
+- https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html
+- https://docs.cardlytics.com/poweredby/api-reference-authentication.html
+- https://docs.cardlytics.com/csr/common/authentication.html
+summary:
+  types:
+  - oauth2
+  - mutualTLS
+  - http
+  - custom-session-token
+  oauth2_flows:
+  - authorizationCode
+  - clientCredentials
+  note: >-
+    Cardlytics runs four distinct authentication models across four API families.
+    Nothing is self-service — every credential (OAuth client, mTLS client
+    certificate, JWT secretKey, SDK applicationId) is issued by a Cardlytics
+    account manager or integration consultant after a partner agreement.
+schemes:
+- name: oauth2
+  type: oauth2
+  api: Partner API (advertiser merchant + offer ingestion)
+  flows:
+  - flow: clientCredentials
+    tokenUrl: /v1/idp/oauth2/token
+    absolute_token_url: https://api.cardlytics.com/api/v1/idp/oauth2/token
+    scopes: 1
+  credentials: Cardlytics issues a unique client_id and client_secret per partner.
+  additional_controls:
+  - API scopes
+  - optional IP allow-listing
+  sources:
+  - openapi/cardlytics-partner-api-openapi.yml
+  docs: https://platform.cardlytics.com/advertisers/docs/api-get-started
+- name: oauth2-cognito
+  type: oauth2
+  api: Campaign Build API (Ads Manager advertiser campaign objects)
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+    tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+    scopes: 1
+  token_name: id_token
+  sources:
+  - openapi/cardlytics-campaign-build-api-openapi.yml
+  note: >-
+    The spec ships the PRE-PRODUCTION Amazon Cognito user pool
+    (advertiser-auth-preprod). Cardlytics publishes no production authorization
+    server URL for this API, and no anonymous OIDC discovery document is served.
+- name: mutualTLS
+  type: mutualTLS
+  api: Publisher API v2 (financial-institution rewards platform)
+  sources:
+  - https://docs.cardlytics.com/ads/v2/integrations/connectivity-via-mTLS.html
+  description: >-
+    Publisher traffic runs over two-way TLS plus an IP-address allow list.
+    The publisher generates an RSA private key and CSR (a separate certificate
+    for pre-production and production); Cardlytics signs it and returns
+    client.crt. Sandbox and production endpoints both require the client
+    certificate on every call.
+- name: X-CDLX-Session-Token
+  type: apiKey
+  in: header
+  parameter_name: X-CDLX-Session-Token
+  api: Publisher API v2
+  obtained_via: POST /v2/session/startSession
+  token_format: JSON Web Token encoding institution and customer metadata
+  expiry_behavior: >-
+    A 401 is returned when the session expires, with no distinguishing body;
+    clients must cache tokens and re-call startSession on 401.
+  scopes:
+  - api:institution
+  - api:customer
+  sources:
+  - openapi/cardlytics-publisher-api-openapi.yml
+  - https://docs.cardlytics.com/ads/v2/getting-started/get-session-token.html
+- name: Cardlytics JWT (Powered by Cardlytics)
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  api: Powered by Cardlytics marketplace webhooks + SDK
+  algorithm: HS256
+  signing_key: shared secretKey issued by Cardlytics per applicationId
+  required_claims:
+  - iss (the Cardlytics-assigned applicationId, form cdlx:<uuid>)
+  - sub (hex-encoded MD5 digest of the JSON request body)
+  - exp (no more than 60 minutes in the future)
+  - jti (random uuid)
+  sources:
+  - https://docs.cardlytics.com/poweredby/api-reference-authentication.html
+- name: OAuth 2.0 (CSR / servicing API)
+  type: oauth2
+  api: CSR API (customer-service representative tooling)
+  authorization_server: Ping Identity
+  flows:
+  - flow: clientCredentials
+    note: app-to-app, backend integrations
+  - flow: authorizationCode
+    pkce: true
+    note: user-to-app; supports FI SSO federation to the bank's own IdP
+  header: 'Authorization: Bearer {access_token}'
+  sources:
+  - https://docs.cardlytics.com/csr/common/authentication.html
