@@ -1,0 +1,511 @@
+{
+  "item": [
+    {
+      "id": "84c806e7-5b6f-4b88-a7f6-9ba5ffab1639",
+      "name": "session-controller",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3c69478c-e8a8-44e4-9405-209e0072fb1d",
+          "name": "start Session",
+          "request": {
+            "name": "start Session",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "session",
+                "startSession"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-CDLX-Institution-Id",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sourceCustomerId\": \"<string>\",\n  \"scopes\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"organizationId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bf15f6d7-bcdd-48d8-b235-e1e6cc4370c2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "session",
+                    "startSession"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-CDLX-Institution-Id",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sourceCustomerId\": \"<string>\",\n  \"scopes\": [\n    \"api:customer\",\n    \"api:customer\"\n  ],\n  \"organizationId\": \"<string>\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sessionToken\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "6b6980c7-7747-4bcd-bac9-bdf9b5f182a7",
+      "name": "ads-controller",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "a9517c1e-4854-4e5e-b784-04d54be8440b",
+          "name": "get Ads",
+          "request": {
+            "name": "get Ads",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "ads",
+                "getAds"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-CDLX-Session-Token",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"channel\": \"<string>\",\n  \"customerLocation\": {\n    \"latitude\": \"<double>\",\n    \"longitude\": \"<double>\"\n  },\n  \"sections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"categoryIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"curationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"activationStates\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"visibilityStates\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redemptionStates\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"maxAdLimit\": \"<integer>\",\n  \"returnMetadata\": \"<boolean>\",\n  \"returnStoreLocation\": \"<boolean>\",\n  \"includeExpiredAds\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "1a54c24d-ef8e-4edf-88d1-3b19919c65de",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "ads",
+                    "getAds"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-CDLX-Session-Token",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"channel\": \"<string>\",\n  \"customerLocation\": {\n    \"latitude\": \"<double>\",\n    \"longitude\": \"<double>\"\n  },\n  \"sections\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"categoryIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"curationIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"activationStates\": [\n    \"ACTIVATED\",\n    \"ACTIVATED\"\n  ],\n  \"visibilityStates\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"redemptionStates\": [\n    \"FULLY_REDEEMED\",\n    \"FULLY_REDEEMED\"\n  ],\n  \"maxAdLimit\": \"<integer>\",\n  \"returnMetadata\": false,\n  \"returnStoreLocation\": false,\n  \"includeExpiredAds\": false\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"ads\": {\n    \"key_0\": {\n      \"adType\": \"CASH_BACK_OFFER\",\n      \"adServeToken\": \"string\",\n      \"startDate\": \"1950-06-24T05:20:15.695Z\",\n      \"endDate\": \"1949-07-05T12:08:17.981Z\",\n      \"activationDate\": \"2011-09-18T05:38:46.328Z\",\n      \"merchantName\": \"string\",\n      \"sections\": [\n        \"Transaction\",\n        \"Email\"\n      ],\n      \"reward\": {\n        \"rewardType\": \"PERCENT_AMOUNT_PURCHASE\",\n        \"rewardAmount\": 2574.8964957611875,\n        \"maxRewardAmount\": 7862.703189195327,\n        \"isMultiRedemption\": true,\n        \"purchaseRequirement\": {\n          \"minSpendAmount\": 3036.1658238047717,\n          \"purchaseChannels\": [\n            \"InStore\",\n            \"Online\"\n          ],\n          \"purchaseTypes\": [\n            \"Subscription\",\n            \"Membership\"\n          ]\n        }\n      },\n      \"activationState\": \"ACTIVATED\",\n      \"visibilityState\": \"VISIBLE\",\n      \"redemptionState\": \"PROCESSING\",\n      \"assets\": {\n        \"logo\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"largeRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"smallRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"copy\": {\n          \"type\": \"AD_COPY\",\n          \"value\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\"\n          }\n        },\n        \"callsToAction\": {\n          \"type\": \"CALL_TO_ACTION_LINKS\",\n          \"value\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  },\n  \"rankings\": {\n    \"all\": [\n      \"string\",\n      \"string\"\n    ]\n  },\n  \"categories\": {\n    \"key_0\": {\n      \"name\": \"string\",\n      \"id\": \"string\",\n      \"subcategories\": [\n        {\n          \"value\": \"<Circular reference to #/components/schemas/CategoryGroup detected>\"\n        },\n        {\n          \"value\": \"<Circular reference to #/components/schemas/CategoryGroup detected>\"\n        }\n      ]\n    }\n  },\n  \"storeLocations\": {\n    \"key_0\": [\n      {\n        \"storeName\": \"string\",\n        \"address\": {\n          \"addressLine1\": \"string\",\n          \"addressLine2\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"postalCode\": \"string\",\n          \"country\": \"string\"\n        },\n        \"phoneNumber\": \"string\",\n        \"distance\": 1842.543720705312,\n        \"latitude\": 7494.139381052855,\n        \"longitude\": 9218.626075508684\n      },\n      {\n        \"storeName\": \"string\",\n        \"address\": {\n          \"addressLine1\": \"string\",\n          \"addressLine2\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"postalCode\": \"string\",\n          \"country\": \"string\"\n        },\n        \"phoneNumber\": \"string\",\n        \"distance\": 1964.1155197200744,\n        \"latitude\": 9236.89079965192,\n        \"longitude\": 9689.105453134649\n      }\n    ],\n    \"key_1\": [\n      {\n        \"storeName\": \"string\",\n        \"address\": {\n          \"addressLine1\": \"string\",\n          \"addressLine2\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"postalCode\": \"string\",\n          \"country\": \"string\"\n        },\n        \"phoneNumber\": \"string\",\n        \"distance\": 1927.3355106345036,\n        \"latitude\": 5032.692500232391,\n        \"longitude\": 2043.2988337369352\n      },\n      {\n        \"storeName\": \"string\",\n        \"address\": {\n          \"addressLine1\": \"string\",\n          \"addressLine2\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"postalCode\": \"string\",\n          \"country\": \"string\"\n        },\n        \"phoneNumber\": \"string\",\n        \"distance\": 4128.523176503507,\n        \"latitude\": 3033.2984786825223,\n        \"longitude\": 5350.47340381796\n      }\n    ],\n    \"key_2\": [\n      {\n        \"storeName\": \"string\",\n        \"address\": {\n          \"addressLine1\": \"string\",\n          \"addressLine2\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"postalCode\": \"string\",\n          \"country\": \"string\"\n        },\n        \"phoneNumber\": \"string\",\n        \"distance\": 6264.998338487848,\n        \"latitude\": 242.4926308957076,\n        \"longitude\": 3689.9523255693202\n      },\n      {\n        \"storeName\": \"string\",\n        \"address\": {\n          \"addressLine1\": \"string\",\n          \"addressLine2\": \"string\",\n          \"city\": \"string\",\n          \"state\": \"string\",\n          \"postalCode\": \"string\",\n          \"country\": \"string\"\n        },\n        \"phoneNumber\": \"string\",\n        \"distance\": 5939.905996613091,\n        \"latitude\": 4514.11455262868,\n        \"longitude\": 2567.0274246153645\n      }\n    ]\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "1b83cae2-52f9-434d-b5e6-b0383351bca1",
+      "name": "customer-controller",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "b241788b-2a39-4093-9f83-58a25624f080",
+          "name": "get Rewards Summary",
+          "request": {
+            "name": "get Rewards Summary",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "customerProfile",
+                "getCustomerRewardSummary"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-CDLX-Session-Token",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "84fe0d1a-9723-43af-9931-b121595b95b2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "customerProfile",
+                    "getCustomerRewardSummary"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-CDLX-Session-Token",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"rewardsSummary\": {\n    \"allTime\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    },\n    \"pending\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    },\n    \"yearToDate\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    },\n    \"previousCalendarYear\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    },\n    \"previousMonth\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    },\n    \"previousTwelveMonths\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    },\n    \"currentMonth\": {\n      \"requestId\": \"string\",\n      \"rewardsSummary\": {\n        \"value\": \"<Circular reference to #/components/schemas/RewardSummaryTotals detected>\"\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ead68da8-8650-4b5c-b99d-25525e7f50c2",
+          "name": "get Customer Profile",
+          "request": {
+            "name": "get Customer Profile",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "customerProfile",
+                "getCustomerProfile"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-CDLX-Session-Token",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1838db12-0ad9-4ffc-b3cb-ca8599fd9a38",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "customerProfile",
+                    "getCustomerProfile"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-CDLX-Session-Token",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"sourceCustomerId\": \"string\",\n  \"institutionId\": \"string\",\n  \"organizationId\": \"string\",\n  \"postalCode\": \"string\",\n  \"country\": \"string\",\n  \"customerCreationDate\": \"string\",\n  \"enrollmentStartDate\": \"string\",\n  \"enrollmentEndDate\": \"string\",\n  \"enrollmentOptInStatus\": \"INACTIVE\",\n  \"alertOptInStatus\": [\n    \"EXPIRING\",\n    \"REDEMPTION\"\n  ],\n  \"targetingIndicator\": \"DO_NOT_TARGET\",\n  \"portfolios\": [\n    {\n      \"sourcePortfolioId\": \"string\",\n      \"institutionId\": \"string\",\n      \"institutionName\": \"string\",\n      \"portfolioName\": \"string\",\n      \"tagline\": \"string\",\n      \"description\": \"string\",\n      \"rewardCurrencyUnit\": \"string\",\n      \"rewardToCurrencyConversionRate\": \"string\"\n    },\n    {\n      \"sourcePortfolioId\": \"string\",\n      \"institutionId\": \"string\",\n      \"institutionName\": \"string\",\n      \"portfolioName\": \"string\",\n      \"tagline\": \"string\",\n      \"description\": \"string\",\n      \"rewardCurrencyUnit\": \"string\",\n      \"rewardToCurrencyConversionRate\": \"string\"\n    }\n  ],\n  \"accounts\": [\n    {\n      \"sourceAccountId\": \"string\",\n      \"sourceCustomerIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"primarySourceCustomerId\": \"string\",\n      \"status\": \"FRAUD\",\n      \"type\": \"SBS\",\n      \"sourcePortfolioId\": \"string\",\n      \"accountOpenDate\": \"string\",\n      \"accountCloseDate\": \"string\",\n      \"cards\": [\n        {\n          \"sourceAccountId\": \"string\",\n          \"sourceCustomerId\": \"string\",\n          \"last4\": \"string\",\n          \"iin\": \"string\",\n          \"cardType\": \"string\",\n          \"status\": \"string\",\n          \"networkIdentifier\": 812,\n          \"openDate\": \"string\",\n          \"closeDate\": \"string\"\n        },\n        {\n          \"sourceAccountId\": \"string\",\n          \"sourceCustomerId\": \"string\",\n          \"last4\": \"string\",\n          \"iin\": \"string\",\n          \"cardType\": \"string\",\n          \"status\": \"string\",\n          \"networkIdentifier\": 8755,\n          \"openDate\": \"string\",\n          \"closeDate\": \"string\"\n        }\n      ]\n    },\n    {\n      \"sourceAccountId\": \"string\",\n      \"sourceCustomerIds\": [\n        \"string\",\n        \"string\"\n      ],\n      \"primarySourceCustomerId\": \"string\",\n      \"status\": \"OPEN\",\n      \"type\": \"SBCRD\",\n      \"sourcePortfolioId\": \"string\",\n      \"accountOpenDate\": \"string\",\n      \"accountCloseDate\": \"string\",\n      \"cards\": [\n        {\n          \"sourceAccountId\": \"string\",\n          \"sourceCustomerId\": \"string\",\n          \"last4\": \"string\",\n          \"iin\": \"string\",\n          \"cardType\": \"string\",\n          \"status\": \"string\",\n          \"networkIdentifier\": 7764,\n          \"openDate\": \"string\",\n          \"closeDate\": \"string\"\n        },\n        {\n          \"sourceAccountId\": \"string\",\n          \"sourceCustomerId\": \"string\",\n          \"last4\": \"string\",\n          \"iin\": \"string\",\n          \"cardType\": \"string\",\n          \"status\": \"string\",\n          \"networkIdentifier\": 8632,\n          \"openDate\": \"string\",\n          \"closeDate\": \"string\"\n        }\n      ]\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "2217918a-96db-44e1-aa4b-dc8e225e4b25",
+          "name": "get Customer Ad Redemptions",
+          "request": {
+            "name": "get Customer Ad Redemptions",
+            "description": {},
+            "url": {
+              "path": [
+                "v2",
+                "customerProfile",
+                "getCustomerAdRedemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "key": "X-CDLX-Session-Token",
+                "value": "<string>",
+                "description": ""
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11af99ca-0066-45ea-b0b3-8e2807f96a15",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "customerProfile",
+                    "getCustomerAdRedemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "disabled": false,
+                    "key": "X-CDLX-Session-Token",
+                    "value": "<string>",
+                    "description": ""
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"requestId\": \"string\",\n  \"redemptions\": [\n    {\n      \"redemptionId\": \"string\",\n      \"adId\": \"string\",\n      \"amount\": 6725.073818115143,\n      \"redemptionDate\": \"2023-01-28T12:27:13.171Z\",\n      \"sourceCustomerId\": \"string\",\n      \"sourceAccountId\": \"string\",\n      \"redeemingTransactionAmount\": 3438.6853871096037,\n      \"transactionId\": \"string\",\n      \"rewardSettlementRunDate\": \"1959-09-10T18:33:44.006Z\"\n    },\n    {\n      \"redemptionId\": \"string\",\n      \"adId\": \"string\",\n      \"amount\": 8260.493920362986,\n      \"redemptionDate\": \"1995-12-27T17:30:51.489Z\",\n      \"sourceCustomerId\": \"string\",\n      \"sourceAccountId\": \"string\",\n      \"redeemingTransactionAmount\": 3735.292852970661,\n      \"transactionId\": \"string\",\n      \"rewardSettlementRunDate\": \"1947-10-20T01:57:48.381Z\"\n    }\n  ],\n  \"ads\": {\n    \"key_0\": {\n      \"adType\": \"CASH_BACK_OFFER\",\n      \"adServeToken\": \"string\",\n      \"startDate\": \"1988-05-22T06:09:24.747Z\",\n      \"endDate\": \"2021-08-04T14:30:35.723Z\",\n      \"activationDate\": \"1979-09-03T00:08:17.787Z\",\n      \"merchantName\": \"string\",\n      \"sections\": [\n        \"TravelCategory\",\n        \"EntertainmentCategory\"\n      ],\n      \"reward\": {\n        \"rewardType\": \"FIXED_AMOUNT_PURCHASE\",\n        \"rewardAmount\": 9118.399886767298,\n        \"maxRewardAmount\": 9997.087140273303,\n        \"isMultiRedemption\": false,\n        \"purchaseRequirement\": {\n          \"minSpendAmount\": 3846.7691710482122,\n          \"purchaseChannels\": [\n            \"PayAtPump\",\n            \"PayAtPump\"\n          ],\n          \"purchaseTypes\": [\n            \"Fuel\",\n            \"Membership\"\n          ]\n        }\n      },\n      \"activationState\": \"ACTIVATED\",\n      \"visibilityState\": \"VISIBLE\",\n      \"redemptionState\": \"PROCESSING\",\n      \"assets\": {\n        \"logo\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"largeRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"smallRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"copy\": {\n          \"type\": \"AD_COPY\",\n          \"value\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          }\n        },\n        \"callsToAction\": {\n          \"type\": \"CALL_TO_ACTION_LINKS\",\n          \"value\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    \"key_1\": {\n      \"adType\": \"CASH_BACK_OFFER\",\n      \"adServeToken\": \"string\",\n      \"startDate\": \"2021-09-25T15:06:10.850Z\",\n      \"endDate\": \"1987-06-01T03:36:57.525Z\",\n      \"activationDate\": \"1967-03-06T04:08:55.632Z\",\n      \"merchantName\": \"string\",\n      \"sections\": [\n        \"OnboardingPage\",\n        \"Landing\"\n      ],\n      \"reward\": {\n        \"rewardType\": \"PERCENT_AMOUNT_PURCHASE\",\n        \"rewardAmount\": 751.2766367614976,\n        \"maxRewardAmount\": 131.2858375000936,\n        \"isMultiRedemption\": true,\n        \"purchaseRequirement\": {\n          \"minSpendAmount\": 648.8759937241317,\n          \"purchaseChannels\": [\n            \"InStore\",\n            \"Convenience\"\n          ],\n          \"purchaseTypes\": [\n            \"Subscription\",\n            \"Membership\"\n          ]\n        }\n      },\n      \"activationState\": \"NEW\",\n      \"visibilityState\": \"VISIBLE\",\n      \"redemptionState\": \"FULLY_REDEEMED\",\n      \"assets\": {\n        \"logo\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"largeRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"smallRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"copy\": {\n          \"type\": \"AD_COPY\",\n          \"value\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\",\n            \"key_2\": \"string\",\n            \"key_3\": \"string\",\n            \"key_4\": \"string\"\n          }\n        },\n        \"callsToAction\": {\n          \"type\": \"CALL_TO_ACTION_LINKS\",\n          \"value\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    },\n    \"key_2\": {\n      \"adType\": \"CASH_BACK_OFFER\",\n      \"adServeToken\": \"string\",\n      \"startDate\": \"1969-04-11T23:01:20.414Z\",\n      \"endDate\": \"1975-10-27T04:37:02.807Z\",\n      \"activationDate\": \"2017-04-24T04:40:14.469Z\",\n      \"merchantName\": \"string\",\n      \"sections\": [\n        \"ServicesCategory\",\n        \"Transaction\"\n      ],\n      \"reward\": {\n        \"rewardType\": \"FIXED_AMOUNT_PURCHASE\",\n        \"rewardAmount\": 9937.36840522897,\n        \"maxRewardAmount\": 1834.1475137381979,\n        \"isMultiRedemption\": true,\n        \"purchaseRequirement\": {\n          \"minSpendAmount\": 4210.053940786439,\n          \"purchaseChannels\": [\n            \"Online\",\n            \"PayAtPump\"\n          ],\n          \"purchaseTypes\": [\n            \"Membership\",\n            \"Fuel\"\n          ]\n        }\n      },\n      \"activationState\": \"SERVED\",\n      \"visibilityState\": \"PARKED\",\n      \"redemptionState\": \"FULLY_REDEEMED\",\n      \"assets\": {\n        \"logo\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"largeRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"smallRectangle\": {\n          \"type\": \"IMAGE_URL\",\n          \"value\": {\n            \"large\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"small\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        },\n        \"copy\": {\n          \"type\": \"AD_COPY\",\n          \"value\": {\n            \"key_0\": \"string\",\n            \"key_1\": \"string\"\n          }\n        },\n        \"callsToAction\": {\n          \"type\": \"CALL_TO_ACTION_LINKS\",\n          \"value\": {\n            \"key_0\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_1\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_2\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            },\n            \"key_3\": {\n              \"value\": \"<Error: Too many levels of nesting to fake this schema>\"\n            }\n          }\n        }\n      }\n    }\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://publisher-uk-fiuat.cardlytics.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "6c0889a5-898d-45a3-af36-13d4d644a636",
+    "name": "OpenAPI definition",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "",
+      "type": "text/plain"
+    }
+  }
+}

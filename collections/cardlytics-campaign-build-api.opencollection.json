@@ -1,0 +1,2076 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Campaign Build API",
+    "version": "latest"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "authorization_code",
+      "authorizationUrl": "https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize",
+      "accessTokenUrl": "https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "AdGroups",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups/:adGroupId/clone",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The adGroupId to clone."
+              }
+            ]
+          },
+          "docs": "Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)"
+        },
+        {
+          "info": {
+            "name": "Duplicates an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups/:adGroupId/duplicate",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The adGroupId to duplicate."
+              }
+            ]
+          },
+          "docs": "Duplicates an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)"
+        },
+        {
+          "info": {
+            "name": "Returns an AdGroup from the repository for the given account by its adGroupId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups/:adGroupId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The adGroupId to find."
+              }
+            ]
+          },
+          "docs": "Returns an AdGroup from the repository for the given account by its adGroupId."
+        },
+        {
+          "info": {
+            "name": "Updates the partial modifications to an adGroup.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups/:adGroupId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the AdGroup to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the partial modifications to an adGroup."
+        },
+        {
+          "info": {
+            "name": "Deletes an Ad Group with all related entities (Reward, Pricing models, etc.)\r\nDELETE accounts/{accountId}/AdGroups/{adGroupId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups/:adGroupId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The Ad Group Id to delete."
+              }
+            ]
+          },
+          "docs": "Deletes an Ad Group with all related entities (Reward, Pricing models, etc.)\r\nDELETE accounts/{accountId}/AdGroups/{adGroupId}"
+        },
+        {
+          "info": {
+            "name": "Returns an AdGroup from the repository by its adGroupId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/AdGroups/:adGroupId",
+            "params": [
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The adGroupId to find."
+              }
+            ]
+          },
+          "docs": "Returns an AdGroup from the repository by its adGroupId."
+        },
+        {
+          "info": {
+            "name": "Returns all Ad Groups from the repository for a given account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId for which to retrieve Ad Groups."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Ad Groups from the repository for a given account."
+        },
+        {
+          "info": {
+            "name": "Adds an AdGroup to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an AdGroup to the repository."
+        },
+        {
+          "info": {
+            "name": "Returns all Ad Groups from the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/AdGroups",
+            "params": [
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Ad Groups from the repository."
+        },
+        {
+          "info": {
+            "name": "Validates an AdGroup with all business rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/AdGroups/:adGroupId/validation",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId for which to retrieve the AdGroup."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The adGroupId to validate."
+              }
+            ]
+          },
+          "docs": "Validates an AdGroup with all business rules."
+        },
+        {
+          "info": {
+            "name": "Returns validation rules for a AdGroup object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/AdGroups/validation/rule-set"
+          },
+          "docs": "Returns validation rules for a AdGroup object."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Ads",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns an Ad from the repository for a given account by its adId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The adId to find."
+              }
+            ]
+          },
+          "docs": "Returns an Ad from the repository for a given account by its adId."
+        },
+        {
+          "info": {
+            "name": "Updates the partial modifications to an Ad.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the Ad to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the partial modifications to an Ad."
+        },
+        {
+          "info": {
+            "name": "Deletes an Ad with all related entities (Reward, Pricing models, etc.)\r\nDELETE accounts/{accountId}/Ads/{adId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The AdId to delete."
+              }
+            ]
+          },
+          "docs": "Deletes an Ad with all related entities (Reward, Pricing models, etc.)\r\nDELETE accounts/{accountId}/Ads/{adId}"
+        },
+        {
+          "info": {
+            "name": "Returns an Ad from the repository by its adId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Ads/:adId",
+            "params": [
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The adId to find."
+              }
+            ]
+          },
+          "docs": "Returns an Ad from the repository by its adId."
+        },
+        {
+          "info": {
+            "name": "Gets the RedeemingMerchants associated with an Ad.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Ads/:adId/RedeemingMerchants",
+            "params": [
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the Ad to be modified."
+              }
+            ]
+          },
+          "docs": "Gets the RedeemingMerchants associated with an Ad."
+        },
+        {
+          "info": {
+            "name": "Creates an Ad's Redeeming Merchants List.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId/RedeemingMerchants",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The AdIdof the Ad to filter the request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Creates an Ad's Redeeming Merchants List."
+        },
+        {
+          "info": {
+            "name": "Updates the partial modifications to an Ad's Redeeming Merchants List.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId/RedeemingMerchants",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The id of the Ad to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the partial modifications to an Ad's Redeeming Merchants List."
+        },
+        {
+          "info": {
+            "name": "Returns all Ads from the repository for a given account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId for which to retrieve Ads."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Ads from the repository for a given account."
+        },
+        {
+          "info": {
+            "name": "Adds an Ad to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an Ad to the repository."
+        },
+        {
+          "info": {
+            "name": "Returns all Ads from the repository for a given Campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/campaigns/:campaignId/Ads",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId for which to retrieve Ads."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The campaignId for which to retrieve Ads."
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Ads from the repository for a given Campaign."
+        },
+        {
+          "info": {
+            "name": "Returns all Ads from the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Ads",
+            "params": [
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Ads from the repository."
+        },
+        {
+          "info": {
+            "name": "Duplicates an Ad with all related entities (Reward, Pricing models, etc.)\r\nPOST accounts/{accountId}/Ads/{adId}/duplicate?duplicates=5",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId/duplicate",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The AdId to duplicate."
+              },
+              {
+                "name": "duplicates",
+                "value": "",
+                "type": "query",
+                "description": "The number of duplicates of the Ad."
+              }
+            ]
+          },
+          "docs": "Duplicates an Ad with all related entities (Reward, Pricing models, etc.)\r\nPOST accounts/{accountId}/Ads/{adId}/duplicate?duplicates=5"
+        },
+        {
+          "info": {
+            "name": "Validates a Ad with all business rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Ads/:adId/validation",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The adId to find."
+              }
+            ]
+          },
+          "docs": "Validates a Ad with all business rules."
+        },
+        {
+          "info": {
+            "name": "Returns validation rules for a Ad object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Ads/validation/rule-set"
+          },
+          "docs": "Returns validation rules for a Ad object."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AudienceReach",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Calculates the Reach of an Audience composed of the given criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v6/AudienceReach/calculateAudienceReach",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Calculates the Reach of an Audience composed of the given criteria."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Audiences",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all Audiences from the repository for a given account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v8/accounts/:accountId/Audiences",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId for which to retrieve Audiences."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isUserSavedAudience",
+                "value": "",
+                "type": "query",
+                "description": "Parameters to filter only user saved or all audiences(Default: false)."
+              },
+              {
+                "name": "includeGeo",
+                "value": "",
+                "type": "query",
+                "description": "Parameters to include and exclude Geo info in the audiences(Default: false)."
+              }
+            ]
+          },
+          "docs": "Returns all Audiences from the repository for a given account."
+        },
+        {
+          "info": {
+            "name": "Adds an audience to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v8/accounts/:accountId/Audiences",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId associated with the audience."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an audience to the repository."
+        },
+        {
+          "info": {
+            "name": "Returns all Audiences from the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v8/Audiences",
+            "params": [
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "isUserSavedAudience",
+                "value": "",
+                "type": "query",
+                "description": "Parameters to filter only user saved or all audiences(Default: false)."
+              },
+              {
+                "name": "includeGeo",
+                "value": "",
+                "type": "query",
+                "description": "Parameters to include and exclude Geo info in the audiences(Default: false)."
+              }
+            ]
+          },
+          "docs": "Returns all Audiences from the repository."
+        },
+        {
+          "info": {
+            "name": "Returns an audience from the repository for a given account by its AudienceId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v8/accounts/:accountId/Audiences/:audienceId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId associated with the audience."
+              },
+              {
+                "name": "audienceId",
+                "value": "",
+                "type": "path",
+                "description": "The audienceId to find."
+              }
+            ]
+          },
+          "docs": "Returns an audience from the repository for a given account by its AudienceId."
+        },
+        {
+          "info": {
+            "name": "Partial modifications to an Audience.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v8/accounts/:accountId/Audiences/:audienceId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "audienceId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the Audience to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Partial modifications to an Audience."
+        },
+        {
+          "info": {
+            "name": "Returns an audience from the repository by its AudienceId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v8/Audiences/:audienceId",
+            "params": [
+              {
+                "name": "audienceId",
+                "value": "",
+                "type": "path",
+                "description": "The audienceId to find."
+              }
+            ]
+          },
+          "docs": "Returns an audience from the repository by its AudienceId."
+        },
+        {
+          "info": {
+            "name": "Validates an Audience with all business rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v8/accounts/:accountId/Audiences/:audienceId/validation",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "audienceId",
+                "value": "",
+                "type": "path",
+                "description": "The audienceId to find."
+              }
+            ]
+          },
+          "docs": "Validates an Audience with all business rules."
+        },
+        {
+          "info": {
+            "name": "Returns validation rules for a Audience object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v8/Audiences/validation/rule-set"
+          },
+          "docs": "Returns validation rules for a Audience object."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "AuditLogs",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all Audit into from the repository for a given account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v5/accounts/:accountId/AuditLogs",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId for which to retrieve Audit info."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "CampaignId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "AuditUser",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "IncludeChildren",
+                "value": "",
+                "type": "query",
+                "description": "Indicates whether to include children entities (ads, ad groups, audiences) associated with specified campaign."
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Audit into from the repository for a given account."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Campaigns",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns all Campaigns from the repository for a given account.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId to for which to retrieve Campaigns."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Campaigns from the repository for a given account."
+        },
+        {
+          "info": {
+            "name": "Adds a Campaign to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a Campaign to the repository."
+        },
+        {
+          "info": {
+            "name": "Returns all Campaigns from the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Campaigns",
+            "params": [
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "OrderBy",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Returns all Campaigns from the repository."
+        },
+        {
+          "info": {
+            "name": "Returns a Campaign from the repository for a given account by its CampaignId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The CampaignId to find."
+              }
+            ]
+          },
+          "docs": "Returns a Campaign from the repository for a given account by its CampaignId."
+        },
+        {
+          "info": {
+            "name": "Updates the partial modifications to a Campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the Campaign to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the partial modifications to a Campaign."
+        },
+        {
+          "info": {
+            "name": "Deletes a Campaign with all related entities (AdGroup, Ad, Audience etc.)\r\nDELETE accounts/{accountId}/Campaigns/{campaignId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The CampaignId to delete."
+              }
+            ]
+          },
+          "docs": "Deletes a Campaign with all related entities (AdGroup, Ad, Audience etc.)\r\nDELETE accounts/{accountId}/Campaigns/{campaignId}"
+        },
+        {
+          "info": {
+            "name": "Returns a Campaign from the repository by its CampaignId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Campaigns/:campaignId",
+            "params": [
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The CampaignId to find."
+              }
+            ]
+          },
+          "docs": "Returns a Campaign from the repository by its CampaignId."
+        },
+        {
+          "info": {
+            "name": "Returns a difference between the two versions of the Campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/diff",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The CampaignId to find."
+              },
+              {
+                "name": "baseVersion",
+                "value": "",
+                "type": "query",
+                "description": "The base version of the campaign."
+              },
+              {
+                "name": "compareVersion",
+                "value": "",
+                "type": "query",
+                "description": "The version to compare the campaign."
+              }
+            ]
+          },
+          "docs": "Returns a difference between the two versions of the Campaign."
+        },
+        {
+          "info": {
+            "name": "Updates the partial modifications to a Campaign with only optimize Campaign fields.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/optimize",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the Campaign to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the partial modifications to a Campaign with only optimize Campaign fields."
+        },
+        {
+          "info": {
+            "name": "Updates the Status of a Campaign. Use this endpoint to apply changes to the Campaign Status, for example resulting from user action.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/status",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the campaign to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the Status of a Campaign. Use this endpoint to apply changes to the Campaign Status, for example resulting from user action."
+        },
+        {
+          "info": {
+            "name": "Returns all versions of a Campaign. A version is created when a CampaignBuilt event is published for a campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/versions",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the campaign."
+              }
+            ]
+          },
+          "docs": "Returns all versions of a Campaign. A version is created when a CampaignBuilt event is published for a campaign."
+        },
+        {
+          "info": {
+            "name": "Returns the latest version of a Campaign. A version is created when a CampaignBuilt event is published for a campaign.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/versions/latest",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the campaign."
+              }
+            ]
+          },
+          "docs": "Returns the latest version of a Campaign. A version is created when a CampaignBuilt event is published for a campaign."
+        },
+        {
+          "info": {
+            "name": "Creates a CampaignProjection request and saves the request to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/projection",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The AccountId of the campaign to filter."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the campaign to be projected."
+              }
+            ]
+          },
+          "docs": "Creates a CampaignProjection request and saves the request to the repository."
+        },
+        {
+          "info": {
+            "name": "Duplicates a Campaign with all related entities (AdGroup, Ad, Audience, Ad pricing models, etc.)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/duplicate",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The campaignId to duplicate."
+              },
+              {
+                "name": "duplicates",
+                "value": "",
+                "type": "query",
+                "description": "Count of duplicates."
+              }
+            ]
+          },
+          "docs": "Duplicates a Campaign with all related entities (AdGroup, Ad, Audience, Ad pricing models, etc.)"
+        },
+        {
+          "info": {
+            "name": "Validates a Campaign with all business rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Campaigns/:campaignId/validation",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "campaignId",
+                "value": "",
+                "type": "path",
+                "description": "The campaignId to find."
+              }
+            ]
+          },
+          "docs": "Validates a Campaign with all business rules."
+        },
+        {
+          "info": {
+            "name": "Returns validation rules for a Campaign object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Campaigns/validation/rule-set"
+          },
+          "docs": "Returns validation rules for a Campaign object."
+        },
+        {
+          "info": {
+            "name": "Calculates the aggregate count of campaigns partitioned by the campaign status.\r\nOnly counts those objects which the user has been granted access.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Campaigns/count",
+            "params": [
+              {
+                "name": "filter",
+                "value": "",
+                "type": "query",
+                "description": "Gets or Sets the filter specification strings"
+              }
+            ]
+          },
+          "docs": "Calculates the aggregate count of campaigns partitioned by the campaign status.\r\nOnly counts those objects which the user has been granted access."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Geo",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns Geo results that match the query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/Geo",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query to search in Geo."
+              },
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "Required CountryId filter."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Geo results that match the query."
+        },
+        {
+          "info": {
+            "name": "Returns Bulk Geo results based on the body criteria.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v6/Geo",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns Bulk Geo results based on the body criteria."
+        },
+        {
+          "info": {
+            "name": "Returns Geo Country results that match the query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/Geo/Country",
+            "params": [
+              {
+                "name": "query",
+                "value": "GB",
+                "type": "query",
+                "description": "Query to search in geo. Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Geo Country results that match the query."
+        },
+        {
+          "info": {
+            "name": "Returns Geo DMA results that match the query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/Geo/DMA",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query to search in geo.DMA."
+              },
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "Required CountryId filter."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Geo DMA results that match the query."
+        },
+        {
+          "info": {
+            "name": "Returns Geo Locality results that match the query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/Geo/Locality",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query to search in geo.Locality."
+              },
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "Required CountryId filter."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Geo Locality results that match the query."
+        },
+        {
+          "info": {
+            "name": "Returns Geo PostalCode results that match the query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/Geo/PostalCode",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query to search in geo.PostalCode."
+              },
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "Required CountryId filter."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Geo PostalCode results that match the query."
+        },
+        {
+          "info": {
+            "name": "Returns Geo Region results that match the query.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/Geo/Region",
+            "params": [
+              {
+                "name": "query",
+                "value": "",
+                "type": "query",
+                "description": "Query to search in geo.Region."
+              },
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "Required CountryId filter."
+              },
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              }
+            ]
+          },
+          "docs": "Returns Geo Region results that match the query."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "PricingModels",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns an PricingModel from the repository for the given account by its Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/PricingModels/:pricingModelId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "pricingModelId",
+                "value": "",
+                "type": "path",
+                "description": "The pricingModelId to find."
+              }
+            ]
+          },
+          "docs": "Returns an PricingModel from the repository for the given account by its Id."
+        },
+        {
+          "info": {
+            "name": "Updates a PricingModel with the given resource model.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/PricingModels/:pricingModelId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "pricingModelId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the PricingModel to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a PricingModel with the given resource model."
+        },
+        {
+          "info": {
+            "name": "Updates the partial modifications to a PricingModel.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/PricingModels/:pricingModelId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "pricingModelId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the PricingModel to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates the partial modifications to a PricingModel."
+        },
+        {
+          "info": {
+            "name": "Returns an PricingModel from the repository for the given account by its AdId.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/adGroups/:adGroupId/PricingModels",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adGroupId",
+                "value": "",
+                "type": "path",
+                "description": "The AdGroupId to find pricingModel."
+              }
+            ]
+          },
+          "docs": "Returns an PricingModel from the repository for the given account by its AdId."
+        },
+        {
+          "info": {
+            "name": "Adds an Pricing Model to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v6/accounts/:accountId/PricingModels",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds an Pricing Model to the repository."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "PurchaseCategories",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns a Purchase Category by its Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/PurchaseCategories/:purchaseCategoryId",
+            "params": [
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of a country to search Purchase Category in. Defines localization for PurchaseCategory Name and Description."
+              },
+              {
+                "name": "purchaseCategoryId",
+                "value": "",
+                "type": "path",
+                "description": "The purchaseCategoryId to find."
+              }
+            ]
+          },
+          "docs": "Returns a Purchase Category by its Id."
+        },
+        {
+          "info": {
+            "name": "Returns all Purchase Categories from the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v6/PurchaseCategories",
+            "params": [
+              {
+                "name": "PerPage",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "Page",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "countryId",
+                "value": "",
+                "type": "query",
+                "description": "The ID of a country to search Purchase Category in. Defines localization for PurchaseCategory Name and Description."
+              }
+            ]
+          },
+          "docs": "Returns all Purchase Categories from the repository."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Rewards",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Returns an Reward from the repository for the given account by its Id.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Rewards/:rewardId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "rewardId",
+                "value": "",
+                "type": "path",
+                "description": "The rewardlId to find."
+              }
+            ]
+          },
+          "docs": "Returns an Reward from the repository for the given account by its Id."
+        },
+        {
+          "info": {
+            "name": "Updates a Reward with the given resource model.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Rewards/:rewardId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "rewardId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the Reward to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Reward with the given resource model."
+        },
+        {
+          "info": {
+            "name": "Updates a Reward.",
+            "type": "http"
+          },
+          "http": {
+            "method": "PATCH",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Rewards/:rewardId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "rewardId",
+                "value": "",
+                "type": "path",
+                "description": "The Id of the Reward to be modified."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Updates a Reward."
+        },
+        {
+          "info": {
+            "name": "GET /v7/Rewards/rms/{rmsRewardId}",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Rewards/rms/:rmsRewardId",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "rmsRewardId",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "Returns Rewards for a given Ad from the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/ads/:adId/Rewards",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "adId",
+                "value": "",
+                "type": "path",
+                "description": "The AdId to use to return Rewards."
+              }
+            ]
+          },
+          "docs": "Returns Rewards for a given Ad from the repository."
+        },
+        {
+          "info": {
+            "name": "Validates a Reward with all business rules.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Rewards/:rewardId/validation",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              },
+              {
+                "name": "rewardId",
+                "value": "",
+                "type": "path",
+                "description": "The rewardlId to find."
+              }
+            ]
+          },
+          "docs": "Validates a Reward with all business rules."
+        },
+        {
+          "info": {
+            "name": "Returns validation rules for a Reward object.",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "{{baseUrl}}/v7/Rewards/validation/rule-set"
+          },
+          "docs": "Returns validation rules for a Reward object."
+        },
+        {
+          "info": {
+            "name": "Adds a Reward to the repository.",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "{{baseUrl}}/v7/accounts/:accountId/Rewards",
+            "params": [
+              {
+                "name": "accountId",
+                "value": "",
+                "type": "path",
+                "description": "The accountId of the user to filter the request."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Adds a Reward to the repository."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

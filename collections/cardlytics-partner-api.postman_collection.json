@@ -1,0 +1,1839 @@
+{
+  "item": [
+    {
+      "id": "2f5b18f2-06a2-4748-adc2-2c9b8ad2895e",
+      "name": "Authentication",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c1c65d1c-b3ce-4b1e-895b-2fd3ab9405ff",
+          "name": "Generate OAuth2 access token",
+          "request": {
+            "name": "Generate OAuth2 access token",
+            "description": {
+              "content": "Obtain an access token using client credentials for API authentication",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "idp",
+                "oauth2",
+                "token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be 'client_credentials'"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) Your client ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "(Required) Your client secret"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "e14c0b1d-1d04-4420-a1af-31bb22f551ae",
+              "name": "Token generated successfully",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "idp",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be 'client_credentials'",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your client ID",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your client secret",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"token_type\": \"Bearer\",\n  \"expires_in\": 4077\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf637799-cb6d-4bd9-85af-266f76c5fce1",
+              "name": "Bad Request - Invalid parameters",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "idp",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be 'client_credentials'",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your client ID",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your client secret",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1ad9e184-3405-450d-8e41-800843d3dc3e",
+              "name": "Unauthorized - Invalid client credentials",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "idp",
+                    "oauth2",
+                    "token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Must be 'client_credentials'",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your client ID",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Your client secret",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "89daac3c-d2e0-489c-92ab-51f8166c8977",
+      "name": "Merchants",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "638a8959-e82f-4c53-9a10-9be1c7746911",
+          "name": "Create or Update the Merchant using the partner-provided merchant ID",
+          "request": {
+            "name": "Create or Update the Merchant using the partner-provided merchant ID",
+            "description": {
+              "content": "Create or update merchant information. The external_merchant_id in the path must match the merchantId in the request body.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "partner",
+                "merchants",
+                ":external_merchant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "67890",
+                  "key": "external_merchant_id",
+                  "description": "(Required) Partner-provided merchant identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"merchantId\": \"<string>\",\n  \"merchantName\": \"<string>\",\n  \"paymentChannels\": [\n    \"<string>\"\n  ],\n  \"stores\": [\n    {\n      \"storeId\": \"<string>\",\n      \"address1\": \"<string>\",\n      \"city\": \"<string>\",\n      \"state\": \"<string>\",\n      \"postalCode\": \"<string>\",\n      \"countryCode\": \"<string>\",\n      \"storeName\": \"<string>\",\n      \"processorMidChangedFlag\": \"<string>\",\n      \"processorMidRecords\": [\n        {\n          \"paymentNetwork\": \"<string>\",\n          \"processors\": [\n            {\n              \"processorName\": \"<string>\",\n              \"processorId\": \"<string>\",\n              \"amexMids\": [\n                {\n                  \"seNumber\": \"<string>\"\n                },\n                {\n                  \"seNumber\": \"<string>\"\n                }\n              ],\n              \"visaMids\": [\n                {\n                  \"vmid\": \"<string>\",\n                  \"vsid\": \"<string>\"\n                },\n                {\n                  \"vmid\": \"<string>\",\n                  \"vsid\": \"<string>\"\n                }\n              ],\n              \"mcAuthMids\": [\n                {\n                  \"mcAuthLocationId\": \"<string>\",\n                  \"mcAuthAcquiringMid\": \"<string>\",\n                  \"mcAuthICA\": \"<string>\"\n                },\n                {\n                  \"mcAuthLocationId\": \"<string>\",\n                  \"mcAuthAcquiringMid\": \"<string>\",\n                  \"mcAuthICA\": \"<string>\"\n                }\n              ],\n              \"mcClearingMids\": [\n                {\n                  \"mcClearingLocationId\": \"<string>\",\n                  \"mcClearingAcquiringMid\": \"<string>\",\n                  \"mcClearingICA\": \"<string>\"\n                },\n                {\n                  \"mcClearingLocationId\": \"<string>\",\n                  \"mcClearingAcquiringMid\": \"<string>\",\n                  \"mcClearingICA\": \"<string>\"\n                }\n              ],\n              \"discoverMids\": [\n                {\n                  \"discover\": \"<string>\"\n                },\n                {\n                  \"discover\": \"<string>\"\n                }\n              ]\n            }\n          ]\n        }\n      ],\n      \"address2\": \"<string>\",\n      \"locatedIn\": \"<string>\",\n      \"storePhoneNumbers\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"storeUrl\": \"<string>\",\n      \"storeEmails\": [\n        \"<string>\",\n        \"<string>\"\n      ],\n      \"latitude\": \"<string>\",\n      \"longitude\": \"<string>\"\n    }\n  ],\n  \"parentMerchantId\": \"<string>\",\n  \"merchantCategoryCode\": \"<number>\",\n  \"merchantSubCategories\": [\n    {\n      \"categoryType\": \"<string>\",\n      \"categoryItems\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    },\n    {\n      \"categoryType\": \"<string>\",\n      \"categoryItems\": [\n        \"<string>\",\n        \"<string>\"\n      ]\n    }\n  ],\n  \"paymentSubChannels\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"merchantUrl\": \"<string>\",\n  \"merchantApps\": [\n    \"<string>\",\n    \"<string>\"\n  ]\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "bc1816df-59b8-4817-a103-9d4ee6650195",
+              "name": "Added to the queue for processing",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchantId\": \"67890\",\n  \"merchantName\": \"Tony's Grill & Bar\",\n  \"merchantCategoryCode\": 5812,\n  \"merchantUrl\": \"www.tonysgrill.com\",\n  \"merchantSubCategories\": [\n    {\n      \"categoryType\": \"cuisine\",\n      \"categoryItems\": [\n        \"American\",\n        \"BBQ\",\n        \"Steakhouse\"\n      ]\n    }\n  ],\n  \"paymentChannels\": [\n    \"instore\"\n  ],\n  \"stores\": [\n    {\n      \"storeId\": \"2047\",\n      \"storeName\": \"Tony's Grill Downtown\",\n      \"storeUrl\": \"www.tonysgrill.com/downtown\",\n      \"address1\": \"456 Broadway Ave\",\n      \"address2\": \"Suite 101\",\n      \"city\": \"SPRINGFIELD\",\n      \"state\": \"IL\",\n      \"postalCode\": \"62701\",\n      \"countryCode\": \"US\",\n      \"latitude\": \"39.8017\",\n      \"longitude\": \"-89.6437\",\n      \"storePhoneNumbers\": [\n        \"+12175559876\"\n      ],\n      \"storeEmails\": [\n        \"info@tonysgrill.com\"\n      ],\n      \"processorMidChangedFlag\": \"N\",\n      \"processorMidRecords\": [\n        {\n          \"paymentNetwork\": \"AmericanExpress\",\n          \"processors\": [\n            {\n              \"processorName\": \"AmericanExpress\",\n              \"amexMids\": [\n                {\n                  \"seNumber\": \"9876543210\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"MasterCard\",\n          \"processors\": [\n            {\n              \"processorName\": \"Chase Paymentech\",\n              \"mcAuthMids\": [\n                {\n                  \"mcAuthLocationId\": \"556677888\",\n                  \"mcAuthAcquiringMid\": \"999888777666555\",\n                  \"mcAuthICA\": 98765\n                }\n              ],\n              \"mcClearingMids\": [\n                {\n                  \"mcClearingLocationId\": \"445566777\",\n                  \"mcClearingAcquiringMid\": \"888777666555444\",\n                  \"mcClearingICA\": 87654\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"Visa\",\n          \"processors\": [\n            {\n              \"processorName\": \"First Data\",\n              \"processorId\": \"FD789\",\n              \"visaMids\": [\n                {\n                  \"vmid\": \"87651234\",\n                  \"vsid\": \"44332211\"\n                }\n              ]\n            },\n            {\n              \"processorName\": \"Global Payments\",\n              \"processorId\": \"GP456\",\n              \"visaMids\": [\n                {\n                  \"vmid\": \"13579246\",\n                  \"vsid\": \"66554433\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"Discover\",\n          \"processors\": [\n            {\n              \"processorName\": \"Discover\",\n              \"discoverMids\": [\n                {\n                  \"discover\": \"7774032918456\"\n                },\n                {\n                  \"discover\": \"7774051297384\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Message description of the operation\",\n  \"trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1df31649-24b4-47e6-9e65-cf9499abfbb8",
+              "name": "Bad Request – possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchantId\": \"67890\",\n  \"merchantName\": \"Tony's Grill & Bar\",\n  \"merchantCategoryCode\": 5812,\n  \"merchantUrl\": \"www.tonysgrill.com\",\n  \"merchantSubCategories\": [\n    {\n      \"categoryType\": \"cuisine\",\n      \"categoryItems\": [\n        \"American\",\n        \"BBQ\",\n        \"Steakhouse\"\n      ]\n    }\n  ],\n  \"paymentChannels\": [\n    \"instore\"\n  ],\n  \"stores\": [\n    {\n      \"storeId\": \"2047\",\n      \"storeName\": \"Tony's Grill Downtown\",\n      \"storeUrl\": \"www.tonysgrill.com/downtown\",\n      \"address1\": \"456 Broadway Ave\",\n      \"address2\": \"Suite 101\",\n      \"city\": \"SPRINGFIELD\",\n      \"state\": \"IL\",\n      \"postalCode\": \"62701\",\n      \"countryCode\": \"US\",\n      \"latitude\": \"39.8017\",\n      \"longitude\": \"-89.6437\",\n      \"storePhoneNumbers\": [\n        \"+12175559876\"\n      ],\n      \"storeEmails\": [\n        \"info@tonysgrill.com\"\n      ],\n      \"processorMidChangedFlag\": \"N\",\n      \"processorMidRecords\": [\n        {\n          \"paymentNetwork\": \"AmericanExpress\",\n          \"processors\": [\n            {\n              \"processorName\": \"AmericanExpress\",\n              \"amexMids\": [\n                {\n                  \"seNumber\": \"9876543210\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"MasterCard\",\n          \"processors\": [\n            {\n              \"processorName\": \"Chase Paymentech\",\n              \"mcAuthMids\": [\n                {\n                  \"mcAuthLocationId\": \"556677888\",\n                  \"mcAuthAcquiringMid\": \"999888777666555\",\n                  \"mcAuthICA\": 98765\n                }\n              ],\n              \"mcClearingMids\": [\n                {\n                  \"mcClearingLocationId\": \"445566777\",\n                  \"mcClearingAcquiringMid\": \"888777666555444\",\n                  \"mcClearingICA\": 87654\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"Visa\",\n          \"processors\": [\n            {\n              \"processorName\": \"First Data\",\n              \"processorId\": \"FD789\",\n              \"visaMids\": [\n                {\n                  \"vmid\": \"87651234\",\n                  \"vsid\": \"44332211\"\n                }\n              ]\n            },\n            {\n              \"processorName\": \"Global Payments\",\n              \"processorId\": \"GP456\",\n              \"visaMids\": [\n                {\n                  \"vmid\": \"13579246\",\n                  \"vsid\": \"66554433\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"Discover\",\n          \"processors\": [\n            {\n              \"processorName\": \"Discover\",\n              \"discoverMids\": [\n                {\n                  \"discover\": \"7774032918456\"\n                },\n                {\n                  \"discover\": \"7774051297384\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "03cdf8f6-7113-4509-8ac4-540f5b729c58",
+              "name": "Internal Server Error – An unexpected error occurred while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"merchantId\": \"67890\",\n  \"merchantName\": \"Tony's Grill & Bar\",\n  \"merchantCategoryCode\": 5812,\n  \"merchantUrl\": \"www.tonysgrill.com\",\n  \"merchantSubCategories\": [\n    {\n      \"categoryType\": \"cuisine\",\n      \"categoryItems\": [\n        \"American\",\n        \"BBQ\",\n        \"Steakhouse\"\n      ]\n    }\n  ],\n  \"paymentChannels\": [\n    \"instore\"\n  ],\n  \"stores\": [\n    {\n      \"storeId\": \"2047\",\n      \"storeName\": \"Tony's Grill Downtown\",\n      \"storeUrl\": \"www.tonysgrill.com/downtown\",\n      \"address1\": \"456 Broadway Ave\",\n      \"address2\": \"Suite 101\",\n      \"city\": \"SPRINGFIELD\",\n      \"state\": \"IL\",\n      \"postalCode\": \"62701\",\n      \"countryCode\": \"US\",\n      \"latitude\": \"39.8017\",\n      \"longitude\": \"-89.6437\",\n      \"storePhoneNumbers\": [\n        \"+12175559876\"\n      ],\n      \"storeEmails\": [\n        \"info@tonysgrill.com\"\n      ],\n      \"processorMidChangedFlag\": \"N\",\n      \"processorMidRecords\": [\n        {\n          \"paymentNetwork\": \"AmericanExpress\",\n          \"processors\": [\n            {\n              \"processorName\": \"AmericanExpress\",\n              \"amexMids\": [\n                {\n                  \"seNumber\": \"9876543210\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"MasterCard\",\n          \"processors\": [\n            {\n              \"processorName\": \"Chase Paymentech\",\n              \"mcAuthMids\": [\n                {\n                  \"mcAuthLocationId\": \"556677888\",\n                  \"mcAuthAcquiringMid\": \"999888777666555\",\n                  \"mcAuthICA\": 98765\n                }\n              ],\n              \"mcClearingMids\": [\n                {\n                  \"mcClearingLocationId\": \"445566777\",\n                  \"mcClearingAcquiringMid\": \"888777666555444\",\n                  \"mcClearingICA\": 87654\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"Visa\",\n          \"processors\": [\n            {\n              \"processorName\": \"First Data\",\n              \"processorId\": \"FD789\",\n              \"visaMids\": [\n                {\n                  \"vmid\": \"87651234\",\n                  \"vsid\": \"44332211\"\n                }\n              ]\n            },\n            {\n              \"processorName\": \"Global Payments\",\n              \"processorId\": \"GP456\",\n              \"visaMids\": [\n                {\n                  \"vmid\": \"13579246\",\n                  \"vsid\": \"66554433\"\n                }\n              ]\n            }\n          ]\n        },\n        {\n          \"paymentNetwork\": \"Discover\",\n          \"processors\": [\n            {\n              \"processorName\": \"Discover\",\n              \"discoverMids\": [\n                {\n                  \"discover\": \"7774032918456\"\n                },\n                {\n                  \"discover\": \"7774051297384\"\n                }\n              ]\n            }\n          ]\n        }\n      ]\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "ae8158a4-5201-4408-87c8-4f0e16223868",
+          "name": "Delete the Merchant using the partner-provided merchant ID",
+          "request": {
+            "name": "Delete the Merchant using the partner-provided merchant ID",
+            "description": {},
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "partner",
+                "merchants",
+                ":external_merchant_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "67890",
+                  "key": "external_merchant_id",
+                  "description": "(Required) Partner-provided merchant identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "11636eb5-aa0c-466e-836a-92aca769ca82",
+              "name": "Accepted and queued for deletion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Message description of the operation\",\n  \"trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b2f465fe-64de-46e7-8b20-caa315267680",
+              "name": "Bad Request – ID mismatch\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9b05b656-cddd-42d1-bc4f-96076019020a",
+              "name": "Internal Server Error – An unexpected error occurred while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "20cdebd0-10e4-4c93-8750-e9814c8e121d",
+      "name": "Offers",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "000df037-0c36-4b65-8246-3ec0506019af",
+          "name": "Create or Update the Offer using the partner-provided merchant ID and offer ID",
+          "request": {
+            "name": "Create or Update the Offer using the partner-provided merchant ID and offer ID",
+            "description": {
+              "content": "Create or update offer information. The external_merchant_id and external_offer_id in the path must match the merchantId and offerId in the request body respectively.\n\n**Note**: If you don't have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "partner",
+                "merchants",
+                ":external_merchant_id",
+                "offers",
+                ":external_offer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "67890",
+                  "key": "external_merchant_id",
+                  "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "OFFER-001",
+                  "key": "external_offer_id",
+                  "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "PUT",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"offerId\": \"<string>\",\n  \"merchantId\": \"<string>\",\n  \"offerName\": \"<string>\",\n  \"assets\": {\n    \"logo\": {\n      \"type\": \"<string>\",\n      \"value\": {\n        \"large\": {}\n      }\n    },\n    \"largeRectangle\": {\n      \"type\": \"<string>\",\n      \"value\": {\n        \"large\": {}\n      }\n    }\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "9ac95d94-cdf9-4681-a4e1-8c8858420c35",
+              "name": "Accepted and queued for campaign creation",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "offers",
+                    ":external_offer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "OFFER-001",
+                      "key": "external_offer_id",
+                      "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offerId\": \"OFFER-001\",\n  \"merchantId\": \"67890\",\n  \"offerName\": \"Tony's Grill\",\n  \"assets\": {\n    \"logo\": {\n      \"type\": \"IMAGE\",\n      \"value\": {\n        \"large\": {\n          \"url\": \"https://picsum.photos/627/627?random=1\"\n        }\n      }\n    },\n    \"largeRectangle\": {\n      \"type\": \"IMAGE\",\n      \"value\": {\n        \"large\": {\n          \"url\": \"https://picsum.photos/1200/627?random=1\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Message description of the operation\",\n  \"trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cd570622-9a87-4764-8d52-01f96bce7eca",
+              "name": "Bad Request – possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "offers",
+                    ":external_offer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "OFFER-001",
+                      "key": "external_offer_id",
+                      "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offerId\": \"OFFER-001\",\n  \"merchantId\": \"67890\",\n  \"offerName\": \"Tony's Grill\",\n  \"assets\": {\n    \"logo\": {\n      \"type\": \"IMAGE\",\n      \"value\": {\n        \"large\": {\n          \"url\": \"https://picsum.photos/627/627?random=1\"\n        }\n      }\n    },\n    \"largeRectangle\": {\n      \"type\": \"IMAGE\",\n      \"value\": {\n        \"large\": {\n          \"url\": \"https://picsum.photos/1200/627?random=1\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a45e8b5e-0c52-40ac-bac3-8a4a12fe43a5",
+              "name": "Internal Server Error – An unexpected error occurred while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "offers",
+                    ":external_offer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "OFFER-001",
+                      "key": "external_offer_id",
+                      "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "PUT",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"offerId\": \"OFFER-001\",\n  \"merchantId\": \"67890\",\n  \"offerName\": \"Tony's Grill\",\n  \"assets\": {\n    \"logo\": {\n      \"type\": \"IMAGE\",\n      \"value\": {\n        \"large\": {\n          \"url\": \"https://picsum.photos/627/627?random=1\"\n        }\n      }\n    },\n    \"largeRectangle\": {\n      \"type\": \"IMAGE\",\n      \"value\": {\n        \"large\": {\n          \"url\": \"https://picsum.photos/1200/627?random=1\"\n        }\n      }\n    }\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cbd7fd1a-f786-4017-a2b2-45e35e28b359",
+          "name": "Delete the Offer using the partner-provided offer ID and merchant ID",
+          "request": {
+            "name": "Delete the Offer using the partner-provided offer ID and merchant ID",
+            "description": {
+              "content": "Delete an offer using the partner-provided identifiers.\n\n**Note**: If you don't have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "partner",
+                "merchants",
+                ":external_merchant_id",
+                "offers",
+                ":external_offer_id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "67890",
+                  "key": "external_merchant_id",
+                  "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                },
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "OFFER-001",
+                  "key": "external_offer_id",
+                  "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "88ebcac3-5501-4e53-aba4-a5658e5a35e0",
+              "name": "Accepted and queued for deletion",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "offers",
+                    ":external_offer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "OFFER-001",
+                      "key": "external_offer_id",
+                      "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Message description of the operation\",\n  \"trace_id\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9e32761b-4f25-43a8-9ca8-a1ec6a9561b2",
+              "name": "Bad Request – ID mismatch\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "offers",
+                    ":external_offer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "OFFER-001",
+                      "key": "external_offer_id",
+                      "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d859a266-d1a4-44ae-b90e-6fc371ffb82f",
+              "name": "Internal Server Error – An unexpected error occurred while processing the request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "offers",
+                    ":external_offer_id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner's unique identifier of their Merchant as shared in the Merchant feed"
+                    },
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "OFFER-001",
+                      "key": "external_offer_id",
+                      "description": "(Required) Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "3e61eb1d-10e3-42fb-8762-51105569815f",
+      "name": "Reports",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "30f46e9e-30f4-4449-b596-8eebf6675b34",
+          "name": "Get merchant performance report (aggregate metrics)",
+          "request": {
+            "name": "Get merchant performance report (aggregate metrics)",
+            "description": {
+              "content": "Returns aggregated performance metrics for a partner-provided merchant over a date range. Supports optional filtering by offer IDs. Defaults: cube=merchant_performance; timeRange.from defaults to 2 years back (max lookback); timeRange.to defaults to today's date.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "partner",
+                "merchants",
+                ":external_merchant_id",
+                "reports"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "67890",
+                  "key": "external_merchant_id",
+                  "description": "(Required) Partner-provided merchant identifier"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"cube\": \"merchant_performance\",\n  \"offerIds\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"timeRange\": {\n    \"from\": \"<date>\",\n    \"to\": \"<date>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "11f6aa3d-2917-43a0-8696-9e4994aa912c",
+              "name": "Aggregated performance for offers under the merchant.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cube\": \"merchant_performance\",\n  \"offerIds\": [],\n  \"timeRange\": {\n    \"from\": \"2023-10-01\",\n    \"to\": \"2025-09-17\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"header\": {\n    \"cube\": \"merchant_performance\",\n    \"fields\": [\n      {\n        \"fieldName\": \"Partner Merchant Id\",\n        \"fieldType\": \"DIM\"\n      },\n      {\n        \"fieldName\": \"Partner Offer Id\",\n        \"fieldType\": \"DIM\"\n      },\n      {\n        \"fieldName\": \"Impressions\",\n        \"fieldType\": \"FACT\"\n      },\n      {\n        \"fieldName\": \"Purchases\",\n        \"fieldType\": \"FACT\"\n      },\n      {\n        \"fieldName\": \"Revenue\",\n        \"fieldType\": \"FACT\"\n      },\n      {\n        \"fieldName\": \"Reach\",\n        \"fieldType\": \"FACT\"\n      },\n      {\n        \"fieldName\": \"Activations\",\n        \"fieldType\": \"FACT\"\n      }\n    ],\n    \"maxRows\": -1\n  },\n  \"rows\": [\n    [\n      \"88d4d968-e922-sample-partner-merchant-id-f32a0eaa43ff\",\n      \"2e1fd66d-72d7-sample-partner-offer-id-af82-b4bfd0aaa7ac\",\n      280568,\n      14,\n      714.87,\n      172472,\n      8005\n    ],\n    [\n      \"88d4d968-e922-sample-partner-merchant-id-f32a0eaa43ff\",\n      \"5555d66d-72d7-sample-partner-offer-id-af82-343430aaa7ac\",\n      100568,\n      8,\n      14.22,\n      2472,\n      807\n    ]\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ffe7ae02-64d6-4e4c-97f3-ff94df91b34d",
+              "name": "Bad Request – Invalid parameters or date range.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cube\": \"merchant_performance\",\n  \"offerIds\": [],\n  \"timeRange\": {\n    \"from\": \"2023-10-01\",\n    \"to\": \"2025-09-17\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ca9bea2e-f360-49d6-8134-9bd184b33b89",
+              "name": "Unauthorized – Invalid or missing access token.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cube\": \"merchant_performance\",\n  \"offerIds\": [],\n  \"timeRange\": {\n    \"from\": \"2023-10-01\",\n    \"to\": \"2025-09-17\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b9ddb9f8-cde4-4c63-abbf-db48b66981e0",
+              "name": "Internal Server Error – An unexpected error occurred while processing the request.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "merchants",
+                    ":external_merchant_id",
+                    "reports"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "67890",
+                      "key": "external_merchant_id",
+                      "description": "(Required) Partner-provided merchant identifier"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"cube\": \"merchant_performance\",\n  \"offerIds\": [],\n  \"timeRange\": {\n    \"from\": \"2023-10-01\",\n    \"to\": \"2025-09-17\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    },
+    {
+      "id": "43ea581d-75dc-42c2-b0aa-eb97d71926ef",
+      "name": "Redemptions",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e41827ff-0109-442c-9f42-8a2d7f299fed",
+          "name": "Get daily redemptions pre-signed URL",
+          "request": {
+            "name": "Get daily redemptions pre-signed URL",
+            "description": {
+              "content": "Returns a pre-signed URL to download all redemptions for a specific day. The day must be in the past (UTC time). The pre-signed URL is valid for 60 minutes only.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "api",
+                "v1",
+                "partner",
+                "redemptions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "date",
+                  "value": "<date>",
+                  "description": "(Required) The date for which to retrieve redemptions (format: YYYY-MM-DD, must be a past date and not today or in the future)."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "89e9fba9-09c1-4f60-bce6-faeb19bb4437",
+              "name": "Pre-signed URL generated successfully.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-01-04"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"url\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1aaa1c02-fc56-42a1-8771-84f5fdbd65f2",
+              "name": "Bad Request - The date format is incorrect, or the date is today's date or in the future.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-01-04"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e9470eb4-4b9a-4c0a-9dbd-390710d016cd",
+              "name": "Internal Server Error - An unexpected error occurred.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "api",
+                    "v1",
+                    "partner",
+                    "redemptions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "date",
+                      "value": "2026-01-04"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: oauth2",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "<token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api-sandbox.cardlytics.com",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "oauth2",
+    "oauth2": [
+      {
+        "key": "scope",
+        "value": "openid"
+      },
+      {
+        "key": "accessTokenUrl",
+        "value": "/v1/idp/oauth2/token"
+      },
+      {
+        "key": "grant_type",
+        "value": "client_credentials"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "dc894d78-01ed-4d8e-afb0-bd53650ec7d1",
+    "name": "partner-api",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Partner APIs",
+      "type": "text/plain"
+    }
+  }
+}

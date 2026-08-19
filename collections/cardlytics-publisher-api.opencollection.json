@@ -1,0 +1,122 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "OpenAPI definition",
+    "version": "v0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "session-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "startSession",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://publisher-uk-fiuat.cardlytics.com/v2/session/startSession",
+            "headers": [
+              {
+                "name": "X-CDLX-Institution-Id",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "ads-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getAds",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://publisher-uk-fiuat.cardlytics.com/v2/ads/getAds",
+            "headers": [
+              {
+                "name": "X-CDLX-Session-Token",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "customer-controller",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "getRewardsSummary",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://publisher-uk-fiuat.cardlytics.com/v2/customerProfile/getCustomerRewardSummary",
+            "headers": [
+              {
+                "name": "X-CDLX-Session-Token",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerProfile",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://publisher-uk-fiuat.cardlytics.com/v2/customerProfile/getCustomerProfile",
+            "headers": [
+              {
+                "name": "X-CDLX-Session-Token",
+                "value": ""
+              }
+            ]
+          }
+        },
+        {
+          "info": {
+            "name": "getCustomerAdRedemptions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://publisher-uk-fiuat.cardlytics.com/v2/customerProfile/getCustomerAdRedemptions",
+            "headers": [
+              {
+                "name": "X-CDLX-Session-Token",
+                "value": ""
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

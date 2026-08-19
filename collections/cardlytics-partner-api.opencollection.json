@@ -1,0 +1,227 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "partner-api",
+    "version": "2025-10-07"
+  },
+  "request": {
+    "auth": {
+      "type": "oauth2",
+      "flow": "client_credentials",
+      "accessTokenUrl": "/v1/idp/oauth2/token",
+      "credentials": {
+        "clientId": "{{clientId}}",
+        "clientSecret": "{{clientSecret}}"
+      }
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Authentication",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Generate OAuth2 access token",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/idp/oauth2/token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                }
+              ]
+            }
+          },
+          "docs": "Obtain an access token using client credentials for API authentication"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Merchants",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or Update the Merchant using the partner-provided merchant ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/partner/merchants/:external_merchant_id",
+            "params": [
+              {
+                "name": "external_merchant_id",
+                "value": "67890",
+                "type": "path",
+                "description": "Partner-provided merchant identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update merchant information. The external_merchant_id in the path must match the merchantId in the request body."
+        },
+        {
+          "info": {
+            "name": "Delete the Merchant using the partner-provided merchant ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/partner/merchants/:external_merchant_id",
+            "params": [
+              {
+                "name": "external_merchant_id",
+                "value": "67890",
+                "type": "path",
+                "description": "Partner-provided merchant identifier"
+              }
+            ]
+          },
+          "docs": "Delete the Merchant using the partner-provided merchant ID"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Offers",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create or Update the Offer using the partner-provided merchant ID and offer ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "PUT",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/partner/merchants/:external_merchant_id/offers/:external_offer_id",
+            "params": [
+              {
+                "name": "external_merchant_id",
+                "value": "67890",
+                "type": "path",
+                "description": "Partner's unique identifier of their Merchant as shared in the Merchant feed"
+              },
+              {
+                "name": "external_offer_id",
+                "value": "OFFER-001",
+                "type": "path",
+                "description": "Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Create or update offer information. The external_merchant_id and external_offer_id in the path must match the merchantId and offerId in the request body respectively.\n\n**Note**: If you don't have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.\n"
+        },
+        {
+          "info": {
+            "name": "Delete the Offer using the partner-provided offer ID and merchant ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/partner/merchants/:external_merchant_id/offers/:external_offer_id",
+            "params": [
+              {
+                "name": "external_merchant_id",
+                "value": "67890",
+                "type": "path",
+                "description": "Partner's unique identifier of their Merchant as shared in the Merchant feed"
+              },
+              {
+                "name": "external_offer_id",
+                "value": "OFFER-001",
+                "type": "path",
+                "description": "Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id."
+              }
+            ]
+          },
+          "docs": "Delete an offer using the partner-provided identifiers.\n\n**Note**: If you don't have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Reports",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get merchant performance report (aggregate metrics)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/partner/merchants/:external_merchant_id/reports",
+            "params": [
+              {
+                "name": "external_merchant_id",
+                "value": "67890",
+                "type": "path",
+                "description": "Partner-provided merchant identifier"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Returns aggregated performance metrics for a partner-provided merchant over a date range. Supports optional filtering by offer IDs. Defaults: cube=merchant_performance; timeRange.from defaults to 2 years back (max lookback); timeRange.to defaults to today's date."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Redemptions",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get daily redemptions pre-signed URL",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api-sandbox.cardlytics.com/api/v1/partner/redemptions",
+            "params": [
+              {
+                "name": "date",
+                "value": "",
+                "type": "query",
+                "description": "The date for which to retrieve redemptions (format: YYYY-MM-DD, must be a past date and not today or in the future)."
+              }
+            ]
+          },
+          "docs": "Returns a pre-signed URL to download all redemptions for a specific day. The day must be in the past (UTC time). The pre-signed URL is valid for 60 minutes only."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
