@@ -49,6 +49,19 @@ tags:
 - Commerce Media
 - Card-Linked Offers
 - Purchase Intelligence
+- Financial-Services
+- Loyalty and Rewards
+- Marketing
+- Banking
+- Retail Media
+- Attribution
+- Offers
+tags_raw:
+- Company
+- Advertising
+- Commerce Media
+- Card-Linked Offers
+- Purchase Intelligence
 - Financial Services
 - Loyalty and Rewards
 - Marketing
@@ -130,6 +143,11 @@ apis:
   humanURL: https://platform.cardlytics.com/publisher-integrations
   baseURL: https://pub-api-us.prod.cardlytics.com
   tags:
+  - Banking
+  - Rewards
+  - Offers
+  - Financial-Services
+  tags_raw:
   - Banking
   - Rewards
   - Offers
