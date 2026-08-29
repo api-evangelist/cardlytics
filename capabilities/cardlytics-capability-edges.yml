@@ -1,0 +1,43 @@
+slug: cardlytics
+provider: Cardlytics
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 3
+edges:
+- tag: Ads
+  spec_file: cardlytics-ads-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.72
+  evidence: Adds an Ad to the repository; Gets the RedeemingMerchants associated with an Ad
+  reason: CRUD over advertisements and their redeeming-merchant lists inside the campaign build system
+    — digital/paid media advertising asset management.
+- tag: AdGroups
+  spec_file: cardlytics-adgroups-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)
+  reason: Ad group structure within advertising campaign build for card-linked offers — paid media / digital
+    advertising campaign construction, which sits under Digital Marketing Management.
+- tag: Campaigns
+  spec_file: cardlytics-campaigns-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: Adds a Campaign to the repository; Updates the Status of a Campaign; Returns all versions
+    of a Campaign
+  reason: Full lifecycle of advertising campaigns (create, optimize, status, versioning) on a commerce
+    media platform — paid media campaign management under Digital Marketing Management.
