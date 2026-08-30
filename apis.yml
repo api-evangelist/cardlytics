@@ -88,6 +88,8 @@ apis:
   humanURL: https://platform.cardlytics.com/advertisers/reference
   baseURL: https://api.cardlytics.com
   tags:
+  - Ad Groups
+  tags_raw:
   - AdGroups
   properties:
   - type: OpenAPI
@@ -248,6 +250,8 @@ apis:
   humanURL: https://platform.cardlytics.com/advertisers/reference
   baseURL: https://api.cardlytics.com
   tags:
+  - Audit Logs
+  tags_raw:
   - AuditLogs
   properties:
   - type: OpenAPI
