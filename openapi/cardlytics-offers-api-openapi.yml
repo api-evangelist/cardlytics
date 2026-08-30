@@ -1,0 +1,216 @@
+openapi: 3.2.0
+info:
+  title: partner-api Offers API
+  description: Partner APIs
+  version: '2025-10-07'
+servers:
+- url: https://api-sandbox.cardlytics.com
+  description: Sandbox environment - Use this for API testing and development
+- url: https://api.cardlytics.com
+  description: Production environment - Documentation reference only, contact support for access
+security:
+- oauth2:
+  - openid
+tags:
+- name: Offers
+paths:
+  /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}:
+    put:
+      summary: Create or Update the Offer using the partner-provided merchant ID and offer ID
+      description: 'Create or update offer information. The external_merchant_id and external_offer_id in the path must match the merchantId and offerId in the request body respectively.
+
+
+        **Note**: If you don''t have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.
+
+        '
+      tags:
+      - Offers
+      parameters:
+      - name: external_merchant_id
+        in: path
+        description: Partner's unique identifier of their Merchant as shared in the Merchant feed
+        required: true
+        schema:
+          type: string
+          default: '67890'
+        example: '67890'
+      - name: external_offer_id
+        in: path
+        description: Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id.
+        required: true
+        schema:
+          type: string
+          default: OFFER-001
+        example: OFFER-001
+      requestBody:
+        description: Offer object that needs to be inserted or updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/OfferPayload'
+            example:
+              offerId: OFFER-001
+              merchantId: '67890'
+              offerName: Tony's Grill
+              assets:
+                logo:
+                  type: IMAGE
+                  value:
+                    large:
+                      url: https://picsum.photos/627/627?random=1
+                largeRectangle:
+                  type: IMAGE
+                  value:
+                    large:
+                      url: https://picsum.photos/1200/627?random=1
+      responses:
+        '202':
+          description: Accepted and queued for campaign creation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceResponse'
+        '400':
+          description: "Bad Request – possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n"
+        '500':
+          description: Internal Server Error – An unexpected error occurred while processing the request
+    delete:
+      summary: Delete the Offer using the partner-provided offer ID and merchant ID
+      description: 'Delete an offer using the partner-provided identifiers.
+
+
+        **Note**: If you don''t have a separate offer identifier, you can use the external_merchant_id as the external_offer_id.
+
+        '
+      tags:
+      - Offers
+      parameters:
+      - name: external_merchant_id
+        in: path
+        description: Partner's unique identifier of their Merchant as shared in the Merchant feed
+        required: true
+        schema:
+          type: string
+          default: '67890'
+        example: '67890'
+      - name: external_offer_id
+        in: path
+        description: Partner's unique Offer Id for the Merchant. If you don't have a separate offer identifier, you can use the same value as external_merchant_id.
+        required: true
+        schema:
+          type: string
+          default: OFFER-001
+        example: OFFER-001
+      responses:
+        '202':
+          description: Accepted and queued for deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceResponse'
+        '400':
+          description: 'Bad Request – ID mismatch
+
+            '
+        '500':
+          description: Internal Server Error – An unexpected error occurred while processing the request
+components:
+  schemas:
+    TraceResponse:
+      type: object
+      description: Response containing the trace identifier
+      properties:
+        message:
+          type: string
+          example: Message description of the operation
+        trace_id:
+          type: string
+          description: Request trace identifier
+      required:
+      - message
+      - trace_id
+    ImageAsset:
+      type: object
+      description: An image asset with type and a single `large` payload
+      properties:
+        type:
+          type: string
+          enum:
+          - IMAGE
+          description: Must be 'IMAGE'
+        value:
+          type: object
+          description: Wrapper for the actual image payload
+          properties:
+            large:
+              $ref: '#/components/schemas/LargeImage'
+          required:
+          - large
+      required:
+      - type
+      - value
+    LargeImage:
+      type: object
+      description: 'The full-sized image. Exactly one of `url` or `content` must be present.
+
+        '
+      properties:
+        url:
+          type: string
+          format: uri
+          description: URL to the image
+        content:
+          type: string
+          description: 'Data URL form of the image string (e.g., `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAUA`). Refer to RFC 2397 for details.
+
+            '
+      oneOf:
+      - required:
+        - url
+      - required:
+        - content
+    OfferPayload:
+      type: object
+      description: A partner offer payload
+      properties:
+        offerId:
+          type: string
+          description: Partner’s unique Offer Id for the Merchant
+        merchantId:
+          type: string
+          description: Partner’s unique identifier of their Merchant as shared in the Merchant feed
+        offerName:
+          type: string
+          description: Offer Name
+        assets:
+          type: object
+          description: 'Two image assets (logo and largeRectangle).
+
+            '
+          properties:
+            logo:
+              $ref: '#/components/schemas/ImageAsset'
+              description: Logo image asset (627x627)
+            largeRectangle:
+              $ref: '#/components/schemas/ImageAsset'
+              description: Large rectangle image asset (1200x627)
+          required:
+          - logo
+          - largeRectangle
+      required:
+      - offerId
+      - merchantId
+      - offerName
+      - assets
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /v1/idp/oauth2/token
+          scopes:
+            openid: openid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

@@ -1,0 +1,184 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Audience Reach API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: AudienceReach
+paths:
+  /v6/AudienceReach/calculateAudienceReach:
+    post:
+      tags:
+      - AudienceReach
+      summary: Calculates the Reach of an Audience composed of the given criteria.
+      requestBody:
+        description: The criteria to use for calculating the Audience Reach.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostAudienceReachResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostAudienceReachResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostAudienceReachResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostAudienceReachResourceModel'
+      responses:
+        '200':
+          description: The Audience Reach was calculated and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAudienceReachResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAudienceReachResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAudienceReachResourceModel'
+        '400':
+          description: Invalid criteria were specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    PostAudienceReachResourceModel:
+      type: object
+      properties:
+        includeLocations:
+          description: Gets whether or not Locations are included in the request.
+          default: false
+          readOnly: true
+        includePurchaseCategories:
+          description: Gets whether or not Purchase Categories are included in the request.
+          default: false
+          readOnly: true
+        purchaseCategoryFilter:
+          $ref: '#/components/schemas/ReachPurchaseCategoryParameters'
+        geoFilter:
+          $ref: '#/components/schemas/ReachLocationParameters'
+      additionalProperties: false
+    ReachPurchaseCategoryParameters:
+      type: object
+      properties:
+        countryIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of Countries to include in the Reach calculation.
+        purchaseCategoryIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of Purchase Categories to include in the Reach calculation.
+      additionalProperties: false
+      description: Purchase Category Parameters for the Audience Reach Calculation
+    ReachLocationParameters:
+      type: object
+      properties:
+        countryIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of Countries to include in the Reach calculation.
+        dmaIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of DMAs to include in the Reach calculation.
+        localityIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of Localities to include in the Reach calculation.
+        postalCodeIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of Postal Codes to include in the Reach calculation.
+        regionIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+          description: IDs of Regions to include in the Reach calculation.
+      additionalProperties: false
+      description: Location-related parameters for the Audience Reach calculation.
+    GetAudienceReachResourceModel:
+      type: object
+      properties:
+        potentialAudienceSize:
+          type: integer
+          format: int64
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

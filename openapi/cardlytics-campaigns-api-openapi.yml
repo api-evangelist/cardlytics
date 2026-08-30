@@ -1,0 +1,1428 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Campaigns API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: Campaigns
+paths:
+  /v7/accounts/{accountId}/Campaigns:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns all Campaigns from the repository for a given account.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId to for which to retrieve Campaigns.
+        required: true
+        schema:
+          type: string
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of Campaign was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Campaigns
+      summary: Adds a Campaign to the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The Campaign to add to the repository.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostCampaignResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostCampaignResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostCampaignResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostCampaignResourceModel'
+      responses:
+        '201':
+          description: The Campaign was created; the response contains the new entity and the route to retrieve it from this controller.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Campaigns:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns all Campaigns from the repository.
+      parameters:
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of Campaign was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignResourceModel'
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns a Campaign from the repository for a given account by its CampaignId.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The CampaignId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Campaign was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+    patch:
+      tags:
+      - Campaigns
+      summary: Updates the partial modifications to a Campaign.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The Id of the Campaign to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Campaign with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+      responses:
+        '200':
+          description: The Campaign was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+        '400':
+          description: The CampaignId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Campaigns
+      summary: 'Deletes a Campaign with all related entities (AdGroup, Ad, Audience etc.)
+
+        DELETE accounts/{accountId}/Campaigns/{campaignId}'
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The CampaignId to delete.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '204':
+          description: A Successful No Content result.
+        '400':
+          description: The Campaign is not in Draft Status.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Campaigns/{campaignId}:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns a Campaign from the repository by its CampaignId.
+      parameters:
+      - name: campaignId
+        in: path
+        description: The CampaignId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Campaign was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/diff:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns a difference between the two versions of the Campaign.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The CampaignId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: baseVersion
+        in: query
+        description: The base version of the campaign.
+        schema:
+          type: integer
+          format: int32
+      - name: compareVersion
+        in: query
+        description: The version to compare the campaign.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Campaign and its was found and returned the difference of two versions.
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/optimize:
+    patch:
+      tags:
+      - Campaigns
+      summary: Updates the partial modifications to a Campaign with only optimize Campaign fields.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The Id of the Campaign to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Campaign with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+      responses:
+        '200':
+          description: The Campaign was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+        '400':
+          description: The CampaignId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/status:
+    put:
+      tags:
+      - Campaigns
+      summary: Updates the Status of a Campaign. Use this endpoint to apply changes to the Campaign Status, for example resulting from user action.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The Id of the campaign to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: An object containing the new desired status.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PutCampaignStatusResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutCampaignStatusResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PutCampaignStatusResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PutCampaignStatusResourceModel'
+      responses:
+        '200':
+          description: The Campaign was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignResourceModel'
+        '400':
+          description: The CampaignId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/versions:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns all versions of a Campaign. A version is created when a CampaignBuilt event is published for a campaign.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The Id of the campaign.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Campaign was found.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignVersionResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignVersionResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetCampaignVersionResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/versions/latest:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns the latest version of a Campaign. A version is created when a CampaignBuilt event is published for a campaign.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The Id of the campaign.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Campaign was found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignVersionResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignVersionResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignVersionResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/projection:
+    post:
+      tags:
+      - Campaigns
+      summary: Creates a CampaignProjection request and saves the request to the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The AccountId of the campaign to filter.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The Id of the campaign to be projected.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '201':
+          description: The CampaignProjection was created; the response contains the new entity.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetCampaignProjectionResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignProjectionResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetCampaignProjectionResourceModel'
+        '400':
+          description: The Campaign Bad request when project does not follow the validation rules..
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/duplicate:
+    post:
+      tags:
+      - Campaigns
+      summary: Duplicates a Campaign with all related entities (AdGroup, Ad, Audience, Ad pricing models, etc.)
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The campaignId to duplicate.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: duplicates
+        in: query
+        description: Count of duplicates.
+        schema:
+          maximum: 100
+          minimum: 1
+          type: integer
+          format: int32
+          default: 1
+      responses:
+        '303':
+          description: The Campaign was duplicated and the GET route to the new duplicated campaign is returned in the location header.
+        '400':
+          description: Bad request. For example, some validation rules were violated during the request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Campaigns/{campaignId}/validation:
+    get:
+      tags:
+      - Campaigns
+      summary: Validates a Campaign with all business rules.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The campaignId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Campaign was found and the validation result is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Campaign was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Campaigns/validation/rule-set:
+    get:
+      tags:
+      - Campaigns
+      summary: Returns validation rules for a Campaign object.
+      responses:
+        '200':
+          description: The Campaign validation rules are returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+  /v7/Campaigns/count:
+    get:
+      tags:
+      - Campaigns
+      summary: 'Calculates the aggregate count of campaigns partitioned by the campaign status.
+
+        Only counts those objects which the user has been granted access.'
+      parameters:
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The counts operation completed successfully.
+          content:
+            text/plain:
+              schema:
+                type: object
+                properties:
+                  Draft:
+                    type: integer
+                    format: int32
+                  InReview:
+                    type: integer
+                    format: int32
+                  Scheduled:
+                    type: integer
+                    format: int32
+                  Active:
+                    type: integer
+                    format: int32
+                  Inactive:
+                    type: integer
+                    format: int32
+                additionalProperties: false
+            application/json:
+              schema:
+                type: object
+                properties:
+                  Draft:
+                    type: integer
+                    format: int32
+                  InReview:
+                    type: integer
+                    format: int32
+                  Scheduled:
+                    type: integer
+                    format: int32
+                  Active:
+                    type: integer
+                    format: int32
+                  Inactive:
+                    type: integer
+                    format: int32
+                additionalProperties: false
+            text/json:
+              schema:
+                type: object
+                properties:
+                  Draft:
+                    type: integer
+                    format: int32
+                  InReview:
+                    type: integer
+                    format: int32
+                  Scheduled:
+                    type: integer
+                    format: int32
+                  Active:
+                    type: integer
+                    format: int32
+                  Inactive:
+                    type: integer
+                    format: int32
+                additionalProperties: false
+        '400':
+          description: The filter parameters were incorrect or invalid.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    GetCampaignProjectionResourceModel:
+      type: object
+      properties:
+        campaignProjectionId:
+          type: integer
+          format: int32
+        campaignId:
+          type: integer
+          format: int32
+        eventId:
+          type: string
+          format: uuid
+      additionalProperties: false
+    CampaignPricingModel:
+      enum:
+      - None
+      - CPR
+      - CPE
+      - CPT
+      - CPS
+      - CPST
+      - CPSH
+      - CPM
+      type: string
+      description: 'Campaign PricingModel enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    CampaignObjective:
+      enum:
+      - DriveSales
+      - BuildLoyalty
+      - AcquireNewCustomers
+      type: string
+    GetCampaignVersionResourceModel:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        eventDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+      additionalProperties: false
+    CampaignType:
+      enum:
+      - FIXED_CLO
+      - DYNAMIC_CLO
+      type: string
+      description: CampaignType enumeration.
+    ScheduleType:
+      enum:
+      - Lifetime
+      - Daily
+      type: string
+      description: 'Schedule Type enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
+    PutCampaignStatusResourceModel:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CampaignStatus'
+      additionalProperties: false
+    GetCampaignResourceModel:
+      type: object
+      properties:
+        startDateTime:
+          description: This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+          example: '1987-03-18T00:00:00.0000000'
+        endDateTime:
+          description: This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+          example: '1987-03-18T00:00:00.0000000'
+        createDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        transactionDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        isOfferAutoActivated:
+          default: false
+        campaignType:
+          $ref: '#/components/schemas/CampaignType'
+        attributionWindow:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        isBankFunded:
+          default: false
+        currency:
+          $ref: '#/components/schemas/Currency'
+        campaignPricingModel:
+          $ref: '#/components/schemas/CampaignPricingModel'
+        orderNumber:
+          type:
+          - string
+          - 'null'
+        campaignId:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        accountId:
+          type:
+          - string
+          - 'null'
+        campaignObjective:
+          $ref: '#/components/schemas/CampaignObjective'
+        budget:
+          type: number
+          format: double
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+        campaignStatus:
+          $ref: '#/components/schemas/CampaignStatus'
+        createUser:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    PostCampaignResourceModel:
+      required:
+      - budget
+      - campaignObjective
+      - campaignPricingModel
+      - name
+      - orderNumber
+      - scheduleType
+      type: object
+      properties:
+        startDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime.'
+          example: '1987-03-18T00:00:00.0000000'
+        endDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime.'
+          example: '1987-03-18T00:00:00.0000000'
+        transactionDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        isOfferAutoActivated:
+          default: false
+        campaignType:
+          $ref: '#/components/schemas/CampaignType'
+        attributionWindow:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        isBankFunded:
+          default: false
+        campaignPricingModel:
+          $ref: '#/components/schemas/CampaignPricingModel'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        orderNumber:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          type: string
+        campaignObjective:
+          $ref: '#/components/schemas/CampaignObjective'
+        budget:
+          type: number
+          format: double
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

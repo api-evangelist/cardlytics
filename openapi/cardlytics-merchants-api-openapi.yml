@@ -1,0 +1,408 @@
+openapi: 3.2.0
+info:
+  title: partner-api Merchants API
+  description: Partner APIs
+  version: '2025-10-07'
+servers:
+- url: https://api-sandbox.cardlytics.com
+  description: Sandbox environment - Use this for API testing and development
+- url: https://api.cardlytics.com
+  description: Production environment - Documentation reference only, contact support for access
+security:
+- oauth2:
+  - openid
+tags:
+- name: Merchants
+paths:
+  /api/v1/partner/merchants/{external_merchant_id}:
+    put:
+      summary: Create or Update the Merchant using the partner-provided merchant ID
+      description: Create or update merchant information. The external_merchant_id in the path must match the merchantId in the request body.
+      tags:
+      - Merchants
+      parameters:
+      - name: external_merchant_id
+        in: path
+        description: Partner-provided merchant identifier
+        required: true
+        schema:
+          type: string
+          default: '67890'
+        example: '67890'
+      requestBody:
+        description: Merchant object that needs to be inserted or updated
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MerchantPayload'
+            example:
+              merchantId: '67890'
+              merchantName: Tony's Grill & Bar
+              merchantCategoryCode: 5812
+              merchantUrl: www.tonysgrill.com
+              merchantSubCategories:
+              - categoryType: cuisine
+                categoryItems:
+                - American
+                - BBQ
+                - Steakhouse
+              paymentChannels:
+              - instore
+              stores:
+              - storeId: '2047'
+                storeName: Tony's Grill Downtown
+                storeUrl: www.tonysgrill.com/downtown
+                address1: 456 Broadway Ave
+                address2: Suite 101
+                city: SPRINGFIELD
+                state: IL
+                postalCode: '62701'
+                countryCode: US
+                latitude: '39.8017'
+                longitude: '-89.6437'
+                storePhoneNumbers:
+                - '+12175559876'
+                storeEmails:
+                - info@tonysgrill.com
+                processorMidChangedFlag: N
+                processorMidRecords:
+                - paymentNetwork: AmericanExpress
+                  processors:
+                  - processorName: AmericanExpress
+                    amexMids:
+                    - seNumber: '9876543210'
+                - paymentNetwork: MasterCard
+                  processors:
+                  - processorName: Chase Paymentech
+                    mcAuthMids:
+                    - mcAuthLocationId: '556677888'
+                      mcAuthAcquiringMid: '999888777666555'
+                      mcAuthICA: 098765
+                    mcClearingMids:
+                    - mcClearingLocationId: '445566777'
+                      mcClearingAcquiringMid: '888777666555444'
+                      mcClearingICA: 087654
+                - paymentNetwork: Visa
+                  processors:
+                  - processorName: First Data
+                    processorId: FD789
+                    visaMids:
+                    - vmid: '87651234'
+                      vsid: '44332211'
+                  - processorName: Global Payments
+                    processorId: GP456
+                    visaMids:
+                    - vmid: '13579246'
+                      vsid: '66554433'
+                - paymentNetwork: Discover
+                  processors:
+                  - processorName: Discover
+                    discoverMids:
+                    - discover: '7774032918456'
+                    - discover: '7774051297384'
+      responses:
+        '202':
+          description: Added to the queue for processing
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceResponse'
+        '400':
+          description: "Bad Request – possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n"
+        '500':
+          description: Internal Server Error – An unexpected error occurred while processing the request
+    delete:
+      summary: Delete the Merchant using the partner-provided merchant ID
+      tags:
+      - Merchants
+      parameters:
+      - name: external_merchant_id
+        in: path
+        description: Partner-provided merchant identifier
+        required: true
+        schema:
+          type: string
+          default: '67890'
+        example: '67890'
+      responses:
+        '202':
+          description: Accepted and queued for deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TraceResponse'
+        '400':
+          description: 'Bad Request – ID mismatch
+
+            '
+        '500':
+          description: Internal Server Error – An unexpected error occurred while processing the request
+components:
+  schemas:
+    TraceResponse:
+      type: object
+      description: Response containing the trace identifier
+      properties:
+        message:
+          type: string
+          example: Message description of the operation
+        trace_id:
+          type: string
+          description: Request trace identifier
+      required:
+      - message
+      - trace_id
+    MerchantPayload:
+      type: object
+      properties:
+        merchantId:
+          type: string
+          minLength: 1
+          description: Partner-provided merchant identifier
+        merchantName:
+          type: string
+          minLength: 1
+          description: Registered name of the merchant or brand
+        parentMerchantId:
+          type: string
+          description: Any Parent of this merchant
+        merchantCategoryCode:
+          type: number
+          description: ISO 18245 4-digit MCC code
+        merchantSubCategories:
+          type: array
+          description: List of merchant sub-category objects
+          items:
+            type: object
+            properties:
+              categoryType:
+                type: string
+                description: 'Ex: Cuisine'
+              categoryItems:
+                type: array
+                description: Sub-category values (no special characters)
+                items:
+                  type: string
+            required:
+            - categoryType
+            - categoryItems
+        paymentChannels:
+          type: array
+          description: Indicates if this merchant accepts payments online or instore
+          items:
+            type: string
+            enum:
+            - online
+            - instore
+            minLength: 1
+          minItems: 1
+        paymentSubChannels:
+          type: array
+          description: Payment sub-channels (PayAtPump or Convenience)
+          items:
+            type: string
+            enum:
+            - PayAtPump
+            - Convenience
+        merchantUrl:
+          type: string
+          description: Merchant Website URL
+        merchantApps:
+          type: array
+          description: List of Online Apps used by Merchant
+          items:
+            type: string
+        stores:
+          type: array
+          description: One or more store objects for this merchant
+          items:
+            type: object
+            properties:
+              storeId:
+                type: string
+                minLength: 1
+                description: Partner-provided store identifier
+              address1:
+                type: string
+                minLength: 1
+                description: Street Address
+              address2:
+                type: string
+                description: Street Address (optional)
+              city:
+                type: string
+                minLength: 1
+              state:
+                type: string
+                minLength: 1
+              postalCode:
+                type: string
+                minLength: 1
+              countryCode:
+                type: string
+                minLength: 1
+                description: 2-character country code (ISO 3166-1 alpha-2)
+              storeName:
+                type: string
+                minLength: 1
+                description: Name of the store
+              locatedIn:
+                type: string
+                description: Business or venue the merchant is inside
+              storePhoneNumbers:
+                type: array
+                description: List of phone numbers of the store
+                items:
+                  type: string
+              storeUrl:
+                type: string
+                description: Store Website URL
+              storeEmails:
+                type: array
+                description: List of business email of the store
+                items:
+                  type: string
+              latitude:
+                type: string
+                description: The latitude coordinates of the merchant store location
+              longitude:
+                type: string
+                description: The longitude coordinates of the merchant store location
+              processorMidChangedFlag:
+                type: string
+                minLength: 1
+                description: Y=Yes, N=No
+                enum:
+                - Y
+                - N
+              processorMidRecords:
+                type: array
+                description: List of processor MID records
+                items:
+                  type: object
+                  properties:
+                    paymentNetwork:
+                      type: string
+                      enum:
+                      - Visa
+                      - MasterCard
+                      - AmericanExpress
+                      - Discover
+                      description: Payment network for this MID record
+                    processors:
+                      type: array
+                      minItems: 1
+                      description: List of processor details for this payment network
+                      items:
+                        type: object
+                        properties:
+                          processorName:
+                            type: string
+                            minLength: 1
+                            description: Name of the processor. When not available use “UNKNOWN”
+                          processorId:
+                            type: string
+                            description: processor ID
+                          amexMids:
+                            type: array
+                            description: paymentNetwork=AmericanExpress, "amexMids" array must contain at least one "seNumber" in the array
+                            items:
+                              type: object
+                              properties:
+                                seNumber:
+                                  type: string
+                                  minLength: 1
+                                  description: SE Number for Amex
+                          visaMids:
+                            type: array
+                            description: paymentNetwork=VISA, "visaMids" array must contain at least one element with both "vmid" and "vsid"
+                            items:
+                              type: object
+                              properties:
+                                vmid:
+                                  type: string
+                                  minLength: 1
+                                  description: Visa MID
+                                vsid:
+                                  type: string
+                                  minLength: 1
+                                  description: Visa SID
+                          mcAuthMids:
+                            type: array
+                            description: paymentNetwork=MasterCard, at least one of the "mcAuthMids" array field or "mcClearingMids" array field is present
+                            items:
+                              type: object
+                              properties:
+                                mcAuthLocationId:
+                                  type: string
+                                  minLength: 1
+                                  description: MasterCard Auth Location ID. Required for mcAuthMids
+                                mcAuthAcquiringMid:
+                                  type: string
+                                  minLength: 1
+                                  description: MasterCard Auth Acquiring MID. Required for mcAuthMids
+                                mcAuthICA:
+                                  type: string
+                                  description: MasterCard Auth ICA (optional)
+                          mcClearingMids:
+                            type: array
+                            description: paymentNetwork=MasterCard, at least one of the "mcAuthMids" array field or "mcClearingMids" array field is present
+                            items:
+                              type: object
+                              properties:
+                                mcClearingLocationId:
+                                  type: string
+                                  minLength: 1
+                                  description: MasterCard Clearing Location ID. Required for mcClearingMids
+                                mcClearingAcquiringMid:
+                                  type: string
+                                  minLength: 1
+                                  description: MasterCard Clearing Acquiring MID. Required for mcClearingMids
+                                mcClearingICA:
+                                  type: string
+                                  description: MasterCard Clearing ICA (optional)
+                          discoverMids:
+                            type: array
+                            description: paymentNetwork=Discover, "discoverMids" array must contain at least one "discover" in the array
+                            items:
+                              type: object
+                              properties:
+                                discover:
+                                  type: string
+                                  minLength: 1
+                                  description: Discover MID
+                        required:
+                        - processorName
+                  required:
+                  - paymentNetwork
+                  - processors
+                minItems: 1
+            required:
+            - storeId
+            - address1
+            - city
+            - state
+            - postalCode
+            - countryCode
+            - storeName
+            - processorMidChangedFlag
+            - processorMidRecords
+            minProperties: 1
+          minItems: 1
+      required:
+      - merchantId
+      - merchantName
+      - paymentChannels
+      - stores
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /v1/idp/oauth2/token
+          scopes:
+            openid: openid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

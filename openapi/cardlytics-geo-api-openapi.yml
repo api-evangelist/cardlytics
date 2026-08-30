@@ -1,0 +1,441 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Geo API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: Geo
+paths:
+  /v6/Geo:
+    get:
+      tags:
+      - Geo
+      summary: Returns Geo results that match the query.
+      parameters:
+      - name: query
+        in: query
+        description: Query to search in Geo.
+        schema:
+          type: string
+      - name: countryId
+        in: query
+        description: Required CountryId filter.
+        schema:
+          type: integer
+          format: int32
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The geo results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+    post:
+      tags:
+      - Geo
+      summary: Returns Bulk Geo results based on the body criteria.
+      requestBody:
+        description: Request body containing list(s) of geo criteria to query for results.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostGeoBulkSearchResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostGeoBulkSearchResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostGeoBulkSearchResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostGeoBulkSearchResourceModel'
+      responses:
+        '200':
+          description: The bulk Geo results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MatchedGeoSearchResourceModel'
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MatchedGeoSearchResourceModel'
+            text/json:
+              schema:
+                type: object
+                additionalProperties:
+                  $ref: '#/components/schemas/MatchedGeoSearchResourceModel'
+  /v6/Geo/Country:
+    get:
+      tags:
+      - Geo
+      summary: Returns Geo Country results that match the query.
+      parameters:
+      - name: query
+        in: query
+        description: Query to search in geo. Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description.
+        schema:
+          type: string
+        example: GB
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The geo.Country results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+  /v6/Geo/DMA:
+    get:
+      tags:
+      - Geo
+      summary: Returns Geo DMA results that match the query.
+      parameters:
+      - name: query
+        in: query
+        description: Query to search in geo.DMA.
+        schema:
+          type: string
+      - name: countryId
+        in: query
+        description: Required CountryId filter.
+        schema:
+          type: integer
+          format: int32
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The geo.Dma results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+  /v6/Geo/Locality:
+    get:
+      tags:
+      - Geo
+      summary: Returns Geo Locality results that match the query.
+      parameters:
+      - name: query
+        in: query
+        description: Query to search in geo.Locality.
+        schema:
+          type: string
+      - name: countryId
+        in: query
+        description: Required CountryId filter.
+        schema:
+          type: integer
+          format: int32
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The geo.Locality results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+  /v6/Geo/PostalCode:
+    get:
+      tags:
+      - Geo
+      summary: Returns Geo PostalCode results that match the query.
+      parameters:
+      - name: query
+        in: query
+        description: Query to search in geo.PostalCode.
+        schema:
+          type: string
+      - name: countryId
+        in: query
+        description: Required CountryId filter.
+        schema:
+          type: integer
+          format: int32
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The geo.PostalCode results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+  /v6/Geo/Region:
+    get:
+      tags:
+      - Geo
+      summary: Returns Geo Region results that match the query.
+      parameters:
+      - name: query
+        in: query
+        description: Query to search in geo.Region.
+        schema:
+          type: string
+      - name: countryId
+        in: query
+        description: Required CountryId filter.
+        schema:
+          type: integer
+          format: int32
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The geo.Region results found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GeoSearchResourceModel'
+components:
+  schemas:
+    GeoSearchResourceModel:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Geo search result Name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Geo search result Full Description.
+        code:
+          type:
+          - string
+          - 'null'
+          description: Geo search result code.
+        abbreviation:
+          type:
+          - string
+          - 'null'
+          description: Geo search result abbreviation.
+        id:
+          type: integer
+          description: Geo search result unique reference Id for the given GeoType.
+          format: int32
+        countryId:
+          type: integer
+          description: The country id associated with this Geo search result.
+          format: int32
+        geoType:
+          $ref: '#/components/schemas/GeoType'
+      additionalProperties: false
+      description: Model Class the represents a Geo Search result.
+    MatchedGeoSearchResourceModel:
+      type: object
+      properties:
+        matched:
+          type: integer
+          format: int32
+          readOnly: true
+        matches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GeoSearchResourceModel'
+      additionalProperties: false
+    PostGeoBulkSearchResourceModel:
+      type: object
+      properties:
+        subLevelCountryId:
+          type: integer
+          format: int32
+        country:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description.
+        dma:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        region:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        locality:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        postalCode:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GeoType:
+      enum:
+      - COUNTRY
+      - REGION
+      - LOCALITY
+      - DMA
+      - POSTAL_CODE
+      type: string
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

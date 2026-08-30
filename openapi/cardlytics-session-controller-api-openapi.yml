@@ -1,0 +1,54 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Session Controller API
+  version: v0
+servers:
+- url: https://publisher-uk-fiuat.cardlytics.com
+  description: Generated server url
+tags:
+- name: session-controller
+paths:
+  /v2/session/startSession:
+    post:
+      tags:
+      - session-controller
+      operationId: startSession
+      parameters:
+      - name: X-CDLX-Institution-Id
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StartSessionRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/StartSessionResponse'
+components:
+  schemas:
+    StartSessionResponse:
+      type: object
+      properties:
+        sessionToken:
+          type: string
+    StartSessionRequest:
+      required:
+      - sourceCustomerId
+      type: object
+      properties:
+        sourceCustomerId:
+          type: string
+        scopes:
+          type: array
+          items:
+            type: string
+            example: api:customer
+        organizationId:
+          type: string

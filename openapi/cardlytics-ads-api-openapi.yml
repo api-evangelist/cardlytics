@@ -1,0 +1,1165 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Ads API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: Ads
+paths:
+  /v7/accounts/{accountId}/Ads/{adId}:
+    get:
+      tags:
+      - Ads
+      summary: Returns an Ad from the repository for a given account by its adId.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The adId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Ad was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Ad was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    patch:
+      tags:
+      - Ads
+      summary: Updates the partial modifications to an Ad.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The id of the Ad to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Ad with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+      responses:
+        '200':
+          description: The Ad was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+        '400':
+          description: The adId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Ad was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - Ads
+      summary: 'Deletes an Ad with all related entities (Reward, Pricing models, etc.)
+
+        DELETE accounts/{accountId}/Ads/{adId}'
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The AdId to delete.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '204':
+          description: A Successful No Content result.
+        '400':
+          description: The Ad is not in Draft Status.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Ad was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Ads/{adId}:
+    get:
+      tags:
+      - Ads
+      summary: Returns an Ad from the repository by its adId.
+      parameters:
+      - name: adId
+        in: path
+        description: The adId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Ad was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+        '404':
+          description: The Ad was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Ads/{adId}/RedeemingMerchants:
+    get:
+      tags:
+      - Ads
+      summary: Gets the RedeemingMerchants associated with an Ad.
+      parameters:
+      - name: adId
+        in: path
+        description: The id of the Ad to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Ad was found and associated Redeeming Merchants were returned.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+        '404':
+          description: The Ad was not found or does not contain RedeemingMerchant information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Ads/{adId}/RedeemingMerchants:
+    post:
+      tags:
+      - Ads
+      summary: Creates an Ad's Redeeming Merchants List.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The AdIdof the Ad to filter the request.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The list of Redeeming Merchant objects to add to the repository.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostRedeemingMerchantResourceModel'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostRedeemingMerchantResourceModel'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostRedeemingMerchantResourceModel'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PostRedeemingMerchantResourceModel'
+      responses:
+        '201':
+          description: "The Redeeming Merchant List was created; the response contains the new entity and the route to retrieve it\n           from this controller."
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Ads
+      summary: Updates the partial modifications to an Ad's Redeeming Merchants List.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The id of the Ad to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Redeeming Merchant List with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PutRedeemingMerchantResourceModel'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PutRedeemingMerchantResourceModel'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PutRedeemingMerchantResourceModel'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PutRedeemingMerchantResourceModel'
+      responses:
+        '200':
+          description: The Redeeming Merchant List was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetRedeemingMerchantResourceModel'
+        '400':
+          description: The adId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Redeeming Merchant List was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Ads:
+    get:
+      tags:
+      - Ads
+      summary: Returns all Ads from the repository for a given account.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId for which to retrieve Ads.
+        required: true
+        schema:
+          type: string
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of audiences was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    post:
+      tags:
+      - Ads
+      summary: Adds an Ad to the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The Ad to add to the repository.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostAdResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostAdResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostAdResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostAdResourceModel'
+      responses:
+        '201':
+          description: "The Ad was created; the response contains the new entity and the route to retrieve it\n           from this controller."
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/campaigns/{campaignId}/Ads:
+    get:
+      tags:
+      - Ads
+      summary: Returns all Ads from the repository for a given Campaign.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId for which to retrieve Ads.
+        required: true
+        schema:
+          type: string
+      - name: campaignId
+        in: path
+        description: The campaignId for which to retrieve Ads.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of audiences was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Ads:
+    get:
+      tags:
+      - Ads
+      summary: Returns all Ads from the repository.
+      parameters:
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of audiences was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdResourceModel'
+  /v7/accounts/{accountId}/Ads/{adId}/duplicate:
+    post:
+      tags:
+      - Ads
+      summary: 'Duplicates an Ad with all related entities (Reward, Pricing models, etc.)
+
+        POST accounts/{accountId}/Ads/{adId}/duplicate?duplicates=5'
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The AdId to duplicate.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      - name: duplicates
+        in: query
+        description: The number of duplicates of the Ad.
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '303':
+          description: The Ad was duplicated and the GET route to the new duplicated Ad is returned in the location header.
+        '400':
+          description: The duplicates specified in the query string does not match the expected value between 1 .. 100.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Temporarily disabled.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Ad was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Ads/{adId}/validation:
+    get:
+      tags:
+      - Ads
+      summary: Validates a Ad with all business rules.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The adId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Ad was found and the validation result is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Ad was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Ads/validation/rule-set:
+    get:
+      tags:
+      - Ads
+      summary: Returns validation rules for a Ad object.
+      responses:
+        '200':
+          description: The Ad validation rules are returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+components:
+  schemas:
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    SegmentDataResourceModel:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          type: string
+        storeLocationSubType:
+          type:
+          - string
+          - 'null'
+        paymentChannel:
+          type:
+          - string
+          - 'null'
+        productCategories:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    PostAdResourceModel:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        adGroupId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        creativeId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+      additionalProperties: false
+    GetRedeemingMerchantResourceModel:
+      required:
+      - brandId
+      - brandName
+      - storeSegments
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type: string
+      additionalProperties: false
+    PostRedeemingMerchantResourceModel:
+      required:
+      - brandId
+      - brandName
+      - storeSegments
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type: string
+      additionalProperties: false
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    SegmentResourceModel:
+      type: object
+      properties:
+        segments:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SegmentDataResourceModel'
+        purchaseChannel:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetAdResourceModel:
+      type: object
+      properties:
+        createDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        adId:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        accountId:
+          type:
+          - string
+          - 'null'
+        adGroupId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        createUser:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+        creativeId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        brands:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int64
+        adStatus:
+          $ref: '#/components/schemas/CampaignStatus'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
+    PutRedeemingMerchantResourceModel:
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

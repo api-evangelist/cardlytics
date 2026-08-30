@@ -1,0 +1,383 @@
+openapi: 3.2.0
+info:
+  title: OpenAPI definition Ads Controller API
+  version: v0
+servers:
+- url: https://publisher-uk-fiuat.cardlytics.com
+  description: Generated server url
+tags:
+- name: ads-controller
+paths:
+  /v2/ads/getAds:
+    post:
+      tags:
+      - ads-controller
+      operationId: getAds
+      parameters:
+      - name: X-CDLX-Session-Token
+        in: header
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GetAdsRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdsResponse'
+components:
+  schemas:
+    AdImageValue:
+      type: object
+      properties:
+        large:
+          $ref: '#/components/schemas/ImageURL'
+        small:
+          $ref: '#/components/schemas/ImageURL'
+    GetAdsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        ads:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Ad'
+        rankings:
+          $ref: '#/components/schemas/AdRankings'
+        categories:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CategoryGroup'
+        storeLocations:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/StoreLocation'
+    ImageURL:
+      type: object
+      properties:
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
+    Image:
+      type: object
+      properties:
+        type:
+          type: string
+          example: IMAGE_URL
+          enum:
+          - IMAGE_URL
+          - AD_COPY
+          - CALL_TO_ACTION_LINKS
+        value:
+          $ref: '#/components/schemas/AdImageValue'
+    Text:
+      type: object
+      properties:
+        type:
+          type: string
+          example: AD_COPY
+          enum:
+          - IMAGE_URL
+          - AD_COPY
+          - CALL_TO_ACTION_LINKS
+        value:
+          type: object
+          additionalProperties:
+            type: string
+    CallToActionLink:
+      type: object
+      properties:
+        type:
+          type: string
+          example: WEB_LINK
+        value:
+          type: string
+    AdReward:
+      type: object
+      properties:
+        rewardType:
+          type: string
+          enum:
+          - PERCENT_AMOUNT_PURCHASE
+          - FIXED_AMOUNT_PURCHASE
+          - METERED_AMOUNT_PURCHASE
+        rewardAmount:
+          type: number
+          format: float
+        maxRewardAmount:
+          type: number
+          format: float
+        isMultiRedemption:
+          type: boolean
+        purchaseRequirement:
+          $ref: '#/components/schemas/PurchaseRequirement'
+    CallsToAction:
+      type: object
+      properties:
+        type:
+          type: string
+          example: CALL_TO_ACTION_LINKS
+          enum:
+          - IMAGE_URL
+          - AD_COPY
+          - CALL_TO_ACTION_LINKS
+        value:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CallToActionLink'
+    GetAdsRequest:
+      required:
+      - channel
+      type: object
+      properties:
+        customerLocation:
+          $ref: '#/components/schemas/GeoCoordinate'
+        channel:
+          type: string
+          enum:
+          - Email
+          - SMS
+          - MMS
+          - OLB
+          - MobileWeb
+          - MobileApp
+          - MobileWallet
+        sections:
+          type: array
+          items:
+            type: string
+            enum:
+            - Email
+            - SMS
+            - MMS
+            - Transaction
+            - Summary
+            - Dashboard
+            - Landing
+            - OnboardingPage
+            - LatestOffers
+            - ExpiringSoon
+            - RewardSummaryListView
+            - FeaturedOffers
+            - EntertainmentCategory
+            - FoodCategory
+            - RetailCategory
+            - ServicesCategory
+            - TravelCategory
+        categoryIds:
+          type: array
+          items:
+            type: string
+        curationIds:
+          type: array
+          items:
+            type: string
+        activationStates:
+          type: array
+          items:
+            type: string
+            example: ACTIVATED
+            enum:
+            - NEW
+            - SERVED
+            - ACTIVATED
+        visibilityStates:
+          type: array
+          items:
+            type: string
+            enum:
+            - VISIBLE
+            - PARKED
+        redemptionStates:
+          type: array
+          items:
+            type: string
+            example: FULLY_REDEEMED
+            enum:
+            - PROCESSING
+            - FULLY_REDEEMED
+        maxAdLimit:
+          type: integer
+          format: int32
+        returnMetadata:
+          type: boolean
+          example: false
+        returnStoreLocation:
+          type: boolean
+          example: false
+        includeExpiredAds:
+          type: boolean
+          example: false
+    StoreLocationAddress:
+      type: object
+      properties:
+        addressLine1:
+          type: string
+        addressLine2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+    GeoCoordinate:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    AdAssetList:
+      type: object
+      properties:
+        logo:
+          $ref: '#/components/schemas/Image'
+        largeRectangle:
+          $ref: '#/components/schemas/Image'
+        smallRectangle:
+          $ref: '#/components/schemas/Image'
+        copy:
+          $ref: '#/components/schemas/Text'
+        callsToAction:
+          $ref: '#/components/schemas/CallsToAction'
+    CategoryGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryGroup'
+    Ad:
+      type: object
+      properties:
+        adType:
+          type: string
+          enum:
+          - CASH_BACK_OFFER
+        adServeToken:
+          type: string
+        startDate:
+          type: string
+          format: date-time
+        endDate:
+          type: string
+          format: date-time
+        activationDate:
+          type: string
+          format: date-time
+        merchantName:
+          type: string
+        sections:
+          type: array
+          items:
+            type: string
+            enum:
+            - Email
+            - SMS
+            - MMS
+            - Transaction
+            - Summary
+            - Dashboard
+            - Landing
+            - OnboardingPage
+            - LatestOffers
+            - ExpiringSoon
+            - RewardSummaryListView
+            - FeaturedOffers
+            - EntertainmentCategory
+            - FoodCategory
+            - RetailCategory
+            - ServicesCategory
+            - TravelCategory
+        reward:
+          $ref: '#/components/schemas/AdReward'
+        activationState:
+          type: string
+          enum:
+          - NEW
+          - SERVED
+          - ACTIVATED
+        visibilityState:
+          type: string
+          enum:
+          - VISIBLE
+          - PARKED
+        redemptionState:
+          type: string
+          enum:
+          - PROCESSING
+          - FULLY_REDEEMED
+        assets:
+          $ref: '#/components/schemas/AdAssetList'
+    AdRankings:
+      type: object
+      properties:
+        all:
+          type: array
+          items:
+            type: string
+    StoreLocation:
+      type: object
+      properties:
+        storeName:
+          type: string
+        address:
+          $ref: '#/components/schemas/StoreLocationAddress'
+        phoneNumber:
+          type: string
+        distance:
+          type: number
+          format: float
+        latitude:
+          type: number
+          format: float
+        longitude:
+          type: number
+          format: float
+    PurchaseRequirement:
+      type: object
+      properties:
+        minSpendAmount:
+          type: number
+          format: float
+        purchaseChannels:
+          type: array
+          items:
+            type: string
+            enum:
+            - InStore
+            - Online
+            - PayAtPump
+            - App
+            - Convenience
+        purchaseTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - Membership
+            - Subscription
+            - Fuel

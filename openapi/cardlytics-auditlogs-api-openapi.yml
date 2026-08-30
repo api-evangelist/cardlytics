@@ -1,0 +1,170 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Audit Logs API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: AuditLogs
+paths:
+  /v5/accounts/{accountId}/AuditLogs:
+    get:
+      tags:
+      - AuditLogs
+      summary: Returns all Audit into from the repository for a given account.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId for which to retrieve Audit info.
+        required: true
+        schema:
+          type: string
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: CampaignId
+        in: query
+        schema:
+          type: array
+          items:
+            type: integer
+            format: int32
+      - name: AuditUser
+        in: query
+        schema:
+          type: string
+      - name: IncludeChildren
+        in: query
+        description: Indicates whether to include children entities (ads, ad groups, audiences) associated with specified campaign.
+        schema:
+          default: false
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of audit info was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAuditLogResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAuditLogResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAuditLogResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    GetAuditLogResourceModel:
+      type: object
+      properties:
+        entityType:
+          type:
+          - string
+          - 'null'
+        action:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        changes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeLogEntry'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    ChangeLogEntry:
+      type: object
+      properties:
+        columnName:
+          type:
+          - string
+          - 'null'
+        originalValue:
+          type:
+          - string
+          - 'null'
+        newValue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

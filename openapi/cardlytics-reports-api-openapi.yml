@@ -1,0 +1,186 @@
+openapi: 3.2.0
+info:
+  title: partner-api Reports API
+  description: Partner APIs
+  version: '2025-10-07'
+servers:
+- url: https://api-sandbox.cardlytics.com
+  description: Sandbox environment - Use this for API testing and development
+- url: https://api.cardlytics.com
+  description: Production environment - Documentation reference only, contact support for access
+security:
+- oauth2:
+  - openid
+tags:
+- name: Reports
+paths:
+  /api/v1/partner/merchants/{external_merchant_id}/reports:
+    post:
+      summary: Get merchant performance report (aggregate metrics)
+      description: 'Returns aggregated performance metrics for a partner-provided merchant over a date range. Supports optional filtering by offer IDs. Defaults: cube=merchant_performance; timeRange.from defaults to 2 years back (max lookback); timeRange.to defaults to today''s date.'
+      tags:
+      - Reports
+      parameters:
+      - name: external_merchant_id
+        in: path
+        description: Partner-provided merchant identifier
+        required: true
+        schema:
+          type: string
+          default: '67890'
+        example: '67890'
+      requestBody:
+        required: true
+        description: 'Optional filters. If `offerIds` is omitted or empty, metrics are returned for all offers under the merchant. `cube` currently supports only `merchant_performance`. `timeRange` is optional: `from` defaults to 2 years back (max lookback) and `to` defaults to today''s date (YYYY-MM-DD).'
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReportRequest'
+            example:
+              cube: merchant_performance
+              offerIds: []
+              timeRange:
+                from: '2023-10-01'
+                to: '2025-09-17'
+      responses:
+        '200':
+          description: Aggregated performance for offers under the merchant.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReportResponse'
+              example:
+                header:
+                  cube: merchant_performance
+                  fields:
+                  - fieldName: Partner Merchant Id
+                    fieldType: DIM
+                  - fieldName: Partner Offer Id
+                    fieldType: DIM
+                  - fieldName: Impressions
+                    fieldType: FACT
+                  - fieldName: Purchases
+                    fieldType: FACT
+                  - fieldName: Revenue
+                    fieldType: FACT
+                  - fieldName: Reach
+                    fieldType: FACT
+                  - fieldName: Activations
+                    fieldType: FACT
+                  maxRows: -1
+                rows:
+                - - 88d4d968-e922-sample-partner-merchant-id-f32a0eaa43ff
+                  - 2e1fd66d-72d7-sample-partner-offer-id-af82-b4bfd0aaa7ac
+                  - 280568
+                  - 14
+                  - 714.87
+                  - 172472
+                  - 8005
+                - - 88d4d968-e922-sample-partner-merchant-id-f32a0eaa43ff
+                  - 5555d66d-72d7-sample-partner-offer-id-af82-343430aaa7ac
+                  - 100568
+                  - 8
+                  - 14.22
+                  - 2472
+                  - 807
+        '400':
+          description: Bad Request – Invalid parameters or date range.
+        '401':
+          description: Unauthorized – Invalid or missing access token.
+        '500':
+          description: Internal Server Error – An unexpected error occurred while processing the request.
+components:
+  schemas:
+    ReportHeader:
+      type: object
+      description: Metadata describing the report payload.
+      properties:
+        cube:
+          type: string
+          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportField'
+        maxRows:
+          type: integer
+          description: Maximum number of rows returned; -1 means no limit.
+          default: -1
+      required:
+      - cube
+      - fields
+      - maxRows
+    ReportResponse:
+      type: object
+      description: Aggregated report response with a header and data rows.
+      properties:
+        header:
+          $ref: '#/components/schemas/ReportHeader'
+        rows:
+          type: array
+          description: Tabular results; each row aligns with the header fields order.
+          items:
+            type: array
+            items:
+              oneOf:
+              - type: string
+              - type: number
+              - type: integer
+      required:
+      - header
+      - rows
+    ReportField:
+      type: object
+      description: A field in the report header describing a dimension or metric.
+      properties:
+        fieldName:
+          type: string
+        fieldType:
+          type: string
+          enum:
+          - DIM
+          - FACT
+      required:
+      - fieldName
+      - fieldType
+    ReportRequest:
+      type: object
+      description: Request to retrieve aggregated performance per offer for a merchant.
+      properties:
+        cube:
+          type: string
+          description: Reporting cube to query. Only 'merchant_performance' is currently supported.
+          enum:
+          - merchant_performance
+          default: merchant_performance
+        offerIds:
+          type: array
+          description: Optional list of partner offer IDs to filter. Empty or omitted returns all offers for the merchant.
+          items:
+            type: string
+        timeRange:
+          type: object
+          description: 'Inclusive date range for the report (YYYY-MM-DD). If omitted: `from` defaults to 2 years back (max lookback) and `to` defaults to today''s date.'
+          properties:
+            from:
+              type: string
+              format: date
+              description: Start date (inclusive).
+            to:
+              type: string
+              format: date
+              description: End date (inclusive).
+          required:
+          - from
+          - to
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /v1/idp/oauth2/token
+          scopes:
+            openid: openid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

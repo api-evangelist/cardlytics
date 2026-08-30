@@ -1,0 +1,60 @@
+openapi: 3.2.0
+info:
+  title: partner-api Redemptions API
+  description: Partner APIs
+  version: '2025-10-07'
+servers:
+- url: https://api-sandbox.cardlytics.com
+  description: Sandbox environment - Use this for API testing and development
+- url: https://api.cardlytics.com
+  description: Production environment - Documentation reference only, contact support for access
+security:
+- oauth2:
+  - openid
+tags:
+- name: Redemptions
+paths:
+  /api/v1/partner/redemptions:
+    get:
+      summary: Get daily redemptions pre-signed URL
+      description: Returns a pre-signed URL to download all redemptions for a specific day. The day must be in the past (UTC time). The pre-signed URL is valid for 60 minutes only.
+      tags:
+      - Redemptions
+      parameters:
+      - name: date
+        in: query
+        description: 'The date for which to retrieve redemptions (format: YYYY-MM-DD, must be a past date and not today or in the future).'
+        required: true
+        schema:
+          type: string
+          format: date
+          example: '2026-01-04'
+      responses:
+        '200':
+          description: Pre-signed URL generated successfully.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  url:
+                    type: string
+                    description: The pre-signed URL to download the redemptions file.
+                required:
+                - url
+        '400':
+          description: Bad Request - The date format is incorrect, or the date is today's date or in the future.
+        '500':
+          description: Internal Server Error - An unexpected error occurred.
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /v1/idp/oauth2/token
+          scopes:
+            openid: openid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

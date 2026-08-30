@@ -1,0 +1,513 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Pricing Models API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: PricingModels
+paths:
+  /v6/accounts/{accountId}/PricingModels/{pricingModelId}:
+    get:
+      tags:
+      - PricingModels
+      summary: Returns an PricingModel from the repository for the given account by its Id.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: pricingModelId
+        in: path
+        description: The pricingModelId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The PricingModel was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The PricingModel was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    patch:
+      tags:
+      - PricingModels
+      summary: Updates the partial modifications to a PricingModel.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: pricingModelId
+        in: path
+        description: The Id of the PricingModel to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Pricing Model with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+      responses:
+        '200':
+          description: The PricingModel was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The PricingModel was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - PricingModels
+      summary: Updates a PricingModel with the given resource model.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: pricingModelId
+        in: path
+        description: The Id of the PricingModel to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Pricing Model with its updates.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PutPricingModelResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutPricingModelResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PutPricingModelResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PutPricingModelResourceModel'
+      responses:
+        '200':
+          description: The PricingModel was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The PricingModel was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/accounts/{accountId}/adGroups/{adGroupId}/PricingModels:
+    get:
+      tags:
+      - PricingModels
+      summary: Returns an PricingModel from the repository for the given account by its AdId.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The AdGroupId to find pricingModel.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The PricingModel was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The PricingModel was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/accounts/{accountId}/PricingModels:
+    post:
+      tags:
+      - PricingModels
+      summary: Adds an Pricing Model to the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The PricingModel to add to the repository.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostPricingModelResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostPricingModelResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostPricingModelResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostPricingModelResourceModel'
+      responses:
+        '201':
+          description: The PricingModel was created; the response contains the new entity and the route to retrieve it from this controller.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetPricingModelResourceModel'
+components:
+  schemas:
+    PostPricingModelResourceModel:
+      type: object
+      properties:
+        adGroupId:
+          type: integer
+          format: int32
+        feePercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
+      additionalProperties: false
+    PutPricingModelResourceModel:
+      type: object
+      properties:
+        adGroupId:
+          type: integer
+          format: int32
+        pricingModelId:
+          type: integer
+          format: int32
+        accountId:
+          type:
+          - string
+          - 'null'
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        feePercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
+      additionalProperties: false
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    GetPricingModelResourceModel:
+      type: object
+      properties:
+        adGroupId:
+          type: integer
+          format: int32
+        createDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        pricingModelId:
+          type: integer
+          format: int32
+        accountId:
+          type:
+          - string
+          - 'null'
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        feePercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
+        createUser:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

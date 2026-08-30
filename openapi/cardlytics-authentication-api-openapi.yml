@@ -1,0 +1,78 @@
+openapi: 3.2.0
+info:
+  title: partner-api Authentication API
+  description: Partner APIs
+  version: '2025-10-07'
+servers:
+- url: https://api-sandbox.cardlytics.com
+  description: Sandbox environment - Use this for API testing and development
+- url: https://api.cardlytics.com
+  description: Production environment - Documentation reference only, contact support for access
+security:
+- oauth2:
+  - openid
+tags:
+- name: Authentication
+paths:
+  /api/v1/idp/oauth2/token:
+    post:
+      summary: Generate OAuth2 access token
+      description: Obtain an access token using client credentials for API authentication
+      tags:
+      - Authentication
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                grant_type:
+                  type: string
+                  enum:
+                  - client_credentials
+                  description: Must be 'client_credentials'
+                client_id:
+                  type: string
+                  description: Your client ID
+                client_secret:
+                  type: string
+                  description: Your client secret
+              required:
+              - grant_type
+              - client_id
+              - client_secret
+      responses:
+        '200':
+          description: Token generated successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  access_token:
+                    type: string
+                    description: The access token
+                  token_type:
+                    type: string
+                    example: Bearer
+                  expires_in:
+                    type: integer
+                    description: Token expiration time in seconds
+        '400':
+          description: Bad Request - Invalid parameters
+        '401':
+          description: Unauthorized - Invalid client credentials
+components:
+  securitySchemes:
+    oauth2:
+      type: oauth2
+      flows:
+        clientCredentials:
+          tokenUrl: /v1/idp/oauth2/token
+          scopes:
+            openid: openid
+x-readme:
+  explorer-enabled: true
+  proxy-enabled: true

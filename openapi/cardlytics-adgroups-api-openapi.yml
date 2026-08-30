@@ -1,0 +1,798 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Ad Groups API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: AdGroups
+paths:
+  /v6/accounts/{accountId}/AdGroups/{adGroupId}/clone:
+    post:
+      tags:
+      - AdGroups
+      summary: Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The adGroupId to clone.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '303':
+          description: The AdGroup was cloned and the GET route to the new cloned AdGroup is returned in the location header.
+        '400':
+          description: Bad request. For example, some validation rules were violated during the request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The AdGroup was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/accounts/{accountId}/AdGroups/{adGroupId}/duplicate:
+    post:
+      tags:
+      - AdGroups
+      summary: Duplicates an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The adGroupId to duplicate.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '303':
+          description: The AdGroup was duplicated and the GET route to the new cloned AdGroup is returned in the location header.
+        '400':
+          description: Bad request. For example, some validation rules were violated during the request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The AdGroup was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/accounts/{accountId}/AdGroups/{adGroupId}:
+    get:
+      tags:
+      - AdGroups
+      summary: Returns an AdGroup from the repository for the given account by its adGroupId.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The adGroupId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The AdGroup was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+        '404':
+          description: The AdGroup was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    patch:
+      tags:
+      - AdGroups
+      summary: Updates the partial modifications to an adGroup.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The Id of the AdGroup to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The AdGroup with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+      responses:
+        '200':
+          description: The AdGroup was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+        '400':
+          description: The adGroupId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The AdGroup was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    delete:
+      tags:
+      - AdGroups
+      summary: 'Deletes an Ad Group with all related entities (Reward, Pricing models, etc.)
+
+        DELETE accounts/{accountId}/AdGroups/{adGroupId}'
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The Ad Group Id to delete.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '204':
+          description: A Successful No Content result.
+        '400':
+          description: The Ad Group is not in Draft Status.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Ad Group was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/AdGroups/{adGroupId}:
+    get:
+      tags:
+      - AdGroups
+      summary: Returns an AdGroup from the repository by its adGroupId.
+      parameters:
+      - name: adGroupId
+        in: path
+        description: The adGroupId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The AdGroup was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+        '404':
+          description: The AdGroup was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/accounts/{accountId}/AdGroups:
+    get:
+      tags:
+      - AdGroups
+      summary: Returns all Ad Groups from the repository for a given account.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId for which to retrieve Ad Groups.
+        required: true
+        schema:
+          type: string
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of Ad Groups was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdGroupResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdGroupResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdGroupResourceModel'
+    post:
+      tags:
+      - AdGroups
+      summary: Adds an AdGroup to the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The AdGroup to add to the repository.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostAdGroupResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostAdGroupResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostAdGroupResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostAdGroupResourceModel'
+      responses:
+        '201':
+          description: The AdGroup was created; the response contains the new entity and the route to retrieve it from this controller.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetAdGroupResourceModel'
+  /v6/AdGroups:
+    get:
+      tags:
+      - AdGroups
+      summary: Returns all Ad Groups from the repository.
+      parameters:
+      - name: PerPage
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: Page
+        in: query
+        schema:
+          minimum: 1
+          type: integer
+          format: int32
+      - name: OrderBy
+        in: query
+        schema:
+          type: string
+      - name: filter
+        in: query
+        description: Gets or Sets the filter specification strings
+        schema:
+          type: array
+          items:
+            type: string
+      responses:
+        '200':
+          description: The list of Ad Groups was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdGroupResourceModel'
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdGroupResourceModel'
+            text/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GetAdGroupResourceModel'
+  /v6/accounts/{accountId}/AdGroups/{adGroupId}/validation:
+    get:
+      tags:
+      - AdGroups
+      summary: Validates an AdGroup with all business rules.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId for which to retrieve the AdGroup.
+        required: true
+        schema:
+          type: string
+      - name: adGroupId
+        in: path
+        description: The adGroupId to validate.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The AdGroup was validated and results returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The AdGroup was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v6/AdGroups/validation/rule-set:
+    get:
+      tags:
+      - AdGroups
+      summary: Returns validation rules for a AdGroup object.
+      responses:
+        '200':
+          description: The AdGroup validation rules are returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+components:
+  schemas:
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    PostAdGroupResourceModel:
+      required:
+      - name
+      type: object
+      properties:
+        targetingCriteriaId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        name:
+          minLength: 1
+          type: string
+        campaignId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audienceId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementLocation:
+          $ref: '#/components/schemas/PlacementLocation'
+        institutions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        testPopulation:
+          type:
+          - number
+          - 'null'
+          format: double
+      additionalProperties: false
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    GetAdGroupResourceModel:
+      type: object
+      properties:
+        createDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        targetingCriteriaId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        adGroupId:
+          type: integer
+          format: int32
+        name:
+          type:
+          - string
+          - 'null'
+        accountId:
+          type:
+          - string
+          - 'null'
+        campaignId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audienceId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementLocation:
+          $ref: '#/components/schemas/PlacementLocation'
+        institutions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        createUser:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+        testPopulation:
+          type: number
+          format: double
+        parentAdGroupId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        adGroupStatus:
+          $ref: '#/components/schemas/CampaignStatus'
+        isExpandable:
+          default: false
+        isExpanded:
+          default: false
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
+    PlacementLocation:
+      enum:
+      - None
+      - All
+      - UnderTransaction
+      type: string
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token

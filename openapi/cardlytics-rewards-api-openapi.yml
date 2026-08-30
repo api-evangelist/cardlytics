@@ -1,0 +1,950 @@
+openapi: 3.2.0
+info:
+  title: Campaign Build Rewards API
+  version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
+security:
+- oauth2-cognito:
+  - read
+tags:
+- name: Rewards
+paths:
+  /v7/accounts/{accountId}/Rewards/{rewardId}:
+    get:
+      tags:
+      - Rewards
+      summary: Returns an Reward from the repository for the given account by its Id.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: rewardId
+        in: path
+        description: The rewardlId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Reward was found and returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Reward was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    patch:
+      tags:
+      - Rewards
+      summary: Updates a Reward.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: rewardId
+        in: path
+        description: The Id of the Reward to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Reward with its updates in Json Patch document format.
+        content:
+          application/json-patch+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          text/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+          application/*+json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/Operation'
+      responses:
+        '200':
+          description: The Reward was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+        '400':
+          description: The rewardId specified in the route does not match the value specified in the request body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Reward was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+    put:
+      tags:
+      - Rewards
+      summary: Updates a Reward with the given resource model.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: rewardId
+        in: path
+        description: The Id of the Reward to be modified.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        description: The Reward Model with its updates.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PutRewardResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PutRewardResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PutRewardResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PutRewardResourceModel'
+      responses:
+        '200':
+          description: The Reward was found and updated; the updated entity is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+        '400':
+          description: Bad Request
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Reward was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Rewards/rms/{rmsRewardId}:
+    get:
+      tags:
+      - Rewards
+      parameters:
+      - name: accountId
+        in: query
+        schema:
+          type: string
+      - name: rmsRewardId
+        in: path
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/RewardAttributesDataBody'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RewardAttributesDataBody'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/RewardAttributesDataBody'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: Not Found
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/ads/{adId}/Rewards:
+    get:
+      tags:
+      - Rewards
+      summary: Returns Rewards for a given Ad from the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: adId
+        in: path
+        description: The AdId to use to return Rewards.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Reward was found and the Reward returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: No reward was found for this Ad.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/accounts/{accountId}/Rewards/{rewardId}/validation:
+    get:
+      tags:
+      - Rewards
+      summary: Validates a Reward with all business rules.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      - name: rewardId
+        in: path
+        description: The rewardlId to find.
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: The Reward was found and the validation result is returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+        '404':
+          description: The Reward was not found.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+  /v7/Rewards/validation/rule-set:
+    get:
+      tags:
+      - Rewards
+      summary: Returns validation rules for a Reward object.
+      responses:
+        '200':
+          description: The Reward validation rules are returned in the response body.
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+  /v7/accounts/{accountId}/Rewards:
+    post:
+      tags:
+      - Rewards
+      summary: Adds a Reward to the repository.
+      parameters:
+      - name: accountId
+        in: path
+        description: The accountId of the user to filter the request.
+        required: true
+        schema:
+          type: string
+      requestBody:
+        description: The Reward to add in the repository.
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/PostRewardResourceModel'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PostRewardResourceModel'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/PostRewardResourceModel'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/PostRewardResourceModel'
+      responses:
+        '201':
+          description: "The Reward was created; the response contains the new entity and the route to retrieve it\n           from this controller."
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/GetRewardResourceModel'
+        '403':
+          description: Forbidden
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ProblemDetails'
+components:
+  schemas:
+    StoreLocationType:
+      enum:
+      - Unknown
+      - InStore
+      - Online
+      - GiftCard
+      - CallCenter
+      type: string
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Relationship:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipData'
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    RewardTemplate:
+      enum:
+      - None
+      - FlatAmountBack
+      - PercentBack
+      - SpendXGetY
+      type: string
+    RewardAttributesDataBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardAttributesData'
+      additionalProperties: false
+    RelationshipData:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    PutRewardResourceModel:
+      type: object
+      properties:
+        redemptionStartDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime or null.'
+          example: '1987-03-18T00:00:00.0000000'
+        redemptionEndDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime or null.'
+          example: '1987-03-18T00:00:00.0000000'
+        rewardAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        rmsRewardId:
+          type:
+          - string
+          - 'null'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        rewardType:
+          $ref: '#/components/schemas/RewardType'
+        rewardId:
+          type: integer
+          format: int32
+        adId:
+          type: integer
+          format: int32
+        accountId:
+          type:
+          - string
+          - 'null'
+        rewardTemplate:
+          $ref: '#/components/schemas/RewardTemplate'
+        rewardPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        rewardAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        minSpend:
+          type:
+          - number
+          - 'null'
+          format: double
+        minVisits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rewardCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        isMultiple:
+          default: false
+        isHoldRedemption:
+          default: false
+        storeLocationTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StoreLocationType'
+      additionalProperties: false
+    RewardAttributes:
+      type: object
+      properties:
+        adId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        endDateOffset:
+          type: integer
+          format: int32
+        isManualRedemption:
+          default: false
+        isSuspendedProcessing:
+          default: false
+        redemptionEndDateTime:
+          example: '1987-03-18T00:00:00.0000000'
+        redemptionStartDateTime:
+          example: '1987-03-18T00:00:00.0000000'
+        remediationModelConfigValue:
+          type:
+          - string
+          - 'null'
+        rewardAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        rewardModelConfigValue:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    RewardAttributesData:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        attributes:
+          $ref: '#/components/schemas/RewardAttributes'
+        relationships:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Relationship'
+      additionalProperties: false
+    RewardType:
+      enum:
+      - SingleRewardFlatAmountBack
+      - SingleRewardPercentAmountBack
+      - SingleRewardSpendXGetY
+      - MultipleRewardFlatAmountBack
+      - MultipleRewardPercentAmountBack
+      - MultipleRewardSpendXGetY
+      type: string
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    PostRewardResourceModel:
+      required:
+      - adId
+      type: object
+      properties:
+        redemptionStartDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime or null.'
+          example: '1987-03-18T00:00:00.0000000'
+        redemptionEndDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime or null.'
+          example: '1987-03-18T00:00:00.0000000'
+        rewardAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        rmsRewardId:
+          type:
+          - string
+          - 'null'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        rewardType:
+          $ref: '#/components/schemas/RewardType'
+        adId:
+          type: integer
+          format: int32
+        rewardTemplate:
+          $ref: '#/components/schemas/RewardTemplate'
+        rewardPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        rewardAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        minSpend:
+          type:
+          - number
+          - 'null'
+          format: double
+        minVisits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rewardCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        isMultiple:
+          default: false
+        isHoldRedemption:
+          default: false
+        storeLocationTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StoreLocationType'
+      additionalProperties: false
+    GetRewardResourceModel:
+      type: object
+      properties:
+        createDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        redemptionStartDateTime:
+          description: This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+          example: '1987-03-18T00:00:00.0000000'
+        redemptionEndDateTime:
+          description: 'This field is calculated. It returns Campaign End Date + Reward End Date Offset or null when no Campaign is attached.
+
+            This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.'
+          example: '1987-03-18T00:00:00.0000000'
+        rewardAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        rmsRewardId:
+          type:
+          - string
+          - 'null'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        rewardType:
+          $ref: '#/components/schemas/RewardType'
+        rewardId:
+          type: integer
+          format: int32
+        adId:
+          type: integer
+          format: int32
+        accountId:
+          type:
+          - string
+          - 'null'
+        rewardTemplate:
+          $ref: '#/components/schemas/RewardTemplate'
+        rewardPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        rewardAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        minSpend:
+          type: number
+          format: double
+        minVisits:
+          type: integer
+          format: int32
+        rewardCap:
+          type: number
+          format: double
+        isMultiple:
+          default: false
+        isHoldRedemption:
+          default: false
+        endDateOffset:
+          type: integer
+          format: int32
+        storeLocationTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StoreLocationType'
+        createUser:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+  securitySchemes:
+    oauth2-cognito:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/authorize
+          tokenUrl: https://advertiser-auth-preprod.auth.us-east-1.amazoncognito.com/oauth2/token
+          scopes:
+            openid: openid
+      x-tokenName: id_token
