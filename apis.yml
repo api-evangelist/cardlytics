@@ -82,40 +82,6 @@ tags_raw:
 - Attribution
 - Offers
 apis:
-- aid: cardlytics:cardlytics-adgroups-api
-  name: Cardlytics Ad Groups API
-  description: The AdGroups API from Cardlytics — 8 operation(s) for adgroups.
-  humanURL: https://platform.cardlytics.com/advertisers/reference
-  baseURL: https://api.cardlytics.com
-  tags:
-  - Ad Groups
-  tags_raw:
-  - AdGroups
-  properties:
-  - type: OpenAPI
-    url: openapi/cardlytics-adgroups-api-openapi.yml
-  - type: Documentation
-    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
-  - type: APIReference
-    url: https://platform.cardlytics.com/advertisers/reference
-  - type: GettingStarted
-    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
-  - type: Sandbox
-    url: https://api-sandbox.cardlytics.com
-  - type: ChangeLog
-    url: https://platform.cardlytics.com/advertisers/changelog
-  - type: Documentation
-    url: https://platform.cardlytics.com/advertisers
-  - type: Documentation
-    url: https://platform.cardlytics.com/publisher-integrations
-  - type: APIReference
-    url: https://platform.cardlytics.com/publisher-integrations/reference
-  - type: GettingStarted
-    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
-  - type: Sandbox
-    url: https://pub-api-us.sandbox.cardlytics.com
-  - type: Webhooks
-    url: asyncapi/cardlytics-publisher-webhooks.yml
 - aid: cardlytics:cardlytics-ads-api
   name: Cardlytics Ads API
   description: The Ads API from Cardlytics — 10 operation(s) for ads.
@@ -222,40 +188,6 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cardlytics-audiences-api-openapi.yml
-  - type: Documentation
-    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
-  - type: APIReference
-    url: https://platform.cardlytics.com/advertisers/reference
-  - type: GettingStarted
-    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
-  - type: Sandbox
-    url: https://api-sandbox.cardlytics.com
-  - type: ChangeLog
-    url: https://platform.cardlytics.com/advertisers/changelog
-  - type: Documentation
-    url: https://platform.cardlytics.com/advertisers
-  - type: Documentation
-    url: https://platform.cardlytics.com/publisher-integrations
-  - type: APIReference
-    url: https://platform.cardlytics.com/publisher-integrations/reference
-  - type: GettingStarted
-    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
-  - type: Sandbox
-    url: https://pub-api-us.sandbox.cardlytics.com
-  - type: Webhooks
-    url: asyncapi/cardlytics-publisher-webhooks.yml
-- aid: cardlytics:cardlytics-auditlogs-api
-  name: Cardlytics Audit Logs API
-  description: The AuditLogs API from Cardlytics — 1 operation(s) for auditlogs.
-  humanURL: https://platform.cardlytics.com/advertisers/reference
-  baseURL: https://api.cardlytics.com
-  tags:
-  - Audit Logs
-  tags_raw:
-  - AuditLogs
-  properties:
-  - type: OpenAPI
-    url: openapi/cardlytics-auditlogs-api-openapi.yml
   - type: Documentation
     url: https://platform.cardlytics.com/advertisers/docs/api-get-started
   - type: APIReference
@@ -502,38 +434,6 @@ apis:
     url: https://pub-api-us.sandbox.cardlytics.com
   - type: Webhooks
     url: asyncapi/cardlytics-publisher-webhooks.yml
-- aid: cardlytics:cardlytics-purchasecategories-api
-  name: Cardlytics Purchase Categories API
-  description: The PurchaseCategories API from Cardlytics — 2 operation(s) for purchasecategories.
-  humanURL: https://platform.cardlytics.com/advertisers/reference
-  baseURL: https://api.cardlytics.com
-  tags:
-  - PurchaseCategories
-  properties:
-  - type: OpenAPI
-    url: openapi/cardlytics-purchasecategories-api-openapi.yml
-  - type: Documentation
-    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
-  - type: APIReference
-    url: https://platform.cardlytics.com/advertisers/reference
-  - type: GettingStarted
-    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
-  - type: Sandbox
-    url: https://api-sandbox.cardlytics.com
-  - type: ChangeLog
-    url: https://platform.cardlytics.com/advertisers/changelog
-  - type: Documentation
-    url: https://platform.cardlytics.com/advertisers
-  - type: Documentation
-    url: https://platform.cardlytics.com/publisher-integrations
-  - type: APIReference
-    url: https://platform.cardlytics.com/publisher-integrations/reference
-  - type: GettingStarted
-    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
-  - type: Sandbox
-    url: https://pub-api-us.sandbox.cardlytics.com
-  - type: Webhooks
-    url: asyncapi/cardlytics-publisher-webhooks.yml
 - aid: cardlytics:cardlytics-redemptions-api
   name: Cardlytics Redemptions API
   description: The Redemptions API from Cardlytics — 1 operation(s) for redemptions.
@@ -640,6 +540,102 @@ apis:
   properties:
   - type: OpenAPI
     url: openapi/cardlytics-session-controller-api-openapi.yml
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: APIReference
+    url: https://platform.cardlytics.com/advertisers/reference
+  - type: GettingStarted
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: Sandbox
+    url: https://api-sandbox.cardlytics.com
+  - type: ChangeLog
+    url: https://platform.cardlytics.com/advertisers/changelog
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers
+  - type: Documentation
+    url: https://platform.cardlytics.com/publisher-integrations
+  - type: APIReference
+    url: https://platform.cardlytics.com/publisher-integrations/reference
+  - type: GettingStarted
+    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
+  - type: Sandbox
+    url: https://pub-api-us.sandbox.cardlytics.com
+  - type: Webhooks
+    url: asyncapi/cardlytics-publisher-webhooks.yml
+- aid: cardlytics:cardlytics-ad-groups-api
+  name: Cardlytics Ad Groups API
+  description: The Ad Groups API from Cardlytics — 8 operation(s) for ad groups.
+  humanURL: https://platform.cardlytics.com/advertisers/reference
+  baseURL: https://api.cardlytics.com
+  tags:
+  - Ad Groups
+  properties:
+  - type: OpenAPI
+    url: openapi/cardlytics-ad-groups-api-openapi.yml
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: APIReference
+    url: https://platform.cardlytics.com/advertisers/reference
+  - type: GettingStarted
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: Sandbox
+    url: https://api-sandbox.cardlytics.com
+  - type: ChangeLog
+    url: https://platform.cardlytics.com/advertisers/changelog
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers
+  - type: Documentation
+    url: https://platform.cardlytics.com/publisher-integrations
+  - type: APIReference
+    url: https://platform.cardlytics.com/publisher-integrations/reference
+  - type: GettingStarted
+    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
+  - type: Sandbox
+    url: https://pub-api-us.sandbox.cardlytics.com
+  - type: Webhooks
+    url: asyncapi/cardlytics-publisher-webhooks.yml
+- aid: cardlytics:cardlytics-audit-logs-api
+  name: Cardlytics Audit Logs API
+  description: The Audit Logs API from Cardlytics — 1 operation(s) for audit logs.
+  humanURL: https://platform.cardlytics.com/advertisers/reference
+  baseURL: https://api.cardlytics.com
+  tags:
+  - Audit Logs
+  properties:
+  - type: OpenAPI
+    url: openapi/cardlytics-audit-logs-api-openapi.yml
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: APIReference
+    url: https://platform.cardlytics.com/advertisers/reference
+  - type: GettingStarted
+    url: https://platform.cardlytics.com/advertisers/docs/api-get-started
+  - type: Sandbox
+    url: https://api-sandbox.cardlytics.com
+  - type: ChangeLog
+    url: https://platform.cardlytics.com/advertisers/changelog
+  - type: Documentation
+    url: https://platform.cardlytics.com/advertisers
+  - type: Documentation
+    url: https://platform.cardlytics.com/publisher-integrations
+  - type: APIReference
+    url: https://platform.cardlytics.com/publisher-integrations/reference
+  - type: GettingStarted
+    url: https://docs.cardlytics.com/ads/v2/getting-started/get-started.html
+  - type: Sandbox
+    url: https://pub-api-us.sandbox.cardlytics.com
+  - type: Webhooks
+    url: asyncapi/cardlytics-publisher-webhooks.yml
+- aid: cardlytics:cardlytics-purchase-categories-api
+  name: Cardlytics Purchase Categories API
+  description: The Purchase Categories API from Cardlytics — 2 operation(s) for purchase categories.
+  humanURL: https://platform.cardlytics.com/advertisers/reference
+  baseURL: https://api.cardlytics.com
+  tags:
+  - Purchase Categories
+  properties:
+  - type: OpenAPI
+    url: openapi/cardlytics-purchase-categories-api-openapi.yml
   - type: Documentation
     url: https://platform.cardlytics.com/advertisers/docs/api-get-started
   - type: APIReference
