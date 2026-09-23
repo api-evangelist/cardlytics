@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Campaigns API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     get:
       tags:
       - Campaigns
-      summary: Returns all Campaigns from the repository for a given account.
+      summary: Returns all Campaigns from the repository for a given account
       parameters:
       - name: accountId
         in: path
@@ -89,10 +86,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdCampaigns
+      x-operation-id-source: derived
     post:
       tags:
       - Campaigns
-      summary: Adds a Campaign to the repository.
+      summary: Adds a Campaign to the repository
       parameters:
       - name: accountId
         in: path
@@ -140,11 +139,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdCampaigns
+      x-operation-id-source: derived
   /v7/Campaigns:
     get:
       tags:
       - Campaigns
-      summary: Returns all Campaigns from the repository.
+      summary: Returns all Campaigns from the repository
       parameters:
       - name: PerPage
         in: query
@@ -200,11 +201,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7Campaigns
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}:
     get:
       tags:
       - Campaigns
-      summary: Returns a Campaign from the repository for a given account by its CampaignId.
+      summary: Returns a Campaign from the repository for a given account by its CampaignId
       parameters:
       - name: accountId
         in: path
@@ -246,10 +249,12 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
         '404':
           description: The Campaign was not found.
+      operationId: getV7AccountsByAccountIdCampaignsByCampaignId
+      x-operation-id-source: derived
     patch:
       tags:
       - Campaigns
-      summary: Updates the partial modifications to a Campaign.
+      summary: Updates the partial modifications to a Campaign
       parameters:
       - name: accountId
         in: path
@@ -336,12 +341,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV7AccountsByAccountIdCampaignsByCampaignId
+      x-operation-id-source: derived
     delete:
       tags:
       - Campaigns
-      summary: 'Deletes a Campaign with all related entities (AdGroup, Ad, Audience etc.)
-
-        DELETE accounts/{accountId}/Campaigns/{campaignId}'
+      summary: Deletes a Campaign with all related entities (AdGroup, Ad, Audience etc.)…
       parameters:
       - name: accountId
         in: path
@@ -395,11 +400,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: deleteV7AccountsByAccountIdCampaignsByCampaignId
+      x-operation-id-source: derived
   /v7/Campaigns/{campaignId}:
     get:
       tags:
       - Campaigns
-      summary: Returns a Campaign from the repository by its CampaignId.
+      summary: Returns a Campaign from the repository by its CampaignId
       parameters:
       - name: campaignId
         in: path
@@ -435,11 +442,13 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
         '404':
           description: The Campaign was not found.
+      operationId: getV7CampaignsByCampaignId
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/diff:
     get:
       tags:
       - Campaigns
-      summary: Returns a difference between the two versions of the Campaign.
+      summary: Returns a difference between the two versions of the Campaign
       parameters:
       - name: accountId
         in: path
@@ -483,11 +492,13 @@ paths:
                 $ref: '#/components/schemas/ProblemDetails'
         '404':
           description: The Campaign was not found.
+      operationId: getV7AccountsByAccountIdCampaignsByCampaignIdDiff
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/optimize:
     patch:
       tags:
       - Campaigns
-      summary: Updates the partial modifications to a Campaign with only optimize Campaign fields.
+      summary: Updates the partial modifications to a Campaign with only optimize Campaign…
       parameters:
       - name: accountId
         in: path
@@ -574,11 +585,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV7AccountsByAccountIdCampaignsByCampaignIdOptimize
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/status:
     put:
       tags:
       - Campaigns
-      summary: Updates the Status of a Campaign. Use this endpoint to apply changes to the Campaign Status, for example resulting from user action.
+      summary: Updates the Status of a Campaign.
       parameters:
       - name: accountId
         in: path
@@ -657,11 +670,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: putV7AccountsByAccountIdCampaignsByCampaignIdStatus
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/versions:
     get:
       tags:
       - Campaigns
-      summary: Returns all versions of a Campaign. A version is created when a CampaignBuilt event is published for a campaign.
+      summary: Returns all versions of a Campaign.
       parameters:
       - name: accountId
         in: path
@@ -719,11 +734,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdCampaignsByCampaignIdVersions
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/versions/latest:
     get:
       tags:
       - Campaigns
-      summary: Returns the latest version of a Campaign. A version is created when a CampaignBuilt event is published for a campaign.
+      summary: Returns the latest version of a Campaign.
       parameters:
       - name: accountId
         in: path
@@ -775,11 +792,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdCampaignsByCampaignIdVersionsLatest
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/projection:
     post:
       tags:
       - Campaigns
-      summary: Creates a CampaignProjection request and saves the request to the repository.
+      summary: Creates a CampaignProjection request and saves the request to the repository
       parameters:
       - name: accountId
         in: path
@@ -843,11 +862,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdCampaignsByCampaignIdProjection
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/duplicate:
     post:
       tags:
       - Campaigns
-      summary: Duplicates a Campaign with all related entities (AdGroup, Ad, Audience, Ad pricing models, etc.)
+      summary: Duplicates a Campaign with all related entities (AdGroup, Ad, Audience, Ad…
       parameters:
       - name: accountId
         in: path
@@ -910,11 +931,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdCampaignsByCampaignIdDuplicate
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Campaigns/{campaignId}/validation:
     get:
       tags:
       - Campaigns
-      summary: Validates a Campaign with all business rules.
+      summary: Validates a Campaign with all business rules
       parameters:
       - name: accountId
         in: path
@@ -966,11 +989,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdCampaignsByCampaignIdValidation
+      x-operation-id-source: derived
   /v7/Campaigns/validation/rule-set:
     get:
       tags:
       - Campaigns
-      summary: Returns validation rules for a Campaign object.
+      summary: Returns validation rules for a Campaign object
       responses:
         '200':
           description: The Campaign validation rules are returned in the response body.
@@ -984,13 +1009,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+      operationId: getV7CampaignsValidationRuleSet
+      x-operation-id-source: derived
   /v7/Campaigns/count:
     get:
       tags:
       - Campaigns
-      summary: 'Calculates the aggregate count of campaigns partitioned by the campaign status.
-
-        Only counts those objects which the user has been granted access.'
+      summary: Calculates the aggregate count of campaigns partitioned by the campaign status.
       parameters:
       - name: filter
         in: query
@@ -1075,84 +1100,69 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7CampaignsCount
+      x-operation-id-source: derived
 components:
   schemas:
-    GetValidationDefinitionResourceModel:
+    PostCampaignResourceModel:
+      required:
+      - budget
+      - campaignObjective
+      - campaignPricingModel
+      - name
+      - orderNumber
+      - scheduleType
       type: object
       properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    GetCampaignProjectionResourceModel:
-      type: object
-      properties:
-        campaignProjectionId:
-          type: integer
-          format: int32
-        campaignId:
-          type: integer
-          format: int32
-        eventId:
-          type: string
-          format: uuid
-      additionalProperties: false
-    CampaignPricingModel:
-      enum:
-      - None
-      - CPR
-      - CPE
-      - CPT
-      - CPS
-      - CPST
-      - CPSH
-      - CPM
-      type: string
-      description: 'Campaign PricingModel enumeration.
+        startDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
 
-        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
+            This value must be a valid ISO DateTime.'
+          example: '1987-03-18T00:00:00.0000000'
+        endDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime.'
+          example: '1987-03-18T00:00:00.0000000'
+        transactionDateTime:
           type:
           - string
           - 'null'
-        op:
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        targetRoas:
           type:
-          - string
+          - number
           - 'null'
-        from:
+          format: double
+        isOfferAutoActivated:
+          default: false
+        campaignType:
+          $ref: '#/components/schemas/CampaignType'
+        attributionWindow:
           type:
-          - string
+          - integer
           - 'null'
-      additionalProperties: false
-    RuleDefinition:
-      type: object
-      properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
+          format: int32
+        isBankFunded:
+          default: false
+        campaignPricingModel:
+          $ref: '#/components/schemas/CampaignPricingModel'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        orderNumber:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          type: string
+        campaignObjective:
+          $ref: '#/components/schemas/CampaignObjective'
+        budget:
+          type: number
+          format: double
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
       additionalProperties: false
     GetValidationResourceModel:
       type: object
@@ -1190,43 +1200,36 @@ components:
           - 'null'
       additionalProperties: {}
       description: Get Validation endpoint resource model.
-    CampaignObjective:
+    CampaignStatus:
       enum:
-      - DriveSales
-      - BuildLoyalty
-      - AcquireNewCustomers
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
       type: string
-    GetCampaignVersionResourceModel:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int32
-        eventDateTime:
-          type: string
-          format: date-time
-          example: '1987-03-18T00:00:00.0000000-08:00'
-      additionalProperties: false
+      description: Campaign status enumeration.
     CampaignType:
       enum:
       - FIXED_CLO
       - DYNAMIC_CLO
       type: string
       description: CampaignType enumeration.
-    ScheduleType:
+    CampaignPricingModel:
       enum:
-      - Lifetime
-      - Daily
+      - None
+      - CPR
+      - CPE
+      - CPT
+      - CPS
+      - CPST
+      - CPSH
+      - CPM
       type: string
-      description: 'Schedule Type enumeration.
+      description: 'Campaign PricingModel enumeration.
 
-        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
-    PutCampaignStatusResourceModel:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/CampaignStatus'
-      additionalProperties: false
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
     GetCampaignResourceModel:
       type: object
       properties:
@@ -1301,66 +1304,52 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    PostCampaignResourceModel:
-      required:
-      - budget
-      - campaignObjective
-      - campaignPricingModel
-      - name
-      - orderNumber
-      - scheduleType
+    PutCampaignStatusResourceModel:
       type: object
       properties:
-        startDateTime:
-          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
-
-            This value must be a valid ISO DateTime.'
-          example: '1987-03-18T00:00:00.0000000'
-        endDateTime:
-          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
-
-            This value must be a valid ISO DateTime.'
-          example: '1987-03-18T00:00:00.0000000'
-        transactionDateTime:
+        status:
+          $ref: '#/components/schemas/CampaignStatus'
+      additionalProperties: false
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
           type:
           - string
           - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetCampaignVersionResourceModel:
+      type: object
+      properties:
+        version:
+          type: integer
+          format: int32
+        eventDateTime:
+          type: string
           format: date-time
           example: '1987-03-18T00:00:00.0000000-08:00'
-        targetRoas:
-          type:
-          - number
-          - 'null'
-          format: double
-        isOfferAutoActivated:
-          default: false
-        campaignType:
-          $ref: '#/components/schemas/CampaignType'
-        attributionWindow:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        isBankFunded:
-          default: false
-        campaignPricingModel:
-          $ref: '#/components/schemas/CampaignPricingModel'
-        currency:
-          $ref: '#/components/schemas/Currency'
-        orderNumber:
-          minLength: 1
-          type: string
-        name:
-          minLength: 1
-          type: string
-        campaignObjective:
-          $ref: '#/components/schemas/CampaignObjective'
-        budget:
-          type: number
-          format: double
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
       additionalProperties: false
+    CampaignObjective:
+      enum:
+      - DriveSales
+      - BuildLoyalty
+      - AcquireNewCustomers
+      type: string
     ProblemDetails:
       type: object
       properties:
@@ -1386,21 +1375,23 @@ components:
           - string
           - 'null'
       additionalProperties: {}
-    Currency:
-      enum:
-      - USD
-      - GBP
-      type: string
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     RuleTypes:
       enum:
       - Required
@@ -1416,6 +1407,42 @@ components:
       - UniqueCollection
       type: string
       description: Validation rule definition types.
+    ScheduleType:
+      enum:
+      - Lifetime
+      - Daily
+      type: string
+      description: 'Schedule Type enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    GetCampaignProjectionResourceModel:
+      type: object
+      properties:
+        campaignProjectionId:
+          type: integer
+          format: int32
+        campaignId:
+          type: integer
+          format: int32
+        eventId:
+          type: string
+          format: uuid
+      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2

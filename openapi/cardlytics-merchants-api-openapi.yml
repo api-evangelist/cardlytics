@@ -112,6 +112,8 @@ paths:
           description: "Bad Request – possible client errors:\n  - Invalid input (schema validation failure)  \n  - ID mismatch\n"
         '500':
           description: Internal Server Error – An unexpected error occurred while processing the request
+      operationId: putApiV1PartnerMerchantsByExternalMerchantId
+      x-operation-id-source: derived
     delete:
       summary: Delete the Merchant using the partner-provided merchant ID
       tags:
@@ -138,21 +140,10 @@ paths:
             '
         '500':
           description: Internal Server Error – An unexpected error occurred while processing the request
+      operationId: deleteApiV1PartnerMerchantsByExternalMerchantId
+      x-operation-id-source: derived
 components:
   schemas:
-    TraceResponse:
-      type: object
-      description: Response containing the trace identifier
-      properties:
-        message:
-          type: string
-          example: Message description of the operation
-        trace_id:
-          type: string
-          description: Request trace identifier
-      required:
-      - message
-      - trace_id
     MerchantPayload:
       type: object
       properties:
@@ -395,6 +386,19 @@ components:
       - merchantName
       - paymentChannels
       - stores
+    TraceResponse:
+      type: object
+      description: Response containing the trace identifier
+      properties:
+        message:
+          type: string
+          example: Message description of the operation
+        trace_id:
+          type: string
+          description: Request trace identifier
+      required:
+      - message
+      - trace_id
   securitySchemes:
     oauth2:
       type: oauth2

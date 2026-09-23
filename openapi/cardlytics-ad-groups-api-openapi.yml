@@ -2,20 +2,17 @@ openapi: 3.2.0
 info:
   title: Campaign Build Ad Groups API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
 tags:
-- name: AdGroups
+- name: Ad Groups
 paths:
   /v6/accounts/{accountId}/AdGroups/{adGroupId}/clone:
     post:
       tags:
-      - AdGroups
-      summary: Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)
+      - Ad Groups
+      summary: Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models…
       parameters:
       - name: accountId
         in: path
@@ -57,11 +54,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV6AccountsByAccountIdAdGroupsByAdGroupIdClone
+      x-operation-id-source: derived
   /v6/accounts/{accountId}/AdGroups/{adGroupId}/duplicate:
     post:
       tags:
-      - AdGroups
-      summary: Duplicates an AdGroup with all related entities (Ad, Audience, Ad pricing models, etc.)
+      - Ad Groups
+      summary: Duplicates an AdGroup with all related entities (Ad, Audience, Ad pricing…
       parameters:
       - name: accountId
         in: path
@@ -103,11 +102,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV6AccountsByAccountIdAdGroupsByAdGroupIdDuplicate
+      x-operation-id-source: derived
   /v6/accounts/{accountId}/AdGroups/{adGroupId}:
     get:
       tags:
-      - AdGroups
-      summary: Returns an AdGroup from the repository for the given account by its adGroupId.
+      - Ad Groups
+      summary: Returns an AdGroup from the repository for the given account by its adGroupId
       parameters:
       - name: accountId
         in: path
@@ -147,10 +148,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV6AccountsByAccountIdAdGroupsByAdGroupId
+      x-operation-id-source: derived
     patch:
       tags:
-      - AdGroups
-      summary: Updates the partial modifications to an adGroup.
+      - Ad Groups
+      summary: Updates the partial modifications to an adGroup
       parameters:
       - name: accountId
         in: path
@@ -225,12 +228,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV6AccountsByAccountIdAdGroupsByAdGroupId
+      x-operation-id-source: derived
     delete:
       tags:
-      - AdGroups
-      summary: 'Deletes an Ad Group with all related entities (Reward, Pricing models, etc.)
-
-        DELETE accounts/{accountId}/AdGroups/{adGroupId}'
+      - Ad Groups
+      summary: Deletes an Ad Group with all related entities (Reward, Pricing models, etc.)…
       parameters:
       - name: accountId
         in: path
@@ -272,11 +275,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: deleteV6AccountsByAccountIdAdGroupsByAdGroupId
+      x-operation-id-source: derived
   /v6/AdGroups/{adGroupId}:
     get:
       tags:
-      - AdGroups
-      summary: Returns an AdGroup from the repository by its adGroupId.
+      - Ad Groups
+      summary: Returns an AdGroup from the repository by its adGroupId
       parameters:
       - name: adGroupId
         in: path
@@ -310,11 +315,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV6AdGroupsByAdGroupId
+      x-operation-id-source: derived
   /v6/accounts/{accountId}/AdGroups:
     get:
       tags:
-      - AdGroups
-      summary: Returns all Ad Groups from the repository for a given account.
+      - Ad Groups
+      summary: Returns all Ad Groups from the repository for a given account
       parameters:
       - name: accountId
         in: path
@@ -364,10 +371,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GetAdGroupResourceModel'
+      operationId: getV6AccountsByAccountIdAdGroups
+      x-operation-id-source: derived
     post:
       tags:
-      - AdGroups
-      summary: Adds an AdGroup to the repository.
+      - Ad Groups
+      summary: Adds an AdGroup to the repository
       parameters:
       - name: accountId
         in: path
@@ -403,11 +412,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetAdGroupResourceModel'
+      operationId: postV6AccountsByAccountIdAdGroups
+      x-operation-id-source: derived
   /v6/AdGroups:
     get:
       tags:
-      - AdGroups
-      summary: Returns all Ad Groups from the repository.
+      - Ad Groups
+      summary: Returns all Ad Groups from the repository
       parameters:
       - name: PerPage
         in: query
@@ -451,11 +462,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GetAdGroupResourceModel'
+      operationId: getV6AdGroups
+      x-operation-id-source: derived
   /v6/accounts/{accountId}/AdGroups/{adGroupId}/validation:
     get:
       tags:
-      - AdGroups
-      summary: Validates an AdGroup with all business rules.
+      - Ad Groups
+      summary: Validates an AdGroup with all business rules
       parameters:
       - name: accountId
         in: path
@@ -507,11 +520,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV6AccountsByAccountIdAdGroupsByAdGroupIdValidation
+      x-operation-id-source: derived
   /v6/AdGroups/validation/rule-set:
     get:
       tags:
-      - AdGroups
-      summary: Returns validation rules for a AdGroup object.
+      - Ad Groups
+      summary: Returns validation rules for a AdGroup object
       responses:
         '200':
           description: The AdGroup validation rules are returned in the response body.
@@ -525,23 +540,56 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+      operationId: getV6AdGroupsValidationRuleSet
+      x-operation-id-source: derived
 components:
   schemas:
-    GetValidationDefinitionResourceModel:
+    GetValidationResourceModel:
       type: object
       properties:
-        typeName:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
           type:
           - string
           - 'null'
-        ruleSet:
+        title:
           type:
-          - array
+          - string
           - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
     PostAdGroupResourceModel:
       required:
       - name
@@ -585,23 +633,12 @@ components:
           - 'null'
           format: double
       additionalProperties: false
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
+    PlacementLocation:
+      enum:
+      - None
+      - All
+      - UnderTransaction
+      type: string
     RuleDefinition:
       type: object
       properties:
@@ -620,19 +657,9 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    GetValidationResourceModel:
+    ProblemDetails:
       type: object
       properties:
-        isValid:
-          default: false
-        errors:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
         type:
           type:
           - string
@@ -655,7 +682,53 @@ components:
           - string
           - 'null'
       additionalProperties: {}
-      description: Get Validation endpoint resource model.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
     GetAdGroupResourceModel:
       type: object
       properties:
@@ -730,62 +803,6 @@ components:
         isExpanded:
           default: false
       additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
-    PlacementLocation:
-      enum:
-      - None
-      - All
-      - UnderTransaction
-      type: string
-    RuleTypes:
-      enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
-      type: string
-      description: Validation rule definition types.
   securitySchemes:
     oauth2-cognito:
       type: oauth2

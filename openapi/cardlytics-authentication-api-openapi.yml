@@ -64,6 +64,8 @@ paths:
           description: Bad Request - Invalid parameters
         '401':
           description: Unauthorized - Invalid client credentials
+      operationId: postApiV1IdpOauth2Token
+      x-operation-id-source: derived
 components:
   securitySchemes:
     oauth2:

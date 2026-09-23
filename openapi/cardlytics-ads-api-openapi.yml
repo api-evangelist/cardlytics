@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Ads API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     get:
       tags:
       - Ads
-      summary: Returns an Ad from the repository for a given account by its adId.
+      summary: Returns an Ad from the repository for a given account by its adId
       parameters:
       - name: accountId
         in: path
@@ -67,10 +64,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdAdsByAdId
+      x-operation-id-source: derived
     patch:
       tags:
       - Ads
-      summary: Updates the partial modifications to an Ad.
+      summary: Updates the partial modifications to an Ad
       parameters:
       - name: accountId
         in: path
@@ -157,12 +156,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV7AccountsByAccountIdAdsByAdId
+      x-operation-id-source: derived
     delete:
       tags:
       - Ads
-      summary: 'Deletes an Ad with all related entities (Reward, Pricing models, etc.)
-
-        DELETE accounts/{accountId}/Ads/{adId}'
+      summary: Deletes an Ad with all related entities (Reward, Pricing models, etc.) DELETE…
       parameters:
       - name: accountId
         in: path
@@ -216,11 +215,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: deleteV7AccountsByAccountIdAdsByAdId
+      x-operation-id-source: derived
   /v7/Ads/{adId}:
     get:
       tags:
       - Ads
-      summary: Returns an Ad from the repository by its adId.
+      summary: Returns an Ad from the repository by its adId
       parameters:
       - name: adId
         in: path
@@ -254,11 +255,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AdsByAdId
+      x-operation-id-source: derived
   /v7/Ads/{adId}/RedeemingMerchants:
     get:
       tags:
       - Ads
-      summary: Gets the RedeemingMerchants associated with an Ad.
+      summary: Gets the RedeemingMerchants associated with an Ad
       parameters:
       - name: adId
         in: path
@@ -282,11 +285,13 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AdsByAdIdRedeemingMerchants
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Ads/{adId}/RedeemingMerchants:
     post:
       tags:
       - Ads
-      summary: Creates an Ad's Redeeming Merchants List.
+      summary: Creates an Ad's Redeeming Merchants List
       parameters:
       - name: accountId
         in: path
@@ -355,10 +360,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdAdsByAdIdRedeemingMerchants
+      x-operation-id-source: derived
     put:
       tags:
       - Ads
-      summary: Updates the partial modifications to an Ad's Redeeming Merchants List.
+      summary: Updates the partial modifications to an Ad's Redeeming Merchants List
       parameters:
       - name: accountId
         in: path
@@ -451,11 +458,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: putV7AccountsByAccountIdAdsByAdIdRedeemingMerchants
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Ads:
     get:
       tags:
       - Ads
-      summary: Returns all Ads from the repository for a given account.
+      summary: Returns all Ads from the repository for a given account
       parameters:
       - name: accountId
         in: path
@@ -517,10 +526,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdAds
+      x-operation-id-source: derived
     post:
       tags:
       - Ads
-      summary: Adds an Ad to the repository.
+      summary: Adds an Ad to the repository
       parameters:
       - name: accountId
         in: path
@@ -568,11 +579,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdAds
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/campaigns/{campaignId}/Ads:
     get:
       tags:
       - Ads
-      summary: Returns all Ads from the repository for a given Campaign.
+      summary: Returns all Ads from the repository for a given Campaign
       parameters:
       - name: accountId
         in: path
@@ -629,11 +642,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdCampaignsByCampaignIdAds
+      x-operation-id-source: derived
   /v7/Ads:
     get:
       tags:
       - Ads
-      summary: Returns all Ads from the repository.
+      summary: Returns all Ads from the repository
       parameters:
       - name: PerPage
         in: query
@@ -677,13 +692,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GetAdResourceModel'
+      operationId: getV7Ads
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Ads/{adId}/duplicate:
     post:
       tags:
       - Ads
-      summary: 'Duplicates an Ad with all related entities (Reward, Pricing models, etc.)
-
-        POST accounts/{accountId}/Ads/{adId}/duplicate?duplicates=5'
+      summary: Duplicates an Ad with all related entities (Reward, Pricing models, etc.) POST…
       parameters:
       - name: accountId
         in: path
@@ -743,11 +758,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdAdsByAdIdDuplicate
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Ads/{adId}/validation:
     get:
       tags:
       - Ads
-      summary: Validates a Ad with all business rules.
+      summary: Validates a Ad with all business rules
       parameters:
       - name: accountId
         in: path
@@ -799,11 +816,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdAdsByAdIdValidation
+      x-operation-id-source: derived
   /v7/Ads/validation/rule-set:
     get:
       tags:
       - Ads
-      summary: Returns validation rules for a Ad object.
+      summary: Returns validation rules for a Ad object
       responses:
         '200':
           description: The Ad validation rules are returned in the response body.
@@ -817,62 +836,10 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+      operationId: getV7AdsValidationRuleSet
+      x-operation-id-source: derived
 components:
   schemas:
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    SegmentDataResourceModel:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          type: string
-        storeLocationSubType:
-          type:
-          - string
-          - 'null'
-        paymentChannel:
-          type:
-          - string
-          - 'null'
-        productCategories:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
     GetValidationResourceModel:
       type: object
       properties:
@@ -909,30 +876,53 @@ components:
           - 'null'
       additionalProperties: {}
       description: Get Validation endpoint resource model.
-    PostAdResourceModel:
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
+    SegmentDataResourceModel:
       required:
       - name
       type: object
       properties:
         name:
-          minLength: 1
           type: string
-        adGroupId:
+        storeLocationSubType:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-        creativeId:
+        paymentChannel:
           type:
-          - integer
+          - string
           - 'null'
-          format: int64
+        productCategories:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       additionalProperties: false
-    GetRedeemingMerchantResourceModel:
-      required:
-      - brandId
-      - brandName
-      - storeSegments
+    SegmentResourceModel:
+      type: object
+      properties:
+        segments:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/SegmentDataResourceModel'
+        purchaseChannel:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    PutRedeemingMerchantResourceModel:
       type: object
       properties:
         purchaseChannelAnnotations:
@@ -950,14 +940,36 @@ components:
         isAnnotationOverridden:
           default: false
         storeSegments:
-          type: array
+          type:
+          - array
+          - 'null'
           items:
             $ref: '#/components/schemas/SegmentResourceModel'
         brandId:
           type: integer
           format: int64
         brandName:
-          type: string
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     PostRedeemingMerchantResourceModel:
       required:
@@ -990,37 +1002,127 @@ components:
         brandName:
           type: string
       additionalProperties: false
-    RuleDefinition:
+    GetValidationDefinitionResourceModel:
       type: object
       properties:
-        propertyName:
+        typeName:
           type:
           - string
           - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    GetRedeemingMerchantResourceModel:
+      required:
+      - brandId
+      - brandName
+      - storeSegments
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type: string
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
           type:
           - string
           - 'null'
-        errorMessage:
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
           type:
           - string
           - 'null'
       additionalProperties: false
-    SegmentResourceModel:
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    PostAdResourceModel:
+      required:
+      - name
       type: object
       properties:
-        segments:
+        name:
+          minLength: 1
+          type: string
+        adGroupId:
           type:
-          - object
+          - integer
           - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SegmentDataResourceModel'
-        purchaseChannel:
+          format: int32
+        creativeId:
           type:
-          - string
+          - integer
           - 'null'
+          format: int64
       additionalProperties: false
     GetAdResourceModel:
       type: object
@@ -1072,87 +1174,6 @@ components:
         adStatus:
           $ref: '#/components/schemas/CampaignStatus'
       additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
-    PutRedeemingMerchantResourceModel:
-      type: object
-      properties:
-        purchaseChannelAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        productCategoryAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        isAnnotationOverridden:
-          default: false
-        storeSegments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SegmentResourceModel'
-        brandId:
-          type: integer
-          format: int64
-        brandName:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RuleTypes:
-      enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
-      type: string
-      description: Validation rule definition types.
   securitySchemes:
     oauth2-cognito:
       type: oauth2

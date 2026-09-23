@@ -89,27 +89,10 @@ paths:
           description: Unauthorized – Invalid or missing access token.
         '500':
           description: Internal Server Error – An unexpected error occurred while processing the request.
+      operationId: postApiV1PartnerMerchantsByExternalMerchantIdReports
+      x-operation-id-source: derived
 components:
   schemas:
-    ReportHeader:
-      type: object
-      description: Metadata describing the report payload.
-      properties:
-        cube:
-          type: string
-          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportField'
-        maxRows:
-          type: integer
-          description: Maximum number of rows returned; -1 means no limit.
-          default: -1
-      required:
-      - cube
-      - fields
-      - maxRows
     ReportResponse:
       type: object
       description: Aggregated report response with a header and data rows.
@@ -129,20 +112,25 @@ components:
       required:
       - header
       - rows
-    ReportField:
+    ReportHeader:
       type: object
-      description: A field in the report header describing a dimension or metric.
+      description: Metadata describing the report payload.
       properties:
-        fieldName:
+        cube:
           type: string
-        fieldType:
-          type: string
-          enum:
-          - DIM
-          - FACT
+          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportField'
+        maxRows:
+          type: integer
+          description: Maximum number of rows returned; -1 means no limit.
+          default: -1
       required:
-      - fieldName
-      - fieldType
+      - cube
+      - fields
+      - maxRows
     ReportRequest:
       type: object
       description: Request to retrieve aggregated performance per offer for a merchant.
@@ -173,6 +161,20 @@ components:
           required:
           - from
           - to
+    ReportField:
+      type: object
+      description: A field in the report header describing a dimension or metric.
+      properties:
+        fieldName:
+          type: string
+        fieldType:
+          type: string
+          enum:
+          - DIM
+          - FACT
+      required:
+      - fieldName
+      - fieldType
   securitySchemes:
     oauth2:
       type: oauth2

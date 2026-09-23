@@ -31,13 +31,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/StartSessionResponse'
+      summary: Start session
+      x-summary-source: derived
 components:
   schemas:
-    StartSessionResponse:
-      type: object
-      properties:
-        sessionToken:
-          type: string
     StartSessionRequest:
       required:
       - sourceCustomerId
@@ -51,4 +48,9 @@ components:
             type: string
             example: api:customer
         organizationId:
+          type: string
+    StartSessionResponse:
+      type: object
+      properties:
+        sessionToken:
           type: string

@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Audience Reach API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     post:
       tags:
       - AudienceReach
-      summary: Calculates the Reach of an Audience composed of the given criteria.
+      summary: Calculates the Reach of an Audience composed of the given criteria
       requestBody:
         description: The criteria to use for calculating the Audience Reach.
         content:
@@ -56,23 +53,16 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV6AudienceReachCalculateAudienceReach
+      x-operation-id-source: derived
 components:
   schemas:
-    PostAudienceReachResourceModel:
+    GetAudienceReachResourceModel:
       type: object
       properties:
-        includeLocations:
-          description: Gets whether or not Locations are included in the request.
-          default: false
-          readOnly: true
-        includePurchaseCategories:
-          description: Gets whether or not Purchase Categories are included in the request.
-          default: false
-          readOnly: true
-        purchaseCategoryFilter:
-          $ref: '#/components/schemas/ReachPurchaseCategoryParameters'
-        geoFilter:
-          $ref: '#/components/schemas/ReachLocationParameters'
+        potentialAudienceSize:
+          type: integer
+          format: int64
       additionalProperties: false
     ReachPurchaseCategoryParameters:
       type: object
@@ -140,12 +130,21 @@ components:
           description: IDs of Regions to include in the Reach calculation.
       additionalProperties: false
       description: Location-related parameters for the Audience Reach calculation.
-    GetAudienceReachResourceModel:
+    PostAudienceReachResourceModel:
       type: object
       properties:
-        potentialAudienceSize:
-          type: integer
-          format: int64
+        includeLocations:
+          description: Gets whether or not Locations are included in the request.
+          default: false
+          readOnly: true
+        includePurchaseCategories:
+          description: Gets whether or not Purchase Categories are included in the request.
+          default: false
+          readOnly: true
+        purchaseCategoryFilter:
+          $ref: '#/components/schemas/ReachPurchaseCategoryParameters'
+        geoFilter:
+          $ref: '#/components/schemas/ReachLocationParameters'
       additionalProperties: false
     ProblemDetails:
       type: object

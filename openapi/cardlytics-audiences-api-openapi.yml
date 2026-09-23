@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Audiences API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     get:
       tags:
       - Audiences
-      summary: Returns all Audiences from the repository for a given account.
+      summary: Returns all Audiences from the repository for a given account
       parameters:
       - name: accountId
         in: path
@@ -64,10 +61,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GetAudienceResourceModel'
+      operationId: getV8AccountsByAccountIdAudiences
+      x-operation-id-source: derived
     post:
       tags:
       - Audiences
-      summary: Adds an audience to the repository.
+      summary: Adds an audience to the repository
       parameters:
       - name: accountId
         in: path
@@ -103,11 +102,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetAudienceResourceModel'
+      operationId: postV8AccountsByAccountIdAudiences
+      x-operation-id-source: derived
   /v8/Audiences:
     get:
       tags:
       - Audiences
-      summary: Returns all Audiences from the repository.
+      summary: Returns all Audiences from the repository
       parameters:
       - name: PerPage
         in: query
@@ -150,11 +151,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GetAudienceResourceModel'
+      operationId: getV8Audiences
+      x-operation-id-source: derived
   /v8/accounts/{accountId}/Audiences/{audienceId}:
     get:
       tags:
       - Audiences
-      summary: Returns an audience from the repository for a given account by its AudienceId.
+      summary: Returns an audience from the repository for a given account by its AudienceId
       parameters:
       - name: accountId
         in: path
@@ -194,10 +197,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV8AccountsByAccountIdAudiencesByAudienceId
+      x-operation-id-source: derived
     patch:
       tags:
       - Audiences
-      summary: Partial modifications to an Audience.
+      summary: Partial modifications to an Audience
       parameters:
       - name: accountId
         in: path
@@ -272,11 +277,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV8AccountsByAccountIdAudiencesByAudienceId
+      x-operation-id-source: derived
   /v8/Audiences/{audienceId}:
     get:
       tags:
       - Audiences
-      summary: Returns an audience from the repository by its AudienceId.
+      summary: Returns an audience from the repository by its AudienceId
       parameters:
       - name: audienceId
         in: path
@@ -310,11 +317,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV8AudiencesByAudienceId
+      x-operation-id-source: derived
   /v8/accounts/{accountId}/Audiences/{audienceId}/validation:
     get:
       tags:
       - Audiences
-      summary: Validates an Audience with all business rules.
+      summary: Validates an Audience with all business rules
       parameters:
       - name: accountId
         in: path
@@ -354,11 +363,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV8AccountsByAccountIdAudiencesByAudienceIdValidation
+      x-operation-id-source: derived
   /v8/Audiences/validation/rule-set:
     get:
       tags:
       - Audiences
-      summary: Returns validation rules for a Audience object.
+      summary: Returns validation rules for a Audience object
       responses:
         '200':
           description: The Audience validation rules are returned in the response body.
@@ -372,8 +383,131 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+      operationId: getV8AudiencesValidationRuleSet
+      x-operation-id-source: derived
 components:
   schemas:
+    PurchaseBehaviorType:
+      enum:
+      - CARDLYTICS_DETERMINED
+      - BY_CATEGORY
+      - EXPANDED
+      type: string
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    IGetGeoResourceModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          readOnly: true
+        geoType:
+          $ref: '#/components/schemas/GeoType'
+      additionalProperties: false
+    CustomAudience:
+      type: object
+      properties:
+        customAudienceId:
+          type: integer
+          format: int64
+        fileName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetCustomAudienceResourceModel:
+      type: object
+      properties:
+        include:
+          $ref: '#/components/schemas/CustomAudience'
+        exclude:
+          $ref: '#/components/schemas/CustomAudience'
+      additionalProperties: false
+    GeoType:
+      enum:
+      - COUNTRY
+      - REGION
+      - LOCALITY
+      - DMA
+      - POSTAL_CODE
+      type: string
+    IPostPurchaseBehaviorResourceModel:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PurchaseBehaviorType'
+      additionalProperties: false
+    PostCustomAudienceResourceModel:
+      type: object
+      properties:
+        include:
+          $ref: '#/components/schemas/CustomAudience'
+        exclude:
+          $ref: '#/components/schemas/CustomAudience'
+      additionalProperties: false
+    GetGeoLocationsResourceModel:
+      type: object
+      properties:
+        include:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IGetGeoResourceModel'
+        exclude:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IGetGeoResourceModel'
+        count:
+          $ref: '#/components/schemas/GetGeoLocationCountResourceModel'
+      additionalProperties: false
+    IPostGeoReferenceResourceModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+        geoType:
+          $ref: '#/components/schemas/GeoType'
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
     GetAudienceResourceModel:
       type: object
       properties:
@@ -423,69 +557,21 @@ components:
         purchaseBehavior:
           $ref: '#/components/schemas/IPurchaseBehaviorResourceModel'
       additionalProperties: false
-    PostGeoLocationsReferenceResourceModel:
+    GetValidationDefinitionResourceModel:
       type: object
       properties:
-        include:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
-        exclude:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
-      additionalProperties: false
-    PostAudienceResourceModel:
-      required:
-      - purchaseBehavior
-      type: object
-      properties:
-        customAudiences:
-          $ref: '#/components/schemas/PostCustomAudienceResourceModel'
-        audienceSegmentationTypeId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        selectedSegmentIds:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int64
-        name:
+        typeName:
           type:
           - string
           - 'null'
-        isUserSavedAudience:
-          default: false
-        locations:
-          $ref: '#/components/schemas/PostGeoLocationsReferenceResourceModel'
-        purchaseBehavior:
-          $ref: '#/components/schemas/IPostPurchaseBehaviorResourceModel'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
       additionalProperties: false
-    GeoType:
-      enum:
-      - COUNTRY
-      - REGION
-      - LOCALITY
-      - DMA
-      - POSTAL_CODE
-      type: string
-    IPostGeoReferenceResourceModel:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        geoType:
-          $ref: '#/components/schemas/GeoType'
-      additionalProperties: false
+      description: Get Validation Definition resource model.
     GetValidationResourceModel:
       type: object
       properties:
@@ -522,94 +608,6 @@ components:
           - 'null'
       additionalProperties: {}
       description: Get Validation endpoint resource model.
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    GetGeoLocationsResourceModel:
-      type: object
-      properties:
-        include:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IGetGeoResourceModel'
-        exclude:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IGetGeoResourceModel'
-        count:
-          $ref: '#/components/schemas/GetGeoLocationCountResourceModel'
-      additionalProperties: false
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    IPurchaseBehaviorResourceModel:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/PurchaseBehaviorType'
-      additionalProperties: false
-    IGetGeoResourceModel:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-          readOnly: true
-        geoType:
-          $ref: '#/components/schemas/GeoType'
-      additionalProperties: false
-    IPostPurchaseBehaviorResourceModel:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/PurchaseBehaviorType'
-      additionalProperties: false
-    GetCustomAudienceResourceModel:
-      type: object
-      properties:
-        include:
-          $ref: '#/components/schemas/CustomAudience'
-        exclude:
-          $ref: '#/components/schemas/CustomAudience'
-      additionalProperties: false
-    PostCustomAudienceResourceModel:
-      type: object
-      properties:
-        include:
-          $ref: '#/components/schemas/CustomAudience'
-        exclude:
-          $ref: '#/components/schemas/CustomAudience'
-      additionalProperties: false
     GetGeoLocationCountResourceModel:
       type: object
       properties:
@@ -620,38 +618,57 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    RuleDefinition:
+    PostGeoLocationsReferenceResourceModel:
       type: object
       properties:
-        propertyName:
+        include:
           type:
-          - string
+          - array
           - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
+          items:
+            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
+        exclude:
           type:
-          - string
+          - array
           - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
+          items:
+            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
       additionalProperties: false
-    CustomAudience:
+    IPurchaseBehaviorResourceModel:
       type: object
       properties:
-        customAudienceId:
-          type: integer
-          format: int64
-        fileName:
+        type:
+          $ref: '#/components/schemas/PurchaseBehaviorType'
+      additionalProperties: false
+    PostAudienceResourceModel:
+      required:
+      - purchaseBehavior
+      type: object
+      properties:
+        customAudiences:
+          $ref: '#/components/schemas/PostCustomAudienceResourceModel'
+        audienceSegmentationTypeId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        selectedSegmentIds:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int64
+        name:
           type:
           - string
           - 'null'
-        description:
-          type:
-          - string
-          - 'null'
+        isUserSavedAudience:
+          default: false
+        locations:
+          $ref: '#/components/schemas/PostGeoLocationsReferenceResourceModel'
+        purchaseBehavior:
+          $ref: '#/components/schemas/IPostPurchaseBehaviorResourceModel'
       additionalProperties: false
     ProblemDetails:
       type: object
@@ -678,27 +695,23 @@ components:
           - string
           - 'null'
       additionalProperties: {}
-    PurchaseBehaviorType:
-      enum:
-      - CARDLYTICS_DETERMINED
-      - BY_CATEGORY
-      - EXPANDED
-      type: string
-    RuleTypes:
-      enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
-      type: string
-      description: Validation rule definition types.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2

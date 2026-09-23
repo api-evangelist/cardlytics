@@ -2,20 +2,17 @@ openapi: 3.2.0
 info:
   title: Campaign Build Purchase Categories API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
 tags:
-- name: PurchaseCategories
+- name: Purchase Categories
 paths:
   /v6/PurchaseCategories/{purchaseCategoryId}:
     get:
       tags:
-      - PurchaseCategories
-      summary: Returns a Purchase Category by its Id.
+      - Purchase Categories
+      summary: Returns a Purchase Category by its Id
       parameters:
       - name: countryId
         in: query
@@ -57,11 +54,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV6PurchaseCategoriesByPurchaseCategoryId
+      x-operation-id-source: derived
   /v6/PurchaseCategories:
     get:
       tags:
-      - PurchaseCategories
-      summary: Returns all Purchase Categories from the repository.
+      - Purchase Categories
+      summary: Returns all Purchase Categories from the repository
       parameters:
       - name: PerPage
         in: query
@@ -102,8 +101,35 @@ paths:
                   $ref: '#/components/schemas/GetPurchaseCategoryResourceModel'
         '308':
           description: CountryId was not provided. Redirecting to countryId=1 (US).
+      operationId: getV6PurchaseCategories
+      x-operation-id-source: derived
 components:
   schemas:
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
     GetPurchaseCategoryResourceModel:
       type: object
       properties:
@@ -135,31 +161,6 @@ components:
           type: integer
           format: int32
       additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
   securitySchemes:
     oauth2-cognito:
       type: oauth2

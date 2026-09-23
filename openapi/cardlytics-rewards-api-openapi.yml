@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Rewards API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     get:
       tags:
       - Rewards
-      summary: Returns an Reward from the repository for the given account by its Id.
+      summary: Returns an Reward from the repository for the given account by its Id
       parameters:
       - name: accountId
         in: path
@@ -67,10 +64,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdRewardsByRewardId
+      x-operation-id-source: derived
     patch:
       tags:
       - Rewards
-      summary: Updates a Reward.
+      summary: Updates a Reward
       parameters:
       - name: accountId
         in: path
@@ -157,10 +156,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV7AccountsByAccountIdRewardsByRewardId
+      x-operation-id-source: derived
     put:
       tags:
       - Rewards
-      summary: Updates a Reward with the given resource model.
+      summary: Updates a Reward with the given resource model
       parameters:
       - name: accountId
         in: path
@@ -239,6 +240,8 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: putV7AccountsByAccountIdRewardsByRewardId
+      x-operation-id-source: derived
   /v7/Rewards/rms/{rmsRewardId}:
     get:
       tags:
@@ -290,11 +293,15 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      summary: Get rewards rms by rms reward id
+      x-summary-source: derived
+      operationId: getV7RewardsRmsByRmsRewardId
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/ads/{adId}/Rewards:
     get:
       tags:
       - Rewards
-      summary: Returns Rewards for a given Ad from the repository.
+      summary: Returns Rewards for a given Ad from the repository
       parameters:
       - name: accountId
         in: path
@@ -346,11 +353,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdAdsByAdIdRewards
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Rewards/{rewardId}/validation:
     get:
       tags:
       - Rewards
-      summary: Validates a Reward with all business rules.
+      summary: Validates a Reward with all business rules
       parameters:
       - name: accountId
         in: path
@@ -402,11 +411,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV7AccountsByAccountIdRewardsByRewardIdValidation
+      x-operation-id-source: derived
   /v7/Rewards/validation/rule-set:
     get:
       tags:
       - Rewards
-      summary: Returns validation rules for a Reward object.
+      summary: Returns validation rules for a Reward object
       responses:
         '200':
           description: The Reward validation rules are returned in the response body.
@@ -420,11 +431,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetValidationDefinitionResourceModel'
+      operationId: getV7RewardsValidationRuleSet
+      x-operation-id-source: derived
   /v7/accounts/{accountId}/Rewards:
     post:
       tags:
       - Rewards
-      summary: Adds a Reward to the repository.
+      summary: Adds a Reward to the repository
       parameters:
       - name: accountId
         in: path
@@ -472,72 +485,10 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: postV7AccountsByAccountIdRewards
+      x-operation-id-source: derived
 components:
   schemas:
-    StoreLocationType:
-      enum:
-      - Unknown
-      - InStore
-      - Online
-      - GiftCard
-      - CallCenter
-      type: string
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RuleDefinition:
-      type: object
-      properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    Relationship:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RelationshipData'
-      additionalProperties: false
     GetValidationResourceModel:
       type: object
       properties:
@@ -574,31 +525,6 @@ components:
           - 'null'
       additionalProperties: {}
       description: Get Validation endpoint resource model.
-    RewardTemplate:
-      enum:
-      - None
-      - FlatAmountBack
-      - PercentBack
-      - SpendXGetY
-      type: string
-    RewardAttributesDataBody:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RewardAttributesData'
-      additionalProperties: false
-    RelationshipData:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     PutRewardResourceModel:
       type: object
       properties:
@@ -708,37 +634,18 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
     Currency:
       enum:
       - USD
       - GBP
       type: string
-    RewardAttributesData:
+    RewardAttributesDataBody:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RewardAttributesData'
+      additionalProperties: false
+    RelationshipData:
       type: object
       properties:
         type:
@@ -749,15 +656,14 @@ components:
           type:
           - string
           - 'null'
-        attributes:
-          $ref: '#/components/schemas/RewardAttributes'
-        relationships:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/Relationship'
       additionalProperties: false
+    RewardTemplate:
+      enum:
+      - None
+      - FlatAmountBack
+      - PercentBack
+      - SpendXGetY
+      type: string
     RewardType:
       enum:
       - SingleRewardFlatAmountBack
@@ -767,21 +673,32 @@ components:
       - MultipleRewardPercentAmountBack
       - MultipleRewardSpendXGetY
       type: string
-    RuleTypes:
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    StoreLocationType:
       enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
+      - Unknown
+      - InStore
+      - Online
+      - GiftCard
+      - CallCenter
       type: string
-      description: Validation rule definition types.
     PostRewardResourceModel:
       required:
       - adId
@@ -938,6 +855,104 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    RewardAttributesData:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        attributes:
+          $ref: '#/components/schemas/RewardAttributes'
+        relationships:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Relationship'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    Relationship:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipData'
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
   securitySchemes:
     oauth2-cognito:
       type: oauth2

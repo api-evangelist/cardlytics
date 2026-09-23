@@ -46,6 +46,8 @@ paths:
           description: Bad Request - The date format is incorrect, or the date is today's date or in the future.
         '500':
           description: Internal Server Error - An unexpected error occurred.
+      operationId: getApiV1PartnerRedemptions
+      x-operation-id-source: derived
 components:
   securitySchemes:
     oauth2:

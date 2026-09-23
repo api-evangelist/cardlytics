@@ -6,12 +6,12 @@ servers:
 - url: https://publisher-uk-fiuat.cardlytics.com
   description: Generated server url
 tags:
-- name: customer-controller
+- name: Customer Controller
 paths:
   /v2/customerProfile/getCustomerRewardSummary:
     get:
       tags:
-      - customer-controller
+      - Customer Controller
       operationId: getRewardsSummary
       parameters:
       - name: X-CDLX-Session-Token
@@ -25,10 +25,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/RewardSummary'
+      summary: Get rewards summary
+      x-summary-source: derived
   /v2/customerProfile/getCustomerProfile:
     get:
       tags:
-      - customer-controller
+      - Customer Controller
       operationId: getCustomerProfile
       parameters:
       - name: X-CDLX-Session-Token
@@ -42,10 +44,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Customer'
+      summary: Get customer profile
+      x-summary-source: derived
   /v2/customerProfile/getCustomerAdRedemptions:
     get:
       tags:
-      - customer-controller
+      - Customer Controller
       operationId: getCustomerAdRedemptions
       parameters:
       - name: X-CDLX-Session-Token
@@ -59,94 +63,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/CustomerAdRedemptionResponse'
+      summary: Get customer ad redemptions
+      x-summary-source: derived
 components:
   schemas:
-    Card:
-      type: object
-      properties:
-        sourceAccountId:
-          type: string
-        sourceCustomerId:
-          type: string
-        last4:
-          type: string
-        iin:
-          type: string
-        cardType:
-          type: string
-        status:
-          type: string
-        networkIdentifier:
-          type: integer
-          format: int32
-        openDate:
-          type: string
-        closeDate:
-          type: string
-    CustomerAdRedemptionResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-        redemptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Redemption'
-        ads:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Ad'
-    Customer:
-      type: object
-      properties:
-        requestId:
-          type: string
-        sourceCustomerId:
-          type: string
-        institutionId:
-          type: string
-        organizationId:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-        customerCreationDate:
-          type: string
-        enrollmentStartDate:
-          type: string
-        enrollmentEndDate:
-          type: string
-        enrollmentOptInStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-        alertOptInStatus:
-          type: array
-          items:
-            type: string
-            enum:
-            - ALL
-            - NEW
-            - ACTIVATED
-            - EXPIRING
-            - REDEMPTION
-            - CLOSE_THE_LOOP
-            - MISSED_OPPORTUNITY
-        targetingIndicator:
-          type: string
-          enum:
-          - TARGET
-          - DO_NOT_TARGET
-        portfolios:
-          type: array
-          items:
-            $ref: '#/components/schemas/Portfolio'
-        accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Account'
     AdImageValue:
       type: object
       properties:
@@ -205,6 +125,28 @@ components:
           - CALL_TO_ACTION_LINKS
         value:
           $ref: '#/components/schemas/AdImageValue'
+    Card:
+      type: object
+      properties:
+        sourceAccountId:
+          type: string
+        sourceCustomerId:
+          type: string
+        last4:
+          type: string
+        iin:
+          type: string
+        cardType:
+          type: string
+        status:
+          type: string
+        networkIdentifier:
+          type: integer
+          format: int32
+        openDate:
+          type: string
+        closeDate:
+          type: string
     ImageURL:
       type: object
       properties:
@@ -216,6 +158,83 @@ components:
         height:
           type: integer
           format: int32
+    AdReward:
+      type: object
+      properties:
+        rewardType:
+          type: string
+          enum:
+          - PERCENT_AMOUNT_PURCHASE
+          - FIXED_AMOUNT_PURCHASE
+          - METERED_AMOUNT_PURCHASE
+        rewardAmount:
+          type: number
+          format: float
+        maxRewardAmount:
+          type: number
+          format: float
+        isMultiRedemption:
+          type: boolean
+        purchaseRequirement:
+          $ref: '#/components/schemas/PurchaseRequirement'
+    RewardSummary:
+      type: object
+      properties:
+        requestId:
+          type: string
+        rewardsSummary:
+          $ref: '#/components/schemas/RewardSummaryTotals'
+    CallsToAction:
+      type: object
+      properties:
+        type:
+          type: string
+          example: CALL_TO_ACTION_LINKS
+          enum:
+          - IMAGE_URL
+          - AD_COPY
+          - CALL_TO_ACTION_LINKS
+        value:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CallToActionLink'
+    CustomerAdRedemptionResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        redemptions:
+          type: array
+          items:
+            $ref: '#/components/schemas/Redemption'
+        ads:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Ad'
+    PurchaseRequirement:
+      type: object
+      properties:
+        minSpendAmount:
+          type: number
+          format: float
+        purchaseChannels:
+          type: array
+          items:
+            type: string
+            enum:
+            - InStore
+            - Online
+            - PayAtPump
+            - App
+            - Convenience
+        purchaseTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - Membership
+            - Subscription
+            - Fuel
     Text:
       type: object
       properties:
@@ -230,14 +249,87 @@ components:
           type: object
           additionalProperties:
             type: string
-    CallToActionLink:
+    RewardSummaryTotals:
       type: object
       properties:
-        type:
+        allTime:
+          $ref: '#/components/schemas/RewardSummary'
+        pending:
+          $ref: '#/components/schemas/RewardSummary'
+        yearToDate:
+          $ref: '#/components/schemas/RewardSummary'
+        previousCalendarYear:
+          $ref: '#/components/schemas/RewardSummary'
+        previousMonth:
+          $ref: '#/components/schemas/RewardSummary'
+        previousTwelveMonths:
+          $ref: '#/components/schemas/RewardSummary'
+        currentMonth:
+          $ref: '#/components/schemas/RewardSummary'
+    AdAssetList:
+      type: object
+      properties:
+        logo:
+          $ref: '#/components/schemas/Image'
+        largeRectangle:
+          $ref: '#/components/schemas/Image'
+        smallRectangle:
+          $ref: '#/components/schemas/Image'
+        copy:
+          $ref: '#/components/schemas/Text'
+        callsToAction:
+          $ref: '#/components/schemas/CallsToAction'
+    Customer:
+      type: object
+      properties:
+        requestId:
           type: string
-          example: WEB_LINK
-        value:
+        sourceCustomerId:
           type: string
+        institutionId:
+          type: string
+        organizationId:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        customerCreationDate:
+          type: string
+        enrollmentStartDate:
+          type: string
+        enrollmentEndDate:
+          type: string
+        enrollmentOptInStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        alertOptInStatus:
+          type: array
+          items:
+            type: string
+            enum:
+            - ALL
+            - NEW
+            - ACTIVATED
+            - EXPIRING
+            - REDEMPTION
+            - CLOSE_THE_LOOP
+            - MISSED_OPPORTUNITY
+        targetingIndicator:
+          type: string
+          enum:
+          - TARGET
+          - DO_NOT_TARGET
+        portfolios:
+          type: array
+          items:
+            $ref: '#/components/schemas/Portfolio'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
     Portfolio:
       type: object
       properties:
@@ -260,101 +352,6 @@ components:
           type: string
         rewardToCurrencyConversionRate:
           type: string
-    CallsToAction:
-      type: object
-      properties:
-        type:
-          type: string
-          example: CALL_TO_ACTION_LINKS
-          enum:
-          - IMAGE_URL
-          - AD_COPY
-          - CALL_TO_ACTION_LINKS
-        value:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/CallToActionLink'
-    AdReward:
-      type: object
-      properties:
-        rewardType:
-          type: string
-          enum:
-          - PERCENT_AMOUNT_PURCHASE
-          - FIXED_AMOUNT_PURCHASE
-          - METERED_AMOUNT_PURCHASE
-        rewardAmount:
-          type: number
-          format: float
-        maxRewardAmount:
-          type: number
-          format: float
-        isMultiRedemption:
-          type: boolean
-        purchaseRequirement:
-          $ref: '#/components/schemas/PurchaseRequirement'
-    Redemption:
-      type: object
-      properties:
-        redemptionId:
-          type: string
-        adId:
-          type: string
-        amount:
-          type: number
-          format: float
-        redemptionDate:
-          type: string
-          format: date-time
-        sourceCustomerId:
-          type: string
-        sourceAccountId:
-          type: string
-        redeemingTransactionAmount:
-          type: number
-          format: float
-        transactionId:
-          type: string
-        rewardSettlementRunDate:
-          type: string
-          format: date-time
-    RewardSummary:
-      type: object
-      properties:
-        requestId:
-          type: string
-        rewardsSummary:
-          $ref: '#/components/schemas/RewardSummaryTotals'
-    AdAssetList:
-      type: object
-      properties:
-        logo:
-          $ref: '#/components/schemas/Image'
-        largeRectangle:
-          $ref: '#/components/schemas/Image'
-        smallRectangle:
-          $ref: '#/components/schemas/Image'
-        copy:
-          $ref: '#/components/schemas/Text'
-        callsToAction:
-          $ref: '#/components/schemas/CallsToAction'
-    RewardSummaryTotals:
-      type: object
-      properties:
-        allTime:
-          $ref: '#/components/schemas/RewardSummary'
-        pending:
-          $ref: '#/components/schemas/RewardSummary'
-        yearToDate:
-          $ref: '#/components/schemas/RewardSummary'
-        previousCalendarYear:
-          $ref: '#/components/schemas/RewardSummary'
-        previousMonth:
-          $ref: '#/components/schemas/RewardSummary'
-        previousTwelveMonths:
-          $ref: '#/components/schemas/RewardSummary'
-        currentMonth:
-          $ref: '#/components/schemas/RewardSummary'
     Ad:
       type: object
       properties:
@@ -417,27 +414,36 @@ components:
           - FULLY_REDEEMED
         assets:
           $ref: '#/components/schemas/AdAssetList'
-    PurchaseRequirement:
+    CallToActionLink:
       type: object
       properties:
-        minSpendAmount:
+        type:
+          type: string
+          example: WEB_LINK
+        value:
+          type: string
+    Redemption:
+      type: object
+      properties:
+        redemptionId:
+          type: string
+        adId:
+          type: string
+        amount:
           type: number
           format: float
-        purchaseChannels:
-          type: array
-          items:
-            type: string
-            enum:
-            - InStore
-            - Online
-            - PayAtPump
-            - App
-            - Convenience
-        purchaseTypes:
-          type: array
-          items:
-            type: string
-            enum:
-            - Membership
-            - Subscription
-            - Fuel
+        redemptionDate:
+          type: string
+          format: date-time
+        sourceCustomerId:
+          type: string
+        sourceAccountId:
+          type: string
+        redeemingTransactionAmount:
+          type: number
+          format: float
+        transactionId:
+          type: string
+        rewardSettlementRunDate:
+          type: string
+          format: date-time

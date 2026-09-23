@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Geo API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     get:
       tags:
       - Geo
-      summary: Returns Geo results that match the query.
+      summary: Returns Geo results that match the query
       parameters:
       - name: query
         in: query
@@ -59,10 +56,12 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GeoSearchResourceModel'
+      operationId: getV6Geo
+      x-operation-id-source: derived
     post:
       tags:
       - Geo
-      summary: Returns Bulk Geo results based on the body criteria.
+      summary: Returns Bulk Geo results based on the body criteria
       requestBody:
         description: Request body containing list(s) of geo criteria to query for results.
         content:
@@ -97,11 +96,13 @@ paths:
                 type: object
                 additionalProperties:
                   $ref: '#/components/schemas/MatchedGeoSearchResourceModel'
+      operationId: postV6Geo
+      x-operation-id-source: derived
   /v6/Geo/Country:
     get:
       tags:
       - Geo
-      summary: Returns Geo Country results that match the query.
+      summary: Returns Geo Country results that match the query
       parameters:
       - name: query
         in: query
@@ -140,11 +141,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GeoSearchResourceModel'
+      operationId: getV6GeoCountry
+      x-operation-id-source: derived
   /v6/Geo/DMA:
     get:
       tags:
       - Geo
-      summary: Returns Geo DMA results that match the query.
+      summary: Returns Geo DMA results that match the query
       parameters:
       - name: query
         in: query
@@ -188,11 +191,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GeoSearchResourceModel'
+      operationId: getV6GeoDMA
+      x-operation-id-source: derived
   /v6/Geo/Locality:
     get:
       tags:
       - Geo
-      summary: Returns Geo Locality results that match the query.
+      summary: Returns Geo Locality results that match the query
       parameters:
       - name: query
         in: query
@@ -236,11 +241,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GeoSearchResourceModel'
+      operationId: getV6GeoLocality
+      x-operation-id-source: derived
   /v6/Geo/PostalCode:
     get:
       tags:
       - Geo
-      summary: Returns Geo PostalCode results that match the query.
+      summary: Returns Geo PostalCode results that match the query
       parameters:
       - name: query
         in: query
@@ -284,11 +291,13 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GeoSearchResourceModel'
+      operationId: getV6GeoPostalCode
+      x-operation-id-source: derived
   /v6/Geo/Region:
     get:
       tags:
       - Geo
-      summary: Returns Geo Region results that match the query.
+      summary: Returns Geo Region results that match the query
       parameters:
       - name: query
         in: query
@@ -332,8 +341,56 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/GeoSearchResourceModel'
+      operationId: getV6GeoRegion
+      x-operation-id-source: derived
 components:
   schemas:
+    GeoType:
+      enum:
+      - COUNTRY
+      - REGION
+      - LOCALITY
+      - DMA
+      - POSTAL_CODE
+      type: string
+    PostGeoBulkSearchResourceModel:
+      type: object
+      properties:
+        subLevelCountryId:
+          type: integer
+          format: int32
+        country:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+          description: Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description.
+        dma:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        region:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        locality:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        postalCode:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+      additionalProperties: false
     GeoSearchResourceModel:
       type: object
       properties:
@@ -383,52 +440,6 @@ components:
           items:
             $ref: '#/components/schemas/GeoSearchResourceModel'
       additionalProperties: false
-    PostGeoBulkSearchResourceModel:
-      type: object
-      properties:
-        subLevelCountryId:
-          type: integer
-          format: int32
-        country:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-          description: Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description.
-        dma:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        region:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        locality:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        postalCode:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-      additionalProperties: false
-    GeoType:
-      enum:
-      - COUNTRY
-      - REGION
-      - LOCALITY
-      - DMA
-      - POSTAL_CODE
-      type: string
   securitySchemes:
     oauth2-cognito:
       type: oauth2

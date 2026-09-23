@@ -2,6 +2,9 @@ openapi: 3.0.1
 info:
   title: Campaign Build API
   version: latest
+servers:
+- url: https://api.cardlytics.com
+  description: Base URL declared by the provider in apis.yml (roadmap#122).
 paths:
   /v6/accounts/{accountId}/AdGroups/{adGroupId}/clone:
     post:

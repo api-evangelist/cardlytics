@@ -2,9 +2,6 @@ openapi: 3.2.0
 info:
   title: Campaign Build Pricing Models API
   version: latest
-servers:
-- url: https://api.cardlytics.com
-  description: Base URL declared by the provider in apis.yml (roadmap#122).
 security:
 - oauth2-cognito:
   - read
@@ -15,7 +12,7 @@ paths:
     get:
       tags:
       - PricingModels
-      summary: Returns an PricingModel from the repository for the given account by its Id.
+      summary: Returns an PricingModel from the repository for the given account by its Id
       parameters:
       - name: accountId
         in: path
@@ -67,10 +64,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV6AccountsByAccountIdPricingModelsByPricingModelId
+      x-operation-id-source: derived
     patch:
       tags:
       - PricingModels
-      summary: Updates the partial modifications to a PricingModel.
+      summary: Updates the partial modifications to a PricingModel
       parameters:
       - name: accountId
         in: path
@@ -157,10 +156,12 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: patchV6AccountsByAccountIdPricingModelsByPricingModelId
+      x-operation-id-source: derived
     put:
       tags:
       - PricingModels
-      summary: Updates a PricingModel with the given resource model.
+      summary: Updates a PricingModel with the given resource model
       parameters:
       - name: accountId
         in: path
@@ -239,11 +240,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: putV6AccountsByAccountIdPricingModelsByPricingModelId
+      x-operation-id-source: derived
   /v6/accounts/{accountId}/adGroups/{adGroupId}/PricingModels:
     get:
       tags:
       - PricingModels
-      summary: Returns an PricingModel from the repository for the given account by its AdId.
+      summary: Returns an PricingModel from the repository for the given account by its AdId
       parameters:
       - name: accountId
         in: path
@@ -295,11 +298,13 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/ProblemDetails'
+      operationId: getV6AccountsByAccountIdAdGroupsByAdGroupIdPricingModels
+      x-operation-id-source: derived
   /v6/accounts/{accountId}/PricingModels:
     post:
       tags:
       - PricingModels
-      summary: Adds an Pricing Model to the repository.
+      summary: Adds an Pricing Model to the repository
       parameters:
       - name: accountId
         in: path
@@ -335,36 +340,56 @@ paths:
             text/json:
               schema:
                 $ref: '#/components/schemas/GetPricingModelResourceModel'
+      operationId: postV6AccountsByAccountIdPricingModels
+      x-operation-id-source: derived
 components:
   schemas:
-    PostPricingModelResourceModel:
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    ProblemDetails:
       type: object
       properties:
-        adGroupId:
-          type: integer
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
           format: int32
-        feePercent:
+        detail:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feeCap:
+        instance:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        targetRoas:
+      additionalProperties: {}
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feeAmount:
+        op:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        currency:
-          $ref: '#/components/schemas/Currency'
+        from:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     PutPricingModelResourceModel:
       type: object
@@ -402,53 +427,35 @@ components:
         currency:
           $ref: '#/components/schemas/Currency'
       additionalProperties: false
-    Operation:
+    PostPricingModelResourceModel:
       type: object
       properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
+        adGroupId:
+          type: integer
           format: int32
-        detail:
+        feePercent:
           type:
-          - string
+          - number
           - 'null'
-        instance:
+          format: double
+        feeCap:
           type:
-          - string
+          - number
           - 'null'
-      additionalProperties: {}
-    Currency:
-      enum:
-      - USD
-      - GBP
-      type: string
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
+      additionalProperties: false
     GetPricingModelResourceModel:
       type: object
       properties:
