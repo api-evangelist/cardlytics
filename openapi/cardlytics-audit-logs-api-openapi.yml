@@ -90,32 +90,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GetAuditLogResourceModel:
-      type: object
-      properties:
-        entityType:
-          type:
-          - string
-          - 'null'
-        action:
-          type:
-          - string
-          - 'null'
-        updateUser:
-          type:
-          - string
-          - 'null'
-        updateDateTime:
-          type: string
-          format: date-time
-          example: '1987-03-18T00:00:00.0000000-08:00'
-        changes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/ChangeLogEntry'
-      additionalProperties: false
     ChangeLogEntry:
       type: object
       properties:
@@ -157,6 +131,32 @@ components:
           - string
           - 'null'
       additionalProperties: {}
+    GetAuditLogResourceModel:
+      type: object
+      properties:
+        entityType:
+          type:
+          - string
+          - 'null'
+        action:
+          type:
+          - string
+          - 'null'
+        updateUser:
+          type:
+          - string
+          - 'null'
+        updateDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        changes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/ChangeLogEntry'
+      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2

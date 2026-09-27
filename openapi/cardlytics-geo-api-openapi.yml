@@ -353,6 +353,41 @@ components:
       - DMA
       - POSTAL_CODE
       type: string
+    GeoSearchResourceModel:
+      type: object
+      properties:
+        name:
+          type:
+          - string
+          - 'null'
+          description: Geo search result Name.
+        description:
+          type:
+          - string
+          - 'null'
+          description: Geo search result Full Description.
+        code:
+          type:
+          - string
+          - 'null'
+          description: Geo search result code.
+        abbreviation:
+          type:
+          - string
+          - 'null'
+          description: Geo search result abbreviation.
+        id:
+          type: integer
+          description: Geo search result unique reference Id for the given GeoType.
+          format: int32
+        countryId:
+          type: integer
+          description: The country id associated with this Geo search result.
+          format: int32
+        geoType:
+          $ref: '#/components/schemas/GeoType'
+      additionalProperties: false
+      description: Model Class the represents a Geo Search result.
     PostGeoBulkSearchResourceModel:
       type: object
       properties:
@@ -391,41 +426,6 @@ components:
           items:
             type: string
       additionalProperties: false
-    GeoSearchResourceModel:
-      type: object
-      properties:
-        name:
-          type:
-          - string
-          - 'null'
-          description: Geo search result Name.
-        description:
-          type:
-          - string
-          - 'null'
-          description: Geo search result Full Description.
-        code:
-          type:
-          - string
-          - 'null'
-          description: Geo search result code.
-        abbreviation:
-          type:
-          - string
-          - 'null'
-          description: Geo search result abbreviation.
-        id:
-          type: integer
-          description: Geo search result unique reference Id for the given GeoType.
-          format: int32
-        countryId:
-          type: integer
-          description: The country id associated with this Geo search result.
-          format: int32
-        geoType:
-          $ref: '#/components/schemas/GeoType'
-      additionalProperties: false
-      description: Model Class the represents a Geo Search result.
     MatchedGeoSearchResourceModel:
       type: object
       properties:

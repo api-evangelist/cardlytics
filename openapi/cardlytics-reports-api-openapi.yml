@@ -112,25 +112,6 @@ components:
       required:
       - header
       - rows
-    ReportHeader:
-      type: object
-      description: Metadata describing the report payload.
-      properties:
-        cube:
-          type: string
-          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportField'
-        maxRows:
-          type: integer
-          description: Maximum number of rows returned; -1 means no limit.
-          default: -1
-      required:
-      - cube
-      - fields
-      - maxRows
     ReportRequest:
       type: object
       description: Request to retrieve aggregated performance per offer for a merchant.
@@ -175,6 +156,25 @@ components:
       required:
       - fieldName
       - fieldType
+    ReportHeader:
+      type: object
+      description: Metadata describing the report payload.
+      properties:
+        cube:
+          type: string
+          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportField'
+        maxRows:
+          type: integer
+          description: Maximum number of rows returned; -1 means no limit.
+          default: -1
+      required:
+      - cube
+      - fields
+      - maxRows
   securitySchemes:
     oauth2:
       type: oauth2

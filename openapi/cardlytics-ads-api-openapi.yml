@@ -840,52 +840,20 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GetValidationResourceModel:
+    SegmentResourceModel:
       type: object
       properties:
-        isValid:
-          default: false
-        errors:
+        segments:
           type:
           - object
           - 'null'
           additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
+            $ref: '#/components/schemas/SegmentDataResourceModel'
+        purchaseChannel:
           type:
           - string
           - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-      description: Get Validation endpoint resource model.
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
+      additionalProperties: false
     SegmentDataResourceModel:
       required:
       - name
@@ -907,222 +875,6 @@ components:
           - 'null'
           items:
             type: string
-      additionalProperties: false
-    SegmentResourceModel:
-      type: object
-      properties:
-        segments:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/SegmentDataResourceModel'
-        purchaseChannel:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    PutRedeemingMerchantResourceModel:
-      type: object
-      properties:
-        purchaseChannelAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        productCategoryAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        isAnnotationOverridden:
-          default: false
-        storeSegments:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/SegmentResourceModel'
-        brandId:
-          type: integer
-          format: int64
-        brandName:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RuleDefinition:
-      type: object
-      properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    PostRedeemingMerchantResourceModel:
-      required:
-      - brandId
-      - brandName
-      - storeSegments
-      type: object
-      properties:
-        purchaseChannelAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        productCategoryAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        isAnnotationOverridden:
-          default: false
-        storeSegments:
-          type: array
-          items:
-            $ref: '#/components/schemas/SegmentResourceModel'
-        brandId:
-          type: integer
-          format: int64
-        brandName:
-          type: string
-      additionalProperties: false
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    GetRedeemingMerchantResourceModel:
-      required:
-      - brandId
-      - brandName
-      - storeSegments
-      type: object
-      properties:
-        purchaseChannelAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        productCategoryAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        isAnnotationOverridden:
-          default: false
-        storeSegments:
-          type: array
-          items:
-            $ref: '#/components/schemas/SegmentResourceModel'
-        brandId:
-          type: integer
-          format: int64
-        brandName:
-          type: string
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RuleTypes:
-      enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
-      type: string
-      description: Validation rule definition types.
-    PostAdResourceModel:
-      required:
-      - name
-      type: object
-      properties:
-        name:
-          minLength: 1
-          type: string
-        adGroupId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        creativeId:
-          type:
-          - integer
-          - 'null'
-          format: int64
       additionalProperties: false
     GetAdResourceModel:
       type: object
@@ -1173,6 +925,254 @@ components:
             format: int64
         adStatus:
           $ref: '#/components/schemas/CampaignStatus'
+      additionalProperties: false
+    GetRedeemingMerchantResourceModel:
+      required:
+      - brandId
+      - brandName
+      - storeSegments
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type: string
+      additionalProperties: false
+    PutRedeemingMerchantResourceModel:
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    PostAdResourceModel:
+      required:
+      - name
+      type: object
+      properties:
+        name:
+          minLength: 1
+          type: string
+        adGroupId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        creativeId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    PostRedeemingMerchantResourceModel:
+      required:
+      - brandId
+      - brandName
+      - storeSegments
+      type: object
+      properties:
+        purchaseChannelAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        productCategoryAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        isAnnotationOverridden:
+          default: false
+        storeSegments:
+          type: array
+          items:
+            $ref: '#/components/schemas/SegmentResourceModel'
+        brandId:
+          type: integer
+          format: int64
+        brandName:
+          type: string
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
   securitySchemes:
     oauth2-cognito:

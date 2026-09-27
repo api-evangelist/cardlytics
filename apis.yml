@@ -64,7 +64,7 @@ tags:
 - Commerce Media
 - Card-Linked Offers
 - Purchase Intelligence
-- Financial-Services
+- Financial Services
 - Loyalty and Rewards
 - Marketing
 - Banking
@@ -84,6 +84,7 @@ tags_raw:
 - Retail Media
 - Attribution
 - Offers
+- Financial-Services
 apis:
 - aid: cardlytics:cardlytics-ads-api
   name: Cardlytics Ads API

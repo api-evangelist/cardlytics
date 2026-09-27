@@ -387,54 +387,14 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PurchaseBehaviorType:
-      enum:
-      - CARDLYTICS_DETERMINED
-      - BY_CATEGORY
-      - EXPANDED
-      type: string
-    RuleDefinition:
-      type: object
-      properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    IGetGeoResourceModel:
+    IPostGeoReferenceResourceModel:
       type: object
       properties:
         id:
           type: integer
           format: int32
-          readOnly: true
         geoType:
           $ref: '#/components/schemas/GeoType'
-      additionalProperties: false
-    CustomAudience:
-      type: object
-      properties:
-        customAudienceId:
-          type: integer
-          format: int64
-        fileName:
-          type:
-          - string
-          - 'null'
-        description:
-          type:
-          - string
-          - 'null'
       additionalProperties: false
     GetCustomAudienceResourceModel:
       type: object
@@ -444,28 +404,42 @@ components:
         exclude:
           $ref: '#/components/schemas/CustomAudience'
       additionalProperties: false
-    GeoType:
-      enum:
-      - COUNTRY
-      - REGION
-      - LOCALITY
-      - DMA
-      - POSTAL_CODE
-      type: string
-    IPostPurchaseBehaviorResourceModel:
+    GetValidationResourceModel:
       type: object
       properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
         type:
-          $ref: '#/components/schemas/PurchaseBehaviorType'
-      additionalProperties: false
-    PostCustomAudienceResourceModel:
-      type: object
-      properties:
-        include:
-          $ref: '#/components/schemas/CustomAudience'
-        exclude:
-          $ref: '#/components/schemas/CustomAudience'
-      additionalProperties: false
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
     GetGeoLocationsResourceModel:
       type: object
       properties:
@@ -484,30 +458,20 @@ components:
         count:
           $ref: '#/components/schemas/GetGeoLocationCountResourceModel'
       additionalProperties: false
-    IPostGeoReferenceResourceModel:
-      type: object
-      properties:
-        id:
-          type: integer
-          format: int32
-        geoType:
-          $ref: '#/components/schemas/GeoType'
-      additionalProperties: false
-    RuleTypes:
+    GeoType:
       enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
+      - COUNTRY
+      - REGION
+      - LOCALITY
+      - DMA
+      - POSTAL_CODE
       type: string
-      description: Validation rule definition types.
+    PurchaseBehaviorType:
+      enum:
+      - CARDLYTICS_DETERMINED
+      - BY_CATEGORY
+      - EXPANDED
+      type: string
     GetAudienceResourceModel:
       type: object
       properties:
@@ -557,89 +521,6 @@ components:
         purchaseBehavior:
           $ref: '#/components/schemas/IPurchaseBehaviorResourceModel'
       additionalProperties: false
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    GetValidationResourceModel:
-      type: object
-      properties:
-        isValid:
-          default: false
-        errors:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-      description: Get Validation endpoint resource model.
-    GetGeoLocationCountResourceModel:
-      type: object
-      properties:
-        include:
-          type: integer
-          format: int32
-        exclude:
-          type: integer
-          format: int32
-      additionalProperties: false
-    PostGeoLocationsReferenceResourceModel:
-      type: object
-      properties:
-        include:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
-        exclude:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
-      additionalProperties: false
-    IPurchaseBehaviorResourceModel:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/PurchaseBehaviorType'
-      additionalProperties: false
     PostAudienceResourceModel:
       required:
       - purchaseBehavior
@@ -670,6 +551,29 @@ components:
         purchaseBehavior:
           $ref: '#/components/schemas/IPostPurchaseBehaviorResourceModel'
       additionalProperties: false
+    PostCustomAudienceResourceModel:
+      type: object
+      properties:
+        include:
+          $ref: '#/components/schemas/CustomAudience'
+        exclude:
+          $ref: '#/components/schemas/CustomAudience'
+      additionalProperties: false
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
     ProblemDetails:
       type: object
       properties:
@@ -695,6 +599,28 @@ components:
           - string
           - 'null'
       additionalProperties: {}
+    PostGeoLocationsReferenceResourceModel:
+      type: object
+      properties:
+        include:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
+        exclude:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/IPostGeoReferenceResourceModel'
+      additionalProperties: false
+    IPostPurchaseBehaviorResourceModel:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PurchaseBehaviorType'
+      additionalProperties: false
     Operation:
       type: object
       properties:
@@ -711,6 +637,80 @@ components:
           type:
           - string
           - 'null'
+      additionalProperties: false
+    CustomAudience:
+      type: object
+      properties:
+        customAudienceId:
+          type: integer
+          format: int64
+        fileName:
+          type:
+          - string
+          - 'null'
+        description:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetGeoLocationCountResourceModel:
+      type: object
+      properties:
+        include:
+          type: integer
+          format: int32
+        exclude:
+          type: integer
+          format: int32
+      additionalProperties: false
+    IPurchaseBehaviorResourceModel:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/PurchaseBehaviorType'
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    IGetGeoResourceModel:
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int32
+          readOnly: true
+        geoType:
+          $ref: '#/components/schemas/GeoType'
       additionalProperties: false
   securitySchemes:
     oauth2-cognito:
