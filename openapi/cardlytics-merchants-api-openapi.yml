@@ -144,19 +144,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    TraceResponse:
-      type: object
-      description: Response containing the trace identifier
-      properties:
-        message:
-          type: string
-          example: Message description of the operation
-        trace_id:
-          type: string
-          description: Request trace identifier
-      required:
-      - message
-      - trace_id
     MerchantPayload:
       type: object
       properties:
@@ -399,6 +386,19 @@ components:
       - merchantName
       - paymentChannels
       - stores
+    TraceResponse:
+      type: object
+      description: Response containing the trace identifier
+      properties:
+        message:
+          type: string
+          example: Message description of the operation
+        trace_id:
+          type: string
+          description: Request trace identifier
+      required:
+      - message
+      - trace_id
   securitySchemes:
     oauth2:
       type: oauth2

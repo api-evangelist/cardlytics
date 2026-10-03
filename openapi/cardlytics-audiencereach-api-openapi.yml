@@ -57,13 +57,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    GetAudienceReachResourceModel:
-      type: object
-      properties:
-        potentialAudienceSize:
-          type: integer
-          format: int64
-      additionalProperties: false
     ReachPurchaseCategoryParameters:
       type: object
       properties:
@@ -85,6 +78,47 @@ components:
           description: IDs of Purchase Categories to include in the Reach calculation.
       additionalProperties: false
       description: Purchase Category Parameters for the Audience Reach Calculation
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    PostAudienceReachResourceModel:
+      type: object
+      properties:
+        includeLocations:
+          description: Gets whether or not Locations are included in the request.
+          default: false
+          readOnly: true
+        includePurchaseCategories:
+          description: Gets whether or not Purchase Categories are included in the request.
+          default: false
+          readOnly: true
+        purchaseCategoryFilter:
+          $ref: '#/components/schemas/ReachPurchaseCategoryParameters'
+        geoFilter:
+          $ref: '#/components/schemas/ReachLocationParameters'
+      additionalProperties: false
     ReachLocationParameters:
       type: object
       properties:
@@ -130,47 +164,13 @@ components:
           description: IDs of Regions to include in the Reach calculation.
       additionalProperties: false
       description: Location-related parameters for the Audience Reach calculation.
-    PostAudienceReachResourceModel:
+    GetAudienceReachResourceModel:
       type: object
       properties:
-        includeLocations:
-          description: Gets whether or not Locations are included in the request.
-          default: false
-          readOnly: true
-        includePurchaseCategories:
-          description: Gets whether or not Purchase Categories are included in the request.
-          default: false
-          readOnly: true
-        purchaseCategoryFilter:
-          $ref: '#/components/schemas/ReachPurchaseCategoryParameters'
-        geoFilter:
-          $ref: '#/components/schemas/ReachLocationParameters'
+        potentialAudienceSize:
+          type: integer
+          format: int64
       additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
   securitySchemes:
     oauth2-cognito:
       type: oauth2

@@ -344,41 +344,27 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PutPricingModelResourceModel:
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    Operation:
       type: object
       properties:
-        adGroupId:
-          type: integer
-          format: int32
-        pricingModelId:
-          type: integer
-          format: int32
-        accountId:
+        value: {}
+        path:
           type:
           - string
           - 'null'
-        feeAmount:
+        op:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feePercent:
+        from:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feeCap:
-          type:
-          - number
-          - 'null'
-          format: double
-        targetRoas:
-          type:
-          - number
-          - 'null'
-          format: double
-        currency:
-          $ref: '#/components/schemas/Currency'
       additionalProperties: false
     GetPricingModelResourceModel:
       type: object
@@ -432,27 +418,41 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Currency:
-      enum:
-      - USD
-      - GBP
-      type: string
-    Operation:
+    PutPricingModelResourceModel:
       type: object
       properties:
-        value: {}
-        path:
+        adGroupId:
+          type: integer
+          format: int32
+        pricingModelId:
+          type: integer
+          format: int32
+        accountId:
           type:
           - string
           - 'null'
-        op:
+        feeAmount:
           type:
-          - string
+          - number
           - 'null'
-        from:
+          format: double
+        feePercent:
           type:
-          - string
+          - number
           - 'null'
+          format: double
+        feeCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
       additionalProperties: false
     PostPricingModelResourceModel:
       type: object

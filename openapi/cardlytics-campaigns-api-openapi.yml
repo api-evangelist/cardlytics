@@ -1104,65 +1104,28 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    CampaignObjective:
-      enum:
-      - DriveSales
-      - BuildLoyalty
-      - AcquireNewCustomers
-      type: string
-    ScheduleType:
-      enum:
-      - Lifetime
-      - Daily
-      type: string
-      description: 'Schedule Type enumeration.
-
-        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
-    CampaignPricingModel:
-      enum:
-      - None
-      - CPR
-      - CPE
-      - CPT
-      - CPS
-      - CPST
-      - CPSH
-      - CPM
-      type: string
-      description: 'Campaign PricingModel enumeration.
-
-        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
-    GetCampaignVersionResourceModel:
-      type: object
-      properties:
-        version:
-          type: integer
-          format: int32
-        eventDateTime:
-          type: string
-          format: date-time
-          example: '1987-03-18T00:00:00.0000000-08:00'
-      additionalProperties: false
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
     Currency:
       enum:
       - USD
       - GBP
       type: string
-    PutCampaignStatusResourceModel:
+    RuleDefinition:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/CampaignStatus'
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     GetValidationDefinitionResourceModel:
       type: object
@@ -1179,147 +1142,24 @@ components:
             $ref: '#/components/schemas/RuleDefinition'
       additionalProperties: false
       description: Get Validation Definition resource model.
-    PostCampaignResourceModel:
-      required:
-      - budget
-      - campaignObjective
-      - campaignPricingModel
-      - name
-      - orderNumber
-      - scheduleType
-      type: object
-      properties:
-        startDateTime:
-          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
-
-            This value must be a valid ISO DateTime.'
-          example: '1987-03-18T00:00:00.0000000'
-        endDateTime:
-          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
-
-            This value must be a valid ISO DateTime.'
-          example: '1987-03-18T00:00:00.0000000'
-        transactionDateTime:
-          type:
-          - string
-          - 'null'
-          format: date-time
-          example: '1987-03-18T00:00:00.0000000-08:00'
-        targetRoas:
-          type:
-          - number
-          - 'null'
-          format: double
-        isOfferAutoActivated:
-          default: false
-        campaignType:
-          $ref: '#/components/schemas/CampaignType'
-        attributionWindow:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        isBankFunded:
-          default: false
-        campaignPricingModel:
-          $ref: '#/components/schemas/CampaignPricingModel'
-        currency:
-          $ref: '#/components/schemas/Currency'
-        orderNumber:
-          minLength: 1
-          type: string
-        name:
-          minLength: 1
-          type: string
-        campaignObjective:
-          $ref: '#/components/schemas/CampaignObjective'
-        budget:
-          type: number
-          format: double
-        scheduleType:
-          $ref: '#/components/schemas/ScheduleType'
-      additionalProperties: false
-    GetValidationResourceModel:
-      type: object
-      properties:
-        isValid:
-          default: false
-        errors:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-      description: Get Validation endpoint resource model.
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RuleTypes:
+    CampaignType:
       enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
+      - FIXED_CLO
+      - DYNAMIC_CLO
       type: string
-      description: Validation rule definition types.
-    GetCampaignProjectionResourceModel:
+      description: CampaignType enumeration.
+    PutCampaignStatusResourceModel:
       type: object
       properties:
-        campaignProjectionId:
-          type: integer
-          format: int32
-        campaignId:
-          type: integer
-          format: int32
-        eventId:
-          type: string
-          format: uuid
+        status:
+          $ref: '#/components/schemas/CampaignStatus'
       additionalProperties: false
+    CampaignObjective:
+      enum:
+      - DriveSales
+      - BuildLoyalty
+      - AcquireNewCustomers
+      type: string
     GetCampaignResourceModel:
       type: object
       properties:
@@ -1394,6 +1234,81 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    ScheduleType:
+      enum:
+      - Lifetime
+      - Daily
+      type: string
+      description: 'Schedule Type enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
+    CampaignPricingModel:
+      enum:
+      - None
+      - CPR
+      - CPE
+      - CPT
+      - CPS
+      - CPST
+      - CPSH
+      - CPM
+      type: string
+      description: 'Campaign PricingModel enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
     ProblemDetails:
       type: object
       properties:
@@ -1419,30 +1334,115 @@ components:
           - string
           - 'null'
       additionalProperties: {}
-    RuleDefinition:
+    GetCampaignVersionResourceModel:
       type: object
       properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
+        version:
+          type: integer
+          format: int32
+        eventDateTime:
+          type: string
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
       additionalProperties: false
-    CampaignType:
+    CampaignStatus:
       enum:
-      - FIXED_CLO
-      - DYNAMIC_CLO
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
       type: string
-      description: CampaignType enumeration.
+      description: Campaign status enumeration.
+    PostCampaignResourceModel:
+      required:
+      - budget
+      - campaignObjective
+      - campaignPricingModel
+      - name
+      - orderNumber
+      - scheduleType
+      type: object
+      properties:
+        startDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime.'
+          example: '1987-03-18T00:00:00.0000000'
+        endDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime.'
+          example: '1987-03-18T00:00:00.0000000'
+        transactionDateTime:
+          type:
+          - string
+          - 'null'
+          format: date-time
+          example: '1987-03-18T00:00:00.0000000-08:00'
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        isOfferAutoActivated:
+          default: false
+        campaignType:
+          $ref: '#/components/schemas/CampaignType'
+        attributionWindow:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        isBankFunded:
+          default: false
+        campaignPricingModel:
+          $ref: '#/components/schemas/CampaignPricingModel'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        orderNumber:
+          minLength: 1
+          type: string
+        name:
+          minLength: 1
+          type: string
+        campaignObjective:
+          $ref: '#/components/schemas/CampaignObjective'
+        budget:
+          type: number
+          format: double
+        scheduleType:
+          $ref: '#/components/schemas/ScheduleType'
+      additionalProperties: false
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    GetCampaignProjectionResourceModel:
+      type: object
+      properties:
+        campaignProjectionId:
+          type: integer
+          format: int32
+        campaignId:
+          type: integer
+          format: int32
+        eventId:
+          type: string
+          format: uuid
+      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2

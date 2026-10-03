@@ -544,59 +544,24 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PostAdGroupResourceModel:
-      required:
-      - name
+    RuleDefinition:
       type: object
       properties:
-        targetingCriteriaId:
+        propertyName:
           type:
-          - integer
+          - string
           - 'null'
-          format: int64
-        name:
-          minLength: 1
-          type: string
-        campaignId:
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-        audienceId:
+        errorMessage:
           type:
-          - integer
+          - string
           - 'null'
-          format: int32
-        placementIndex:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        placementLocation:
-          $ref: '#/components/schemas/PlacementLocation'
-        institutions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-        testPopulation:
-          type:
-          - number
-          - 'null'
-          format: double
       additionalProperties: false
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
     GetAdGroupResourceModel:
       type: object
       properties:
@@ -686,12 +651,33 @@ components:
             $ref: '#/components/schemas/RuleDefinition'
       additionalProperties: false
       description: Get Validation Definition resource model.
-    PlacementLocation:
+    CampaignStatus:
       enum:
-      - None
-      - All
-      - UnderTransaction
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
       type: string
+      description: Campaign status enumeration.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
     GetValidationResourceModel:
       type: object
       properties:
@@ -728,38 +714,6 @@ components:
           - 'null'
       additionalProperties: {}
       description: Get Validation endpoint resource model.
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RuleTypes:
-      enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
-      type: string
-      description: Validation rule definition types.
     ProblemDetails:
       type: object
       properties:
@@ -785,24 +739,70 @@ components:
           - string
           - 'null'
       additionalProperties: {}
-    RuleDefinition:
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
+    PostAdGroupResourceModel:
+      required:
+      - name
       type: object
       properties:
-        propertyName:
+        targetingCriteriaId:
           type:
-          - string
+          - integer
           - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
+          format: int64
+        name:
+          minLength: 1
+          type: string
+        campaignId:
           type:
-          - string
+          - integer
           - 'null'
-        errorMessage:
+          format: int32
+        audienceId:
           type:
-          - string
+          - integer
           - 'null'
+          format: int32
+        placementIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementLocation:
+          $ref: '#/components/schemas/PlacementLocation'
+        institutions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        testPopulation:
+          type:
+          - number
+          - 'null'
+          format: double
       additionalProperties: false
+    PlacementLocation:
+      enum:
+      - None
+      - All
+      - UnderTransaction
+      type: string
   securitySchemes:
     oauth2-cognito:
       type: oauth2

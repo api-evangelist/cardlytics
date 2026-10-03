@@ -489,6 +489,64 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    RuleDefinition:
+      type: object
+      properties:
+        propertyName:
+          type:
+          - string
+          - 'null'
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
+          type:
+          - string
+          - 'null'
+        errorMessage:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    RewardType:
+      enum:
+      - SingleRewardFlatAmountBack
+      - SingleRewardPercentAmountBack
+      - SingleRewardSpendXGetY
+      - MultipleRewardFlatAmountBack
+      - MultipleRewardPercentAmountBack
+      - MultipleRewardSpendXGetY
+      type: string
+    RewardAttributesData:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        id:
+          type:
+          - string
+          - 'null'
+        attributes:
+          $ref: '#/components/schemas/RewardAttributes'
+        relationships:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            $ref: '#/components/schemas/Relationship'
+      additionalProperties: false
+    Relationship:
+      type: object
+      properties:
+        data:
+          $ref: '#/components/schemas/RelationshipData'
+      additionalProperties: false
     RelationshipData:
       type: object
       properties:
@@ -501,11 +559,169 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    StoreLocationType:
+      enum:
+      - Unknown
+      - InStore
+      - Online
+      - GiftCard
+      - CallCenter
+      type: string
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
     RewardAttributesDataBody:
       type: object
       properties:
         data:
           $ref: '#/components/schemas/RewardAttributesData'
+      additionalProperties: false
+    RewardTemplate:
+      enum:
+      - None
+      - FlatAmountBack
+      - PercentBack
+      - SpendXGetY
+      type: string
+    PutRewardResourceModel:
+      type: object
+      properties:
+        redemptionStartDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime or null.'
+          example: '1987-03-18T00:00:00.0000000'
+        redemptionEndDateTime:
+          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
+
+            This value must be a valid ISO DateTime or null.'
+          example: '1987-03-18T00:00:00.0000000'
+        rewardAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        rmsRewardId:
+          type:
+          - string
+          - 'null'
+        currency:
+          $ref: '#/components/schemas/Currency'
+        rewardType:
+          $ref: '#/components/schemas/RewardType'
+        rewardId:
+          type: integer
+          format: int32
+        adId:
+          type: integer
+          format: int32
+        accountId:
+          type:
+          - string
+          - 'null'
+        rewardTemplate:
+          $ref: '#/components/schemas/RewardTemplate'
+        rewardPercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        rewardAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        minSpend:
+          type:
+          - number
+          - 'null'
+          format: double
+        minVisits:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        rewardCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        isMultiple:
+          default: false
+        isHoldRedemption:
+          default: false
+        storeLocationTypes:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/StoreLocationType'
       additionalProperties: false
     PostRewardResourceModel:
       required:
@@ -576,6 +792,40 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/StoreLocationType'
+      additionalProperties: false
+    RewardAttributes:
+      type: object
+      properties:
+        adId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        endDateOffset:
+          type: integer
+          format: int32
+        isManualRedemption:
+          default: false
+        isSuspendedProcessing:
+          default: false
+        redemptionEndDateTime:
+          example: '1987-03-18T00:00:00.0000000'
+        redemptionStartDateTime:
+          example: '1987-03-18T00:00:00.0000000'
+        remediationModelConfigValue:
+          type:
+          - string
+          - 'null'
+        rewardAnnotations:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        rewardModelConfigValue:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     GetRewardResourceModel:
       type: object
@@ -663,11 +913,6 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Currency:
-      enum:
-      - USD
-      - GBP
-      type: string
     ProblemDetails:
       type: object
       properties:
@@ -693,101 +938,6 @@ components:
           - string
           - 'null'
       additionalProperties: {}
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    RewardTemplate:
-      enum:
-      - None
-      - FlatAmountBack
-      - PercentBack
-      - SpendXGetY
-      type: string
-    GetValidationResourceModel:
-      type: object
-      properties:
-        isValid:
-          default: false
-        errors:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-      description: Get Validation endpoint resource model.
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    RewardAttributesData:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        id:
-          type:
-          - string
-          - 'null'
-        attributes:
-          $ref: '#/components/schemas/RewardAttributes'
-        relationships:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            $ref: '#/components/schemas/Relationship'
-      additionalProperties: false
     RuleTypes:
       enum:
       - Required
@@ -803,156 +953,6 @@ components:
       - UniqueCollection
       type: string
       description: Validation rule definition types.
-    RewardAttributes:
-      type: object
-      properties:
-        adId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        endDateOffset:
-          type: integer
-          format: int32
-        isManualRedemption:
-          default: false
-        isSuspendedProcessing:
-          default: false
-        redemptionEndDateTime:
-          example: '1987-03-18T00:00:00.0000000'
-        redemptionStartDateTime:
-          example: '1987-03-18T00:00:00.0000000'
-        remediationModelConfigValue:
-          type:
-          - string
-          - 'null'
-        rewardAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        rewardModelConfigValue:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    StoreLocationType:
-      enum:
-      - Unknown
-      - InStore
-      - Online
-      - GiftCard
-      - CallCenter
-      type: string
-    RewardType:
-      enum:
-      - SingleRewardFlatAmountBack
-      - SingleRewardPercentAmountBack
-      - SingleRewardSpendXGetY
-      - MultipleRewardFlatAmountBack
-      - MultipleRewardPercentAmountBack
-      - MultipleRewardSpendXGetY
-      type: string
-    Relationship:
-      type: object
-      properties:
-        data:
-          $ref: '#/components/schemas/RelationshipData'
-      additionalProperties: false
-    PutRewardResourceModel:
-      type: object
-      properties:
-        redemptionStartDateTime:
-          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
-
-            This value must be a valid ISO DateTime or null.'
-          example: '1987-03-18T00:00:00.0000000'
-        redemptionEndDateTime:
-          description: 'This value is processed at the local time relative to the client at point of redemption, therefore a timezone is not specified.
-
-            This value must be a valid ISO DateTime or null.'
-          example: '1987-03-18T00:00:00.0000000'
-        rewardAnnotations:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        rmsRewardId:
-          type:
-          - string
-          - 'null'
-        currency:
-          $ref: '#/components/schemas/Currency'
-        rewardType:
-          $ref: '#/components/schemas/RewardType'
-        rewardId:
-          type: integer
-          format: int32
-        adId:
-          type: integer
-          format: int32
-        accountId:
-          type:
-          - string
-          - 'null'
-        rewardTemplate:
-          $ref: '#/components/schemas/RewardTemplate'
-        rewardPercent:
-          type:
-          - number
-          - 'null'
-          format: double
-        rewardAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        minSpend:
-          type:
-          - number
-          - 'null'
-          format: double
-        minVisits:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        rewardCap:
-          type:
-          - number
-          - 'null'
-          format: double
-        isMultiple:
-          default: false
-        isHoldRedemption:
-          default: false
-        storeLocationTypes:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/StoreLocationType'
-      additionalProperties: false
-    RuleDefinition:
-      type: object
-      properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2

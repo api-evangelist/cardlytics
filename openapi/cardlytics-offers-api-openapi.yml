@@ -117,6 +117,39 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    OfferPayload:
+      type: object
+      description: A partner offer payload
+      properties:
+        offerId:
+          type: string
+          description: Partner’s unique Offer Id for the Merchant
+        merchantId:
+          type: string
+          description: Partner’s unique identifier of their Merchant as shared in the Merchant feed
+        offerName:
+          type: string
+          description: Offer Name
+        assets:
+          type: object
+          description: 'Two image assets (logo and largeRectangle).
+
+            '
+          properties:
+            logo:
+              $ref: '#/components/schemas/ImageAsset'
+              description: Logo image asset (627x627)
+            largeRectangle:
+              $ref: '#/components/schemas/ImageAsset'
+              description: Large rectangle image asset (1200x627)
+          required:
+          - logo
+          - largeRectangle
+      required:
+      - offerId
+      - merchantId
+      - offerName
+      - assets
     LargeImage:
       type: object
       description: 'The full-sized image. Exactly one of `url` or `content` must be present.
@@ -170,39 +203,6 @@ components:
       required:
       - type
       - value
-    OfferPayload:
-      type: object
-      description: A partner offer payload
-      properties:
-        offerId:
-          type: string
-          description: Partner’s unique Offer Id for the Merchant
-        merchantId:
-          type: string
-          description: Partner’s unique identifier of their Merchant as shared in the Merchant feed
-        offerName:
-          type: string
-          description: Offer Name
-        assets:
-          type: object
-          description: 'Two image assets (logo and largeRectangle).
-
-            '
-          properties:
-            logo:
-              $ref: '#/components/schemas/ImageAsset'
-              description: Logo image asset (627x627)
-            largeRectangle:
-              $ref: '#/components/schemas/ImageAsset'
-              description: Large rectangle image asset (1200x627)
-          required:
-          - logo
-          - largeRectangle
-      required:
-      - offerId
-      - merchantId
-      - offerName
-      - assets
   securitySchemes:
     oauth2:
       type: oauth2
