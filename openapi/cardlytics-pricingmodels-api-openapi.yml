@@ -344,27 +344,75 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    PutPricingModelResourceModel:
+      type: object
+      properties:
+        adGroupId:
+          type: integer
+          format: int32
+        pricingModelId:
+          type: integer
+          format: int32
+        accountId:
+          type:
+          - string
+          - 'null'
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        feePercent:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeCap:
+          type:
+          - number
+          - 'null'
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
+      additionalProperties: false
     Currency:
       enum:
       - USD
       - GBP
       type: string
-    Operation:
+    PostPricingModelResourceModel:
       type: object
       properties:
-        value: {}
-        path:
+        adGroupId:
+          type: integer
+          format: int32
+        feePercent:
           type:
-          - string
+          - number
           - 'null'
-        op:
+          format: double
+        feeCap:
           type:
-          - string
+          - number
           - 'null'
-        from:
+          format: double
+        targetRoas:
           type:
-          - string
+          - number
           - 'null'
+          format: double
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
       additionalProperties: false
     GetPricingModelResourceModel:
       type: object
@@ -418,70 +466,22 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    PutPricingModelResourceModel:
+    Operation:
       type: object
       properties:
-        adGroupId:
-          type: integer
-          format: int32
-        pricingModelId:
-          type: integer
-          format: int32
-        accountId:
+        value: {}
+        path:
           type:
           - string
           - 'null'
-        feeAmount:
+        op:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feePercent:
+        from:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feeCap:
-          type:
-          - number
-          - 'null'
-          format: double
-        targetRoas:
-          type:
-          - number
-          - 'null'
-          format: double
-        currency:
-          $ref: '#/components/schemas/Currency'
-      additionalProperties: false
-    PostPricingModelResourceModel:
-      type: object
-      properties:
-        adGroupId:
-          type: integer
-          format: int32
-        feePercent:
-          type:
-          - number
-          - 'null'
-          format: double
-        feeCap:
-          type:
-          - number
-          - 'null'
-          format: double
-        targetRoas:
-          type:
-          - number
-          - 'null'
-          format: double
-        feeAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        currency:
-          $ref: '#/components/schemas/Currency'
       additionalProperties: false
     ProblemDetails:
       type: object

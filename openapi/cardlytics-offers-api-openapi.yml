@@ -150,6 +150,19 @@ components:
       - merchantId
       - offerName
       - assets
+    TraceResponse:
+      type: object
+      description: Response containing the trace identifier
+      properties:
+        message:
+          type: string
+          example: Message description of the operation
+        trace_id:
+          type: string
+          description: Request trace identifier
+      required:
+      - message
+      - trace_id
     LargeImage:
       type: object
       description: 'The full-sized image. Exactly one of `url` or `content` must be present.
@@ -170,19 +183,6 @@ components:
         - url
       - required:
         - content
-    TraceResponse:
-      type: object
-      description: Response containing the trace identifier
-      properties:
-        message:
-          type: string
-          example: Message description of the operation
-        trace_id:
-          type: string
-          description: Request trace identifier
-      required:
-      - message
-      - trace_id
     ImageAsset:
       type: object
       description: An image asset with type and a single `large` payload

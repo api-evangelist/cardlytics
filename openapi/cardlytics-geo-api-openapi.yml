@@ -345,19 +345,43 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    MatchedGeoSearchResourceModel:
+    PostGeoBulkSearchResourceModel:
       type: object
       properties:
-        matched:
+        subLevelCountryId:
           type: integer
           format: int32
-          readOnly: true
-        matches:
+        country:
           type:
           - array
           - 'null'
           items:
-            $ref: '#/components/schemas/GeoSearchResourceModel'
+            type: string
+          description: Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description.
+        dma:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        region:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        locality:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
+        postalCode:
+          type:
+          - array
+          - 'null'
+          items:
+            type: string
       additionalProperties: false
     GeoSearchResourceModel:
       type: object
@@ -402,43 +426,19 @@ components:
       - DMA
       - POSTAL_CODE
       type: string
-    PostGeoBulkSearchResourceModel:
+    MatchedGeoSearchResourceModel:
       type: object
       properties:
-        subLevelCountryId:
+        matched:
           type: integer
           format: int32
-        country:
+          readOnly: true
+        matches:
           type:
           - array
           - 'null'
           items:
-            type: string
-          description: Country filters specified with two letters are applied to the Abbreviation field, natural language queries are applied to the Description.
-        dma:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        region:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        locality:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
-        postalCode:
-          type:
-          - array
-          - 'null'
-          items:
-            type: string
+            $ref: '#/components/schemas/GeoSearchResourceModel'
       additionalProperties: false
   securitySchemes:
     oauth2-cognito:

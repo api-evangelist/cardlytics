@@ -78,31 +78,6 @@ components:
           description: IDs of Purchase Categories to include in the Reach calculation.
       additionalProperties: false
       description: Purchase Category Parameters for the Audience Reach Calculation
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
     PostAudienceReachResourceModel:
       type: object
       properties:
@@ -118,6 +93,13 @@ components:
           $ref: '#/components/schemas/ReachPurchaseCategoryParameters'
         geoFilter:
           $ref: '#/components/schemas/ReachLocationParameters'
+      additionalProperties: false
+    GetAudienceReachResourceModel:
+      type: object
+      properties:
+        potentialAudienceSize:
+          type: integer
+          format: int64
       additionalProperties: false
     ReachLocationParameters:
       type: object
@@ -164,13 +146,31 @@ components:
           description: IDs of Regions to include in the Reach calculation.
       additionalProperties: false
       description: Location-related parameters for the Audience Reach calculation.
-    GetAudienceReachResourceModel:
+    ProblemDetails:
       type: object
       properties:
-        potentialAudienceSize:
-          type: integer
-          format: int64
-      additionalProperties: false
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
   securitySchemes:
     oauth2-cognito:
       type: oauth2

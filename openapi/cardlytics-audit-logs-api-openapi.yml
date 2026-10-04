@@ -90,22 +90,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    ChangeLogEntry:
-      type: object
-      properties:
-        columnName:
-          type:
-          - string
-          - 'null'
-        originalValue:
-          type:
-          - string
-          - 'null'
-        newValue:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
     GetAuditLogResourceModel:
       type: object
       properties:
@@ -131,6 +115,22 @@ components:
           - 'null'
           items:
             $ref: '#/components/schemas/ChangeLogEntry'
+      additionalProperties: false
+    ChangeLogEntry:
+      type: object
+      properties:
+        columnName:
+          type:
+          - string
+          - 'null'
+        originalValue:
+          type:
+          - string
+          - 'null'
+        newValue:
+          type:
+          - string
+          - 'null'
       additionalProperties: false
     ProblemDetails:
       type: object

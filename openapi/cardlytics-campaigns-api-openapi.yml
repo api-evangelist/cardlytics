@@ -1104,62 +1104,6 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    Currency:
-      enum:
-      - USD
-      - GBP
-      type: string
-    RuleDefinition:
-      type: object
-      properties:
-        propertyName:
-          type:
-          - string
-          - 'null'
-        ruleType:
-          $ref: '#/components/schemas/RuleTypes'
-        valueType:
-          type:
-          - string
-          - 'null'
-        errorMessage:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
-    CampaignType:
-      enum:
-      - FIXED_CLO
-      - DYNAMIC_CLO
-      type: string
-      description: CampaignType enumeration.
-    PutCampaignStatusResourceModel:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/CampaignStatus'
-      additionalProperties: false
-    CampaignObjective:
-      enum:
-      - DriveSales
-      - BuildLoyalty
-      - AcquireNewCustomers
-      type: string
     GetCampaignResourceModel:
       type: object
       properties:
@@ -1234,106 +1178,30 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Operation:
+    RuleDefinition:
       type: object
       properties:
-        value: {}
-        path:
+        propertyName:
           type:
           - string
           - 'null'
-        op:
+        ruleType:
+          $ref: '#/components/schemas/RuleTypes'
+        valueType:
           type:
           - string
           - 'null'
-        from:
+        errorMessage:
           type:
           - string
           - 'null'
       additionalProperties: false
-    GetValidationResourceModel:
-      type: object
-      properties:
-        isValid:
-          default: false
-        errors:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-      description: Get Validation endpoint resource model.
-    ScheduleType:
+    CampaignType:
       enum:
-      - Lifetime
-      - Daily
+      - FIXED_CLO
+      - DYNAMIC_CLO
       type: string
-      description: 'Schedule Type enumeration.
-
-        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
-    CampaignPricingModel:
-      enum:
-      - None
-      - CPR
-      - CPE
-      - CPT
-      - CPS
-      - CPST
-      - CPSH
-      - CPM
-      type: string
-      description: 'Campaign PricingModel enumeration.
-
-        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
+      description: CampaignType enumeration.
     GetCampaignVersionResourceModel:
       type: object
       properties:
@@ -1345,16 +1213,14 @@ components:
           format: date-time
           example: '1987-03-18T00:00:00.0000000-08:00'
       additionalProperties: false
-    CampaignStatus:
+    ScheduleType:
       enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
+      - Lifetime
+      - Daily
       type: string
-      description: Campaign status enumeration.
+      description: 'Schedule Type enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.ScheduleType.'
     PostCampaignResourceModel:
       required:
       - budget
@@ -1415,6 +1281,39 @@ components:
         scheduleType:
           $ref: '#/components/schemas/ScheduleType'
       additionalProperties: false
+    GetCampaignProjectionResourceModel:
+      type: object
+      properties:
+        campaignProjectionId:
+          type: integer
+          format: int32
+        campaignId:
+          type: integer
+          format: int32
+        eventId:
+          type: string
+          format: uuid
+      additionalProperties: false
+    Currency:
+      enum:
+      - USD
+      - GBP
+      type: string
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
     RuleTypes:
       enum:
       - Required
@@ -1430,19 +1329,120 @@ components:
       - UniqueCollection
       type: string
       description: Validation rule definition types.
-    GetCampaignProjectionResourceModel:
+    CampaignStatus:
+      enum:
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
+      type: string
+      description: Campaign status enumeration.
+    CampaignObjective:
+      enum:
+      - DriveSales
+      - BuildLoyalty
+      - AcquireNewCustomers
+      type: string
+    GetValidationResourceModel:
       type: object
       properties:
-        campaignProjectionId:
-          type: integer
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
           format: int32
-        campaignId:
-          type: integer
-          format: int32
-        eventId:
-          type: string
-          format: uuid
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    PutCampaignStatusResourceModel:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/CampaignStatus'
       additionalProperties: false
+    CampaignPricingModel:
+      enum:
+      - None
+      - CPR
+      - CPE
+      - CPT
+      - CPS
+      - CPST
+      - CPSH
+      - CPM
+      type: string
+      description: 'Campaign PricingModel enumeration.
+
+        This must be kept in step with Cardlytics.Api.CampaignBuild.Repository.Entities.CampaignPricingModel.'
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
   securitySchemes:
     oauth2-cognito:
       type: oauth2

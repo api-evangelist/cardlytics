@@ -67,6 +67,99 @@ paths:
       x-summary-source: derived
 components:
   schemas:
+    Customer:
+      type: object
+      properties:
+        requestId:
+          type: string
+        sourceCustomerId:
+          type: string
+        institutionId:
+          type: string
+        organizationId:
+          type: string
+        postalCode:
+          type: string
+        country:
+          type: string
+        customerCreationDate:
+          type: string
+        enrollmentStartDate:
+          type: string
+        enrollmentEndDate:
+          type: string
+        enrollmentOptInStatus:
+          type: string
+          enum:
+          - ACTIVE
+          - INACTIVE
+        alertOptInStatus:
+          type: array
+          items:
+            type: string
+            enum:
+            - ALL
+            - NEW
+            - ACTIVATED
+            - EXPIRING
+            - REDEMPTION
+            - CLOSE_THE_LOOP
+            - MISSED_OPPORTUNITY
+        targetingIndicator:
+          type: string
+          enum:
+          - TARGET
+          - DO_NOT_TARGET
+        portfolios:
+          type: array
+          items:
+            $ref: '#/components/schemas/Portfolio'
+        accounts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Account'
+    Portfolio:
+      type: object
+      properties:
+        sourcePortfolioId:
+          type: string
+        institutionId:
+          type: string
+        institutionName:
+          type: string
+          deprecated: true
+        portfolioName:
+          type: string
+        tagline:
+          type: string
+          deprecated: true
+        description:
+          type: string
+          deprecated: true
+        rewardCurrencyUnit:
+          type: string
+        rewardToCurrencyConversionRate:
+          type: string
+    Image:
+      type: object
+      properties:
+        type:
+          type: string
+          example: IMAGE_URL
+          enum:
+          - IMAGE_URL
+          - AD_COPY
+          - CALL_TO_ACTION_LINKS
+        value:
+          $ref: '#/components/schemas/AdImageValue'
+    CallToActionLink:
+      type: object
+      properties:
+        type:
+          type: string
+          example: WEB_LINK
+        value:
+          type: string
     Card:
       type: object
       properties:
@@ -89,98 +182,25 @@ components:
           type: string
         closeDate:
           type: string
-    PurchaseRequirement:
+    AdReward:
       type: object
       properties:
-        minSpendAmount:
+        rewardType:
+          type: string
+          enum:
+          - PERCENT_AMOUNT_PURCHASE
+          - FIXED_AMOUNT_PURCHASE
+          - METERED_AMOUNT_PURCHASE
+        rewardAmount:
           type: number
           format: float
-        purchaseChannels:
-          type: array
-          items:
-            type: string
-            enum:
-            - InStore
-            - Online
-            - PayAtPump
-            - App
-            - Convenience
-        purchaseTypes:
-          type: array
-          items:
-            type: string
-            enum:
-            - Membership
-            - Subscription
-            - Fuel
-    RewardSummaryTotals:
-      type: object
-      properties:
-        allTime:
-          $ref: '#/components/schemas/RewardSummary'
-        pending:
-          $ref: '#/components/schemas/RewardSummary'
-        yearToDate:
-          $ref: '#/components/schemas/RewardSummary'
-        previousCalendarYear:
-          $ref: '#/components/schemas/RewardSummary'
-        previousMonth:
-          $ref: '#/components/schemas/RewardSummary'
-        previousTwelveMonths:
-          $ref: '#/components/schemas/RewardSummary'
-        currentMonth:
-          $ref: '#/components/schemas/RewardSummary'
-    ImageURL:
-      type: object
-      properties:
-        url:
-          type: string
-        width:
-          type: integer
-          format: int32
-        height:
-          type: integer
-          format: int32
-    Text:
-      type: object
-      properties:
-        type:
-          type: string
-          example: AD_COPY
-          enum:
-          - IMAGE_URL
-          - AD_COPY
-          - CALL_TO_ACTION_LINKS
-        value:
-          type: object
-          additionalProperties:
-            type: string
-    AdAssetList:
-      type: object
-      properties:
-        logo:
-          $ref: '#/components/schemas/Image'
-        largeRectangle:
-          $ref: '#/components/schemas/Image'
-        smallRectangle:
-          $ref: '#/components/schemas/Image'
-        copy:
-          $ref: '#/components/schemas/Text'
-        callsToAction:
-          $ref: '#/components/schemas/CallsToAction'
-    CustomerAdRedemptionResponse:
-      type: object
-      properties:
-        requestId:
-          type: string
-        redemptions:
-          type: array
-          items:
-            $ref: '#/components/schemas/Redemption'
-        ads:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Ad'
+        maxRewardAmount:
+          type: number
+          format: float
+        isMultiRedemption:
+          type: boolean
+        purchaseRequirement:
+          $ref: '#/components/schemas/PurchaseRequirement'
     Ad:
       type: object
       properties:
@@ -243,73 +263,6 @@ components:
           - FULLY_REDEEMED
         assets:
           $ref: '#/components/schemas/AdAssetList'
-    Portfolio:
-      type: object
-      properties:
-        sourcePortfolioId:
-          type: string
-        institutionId:
-          type: string
-        institutionName:
-          type: string
-          deprecated: true
-        portfolioName:
-          type: string
-        tagline:
-          type: string
-          deprecated: true
-        description:
-          type: string
-          deprecated: true
-        rewardCurrencyUnit:
-          type: string
-        rewardToCurrencyConversionRate:
-          type: string
-    RewardSummary:
-      type: object
-      properties:
-        requestId:
-          type: string
-        rewardsSummary:
-          $ref: '#/components/schemas/RewardSummaryTotals'
-    Image:
-      type: object
-      properties:
-        type:
-          type: string
-          example: IMAGE_URL
-          enum:
-          - IMAGE_URL
-          - AD_COPY
-          - CALL_TO_ACTION_LINKS
-        value:
-          $ref: '#/components/schemas/AdImageValue'
-    AdReward:
-      type: object
-      properties:
-        rewardType:
-          type: string
-          enum:
-          - PERCENT_AMOUNT_PURCHASE
-          - FIXED_AMOUNT_PURCHASE
-          - METERED_AMOUNT_PURCHASE
-        rewardAmount:
-          type: number
-          format: float
-        maxRewardAmount:
-          type: number
-          format: float
-        isMultiRedemption:
-          type: boolean
-        purchaseRequirement:
-          $ref: '#/components/schemas/PurchaseRequirement'
-    AdImageValue:
-      type: object
-      properties:
-        large:
-          $ref: '#/components/schemas/ImageURL'
-        small:
-          $ref: '#/components/schemas/ImageURL'
     CallsToAction:
       type: object
       properties:
@@ -324,14 +277,55 @@ components:
           type: object
           additionalProperties:
             $ref: '#/components/schemas/CallToActionLink'
-    CallToActionLink:
+    Text:
       type: object
       properties:
         type:
           type: string
-          example: WEB_LINK
+          example: AD_COPY
+          enum:
+          - IMAGE_URL
+          - AD_COPY
+          - CALL_TO_ACTION_LINKS
         value:
+          type: object
+          additionalProperties:
+            type: string
+    RewardSummaryTotals:
+      type: object
+      properties:
+        allTime:
+          $ref: '#/components/schemas/RewardSummary'
+        pending:
+          $ref: '#/components/schemas/RewardSummary'
+        yearToDate:
+          $ref: '#/components/schemas/RewardSummary'
+        previousCalendarYear:
+          $ref: '#/components/schemas/RewardSummary'
+        previousMonth:
+          $ref: '#/components/schemas/RewardSummary'
+        previousTwelveMonths:
+          $ref: '#/components/schemas/RewardSummary'
+        currentMonth:
+          $ref: '#/components/schemas/RewardSummary'
+    RewardSummary:
+      type: object
+      properties:
+        requestId:
           type: string
+        rewardsSummary:
+          $ref: '#/components/schemas/RewardSummaryTotals'
+    ImageURL:
+      type: object
+      properties:
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
     Account:
       type: object
       properties:
@@ -371,57 +365,63 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Card'
-    Customer:
+    PurchaseRequirement:
       type: object
       properties:
-        requestId:
-          type: string
-        sourceCustomerId:
-          type: string
-        institutionId:
-          type: string
-        organizationId:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-        customerCreationDate:
-          type: string
-        enrollmentStartDate:
-          type: string
-        enrollmentEndDate:
-          type: string
-        enrollmentOptInStatus:
-          type: string
-          enum:
-          - ACTIVE
-          - INACTIVE
-        alertOptInStatus:
+        minSpendAmount:
+          type: number
+          format: float
+        purchaseChannels:
           type: array
           items:
             type: string
             enum:
-            - ALL
-            - NEW
-            - ACTIVATED
-            - EXPIRING
-            - REDEMPTION
-            - CLOSE_THE_LOOP
-            - MISSED_OPPORTUNITY
-        targetingIndicator:
+            - InStore
+            - Online
+            - PayAtPump
+            - App
+            - Convenience
+        purchaseTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - Membership
+            - Subscription
+            - Fuel
+    AdAssetList:
+      type: object
+      properties:
+        logo:
+          $ref: '#/components/schemas/Image'
+        largeRectangle:
+          $ref: '#/components/schemas/Image'
+        smallRectangle:
+          $ref: '#/components/schemas/Image'
+        copy:
+          $ref: '#/components/schemas/Text'
+        callsToAction:
+          $ref: '#/components/schemas/CallsToAction'
+    CustomerAdRedemptionResponse:
+      type: object
+      properties:
+        requestId:
           type: string
-          enum:
-          - TARGET
-          - DO_NOT_TARGET
-        portfolios:
+        redemptions:
           type: array
           items:
-            $ref: '#/components/schemas/Portfolio'
-        accounts:
-          type: array
-          items:
-            $ref: '#/components/schemas/Account'
+            $ref: '#/components/schemas/Redemption'
+        ads:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/Ad'
+    AdImageValue:
+      type: object
+      properties:
+        large:
+          $ref: '#/components/schemas/ImageURL'
+        small:
+          $ref: '#/components/schemas/ImageURL'
     Redemption:
       type: object
       properties:

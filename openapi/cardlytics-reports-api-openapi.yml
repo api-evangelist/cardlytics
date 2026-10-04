@@ -93,6 +93,55 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
+    ReportRequest:
+      type: object
+      description: Request to retrieve aggregated performance per offer for a merchant.
+      properties:
+        cube:
+          type: string
+          description: Reporting cube to query. Only 'merchant_performance' is currently supported.
+          enum:
+          - merchant_performance
+          default: merchant_performance
+        offerIds:
+          type: array
+          description: Optional list of partner offer IDs to filter. Empty or omitted returns all offers for the merchant.
+          items:
+            type: string
+        timeRange:
+          type: object
+          description: 'Inclusive date range for the report (YYYY-MM-DD). If omitted: `from` defaults to 2 years back (max lookback) and `to` defaults to today''s date.'
+          properties:
+            from:
+              type: string
+              format: date
+              description: Start date (inclusive).
+            to:
+              type: string
+              format: date
+              description: End date (inclusive).
+          required:
+          - from
+          - to
+    ReportHeader:
+      type: object
+      description: Metadata describing the report payload.
+      properties:
+        cube:
+          type: string
+          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
+        fields:
+          type: array
+          items:
+            $ref: '#/components/schemas/ReportField'
+        maxRows:
+          type: integer
+          description: Maximum number of rows returned; -1 means no limit.
+          default: -1
+      required:
+      - cube
+      - fields
+      - maxRows
     ReportField:
       type: object
       description: A field in the report header describing a dimension or metric.
@@ -126,55 +175,6 @@ components:
       required:
       - header
       - rows
-    ReportHeader:
-      type: object
-      description: Metadata describing the report payload.
-      properties:
-        cube:
-          type: string
-          description: Logical data source (e.g., cube or dataset). Only 'merchant_performance' is currently supported.
-        fields:
-          type: array
-          items:
-            $ref: '#/components/schemas/ReportField'
-        maxRows:
-          type: integer
-          description: Maximum number of rows returned; -1 means no limit.
-          default: -1
-      required:
-      - cube
-      - fields
-      - maxRows
-    ReportRequest:
-      type: object
-      description: Request to retrieve aggregated performance per offer for a merchant.
-      properties:
-        cube:
-          type: string
-          description: Reporting cube to query. Only 'merchant_performance' is currently supported.
-          enum:
-          - merchant_performance
-          default: merchant_performance
-        offerIds:
-          type: array
-          description: Optional list of partner offer IDs to filter. Empty or omitted returns all offers for the merchant.
-          items:
-            type: string
-        timeRange:
-          type: object
-          description: 'Inclusive date range for the report (YYYY-MM-DD). If omitted: `from` defaults to 2 years back (max lookback) and `to` defaults to today''s date.'
-          properties:
-            from:
-              type: string
-              format: date
-              description: Start date (inclusive).
-            to:
-              type: string
-              format: date
-              description: End date (inclusive).
-          required:
-          - from
-          - to
   securitySchemes:
     oauth2:
       type: oauth2
