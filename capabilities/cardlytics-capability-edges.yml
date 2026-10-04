@@ -4,6 +4,7 @@ generated_by: planning/capability-mapping/scripts/classify_capabilities.py
 model: claude-opus-5
 frame:
 - Banking & Capital Markets
+- Software & Technology
 min_confidence: 0.7
 capability_model:
   source: https://github.com/vincentmakes/turbo-ea-capabilities
@@ -11,7 +12,7 @@ capability_model:
   attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
     CC BY 4.0
   notice: NOTICE
-edge_count: 3
+edge_count: 4
 edges:
 - tag: Ads
   spec_file: cardlytics-ads-api-openapi.yml
@@ -22,6 +23,17 @@ edges:
   evidence: Adds an Ad to the repository; Gets the RedeemingMerchants associated with an Ad
   reason: CRUD over advertisements and their redeeming-merchant lists inside the campaign build system
     — digital/paid media advertising asset management.
+- tag: Ad Groups
+  spec_file: cardlytics-ad-groups-api-openapi.yml
+  capability_id: BC-400.60
+  capability_id_l1: BC-400
+  capability_name: Digital Marketing Management
+  confidence: 0.7
+  evidence: Clones an AdGroup with all related entities (Ad, Audience, Ad pricing models…
+  reason: CRUD, clone and validation operations on advertising Ad Groups with ads, audiences, placement
+    locations and pricing models — the build surface of a paid-media campaign, which sits under digital/paid
+    media marketing management. Sub-capability choice (digital vs demand generation) is somewhat ambiguous,
+    hence moderate confidence.
 - tag: AdGroups
   spec_file: cardlytics-adgroups-api-openapi.yml
   capability_id: BC-400.60
