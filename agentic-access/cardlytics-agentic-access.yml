@@ -1,23 +1,30 @@
-generated: '2026-08-12'
+generated: '2026-09-23'
 method: generated
-source: openapi/cardlytics-campaign-build-api-openapi.yml, openapi/cardlytics-partner-api-openapi.yml,
-  openapi/cardlytics-publisher-api-openapi.yml
+source: openapi/cardlytics-ad-groups-api-openapi.yml, openapi/cardlytics-ads-api-openapi.yml,
+  openapi/cardlytics-ads-controller-api-openapi.yml, openapi/cardlytics-audiencereach-api-openapi.yml,
+  openapi/cardlytics-audiences-api-openapi.yml, openapi/cardlytics-audit-logs-api-openapi.yml,
+  openapi/cardlytics-authentication-api-openapi.yml, openapi/cardlytics-campaigns-api-openapi.yml,
+  openapi/cardlytics-customer-controller-api-openapi.yml, openapi/cardlytics-geo-api-openapi.yml,
+  openapi/cardlytics-merchants-api-openapi.yml, openapi/cardlytics-offers-api-openapi.yml, openapi/cardlytics-pricingmodels-api-openapi.yml,
+  openapi/cardlytics-purchase-categories-api-openapi.yml, openapi/cardlytics-redemptions-api-openapi.yml,
+  openapi/cardlytics-reports-api-openapi.yml, openapi/cardlytics-rewards-api-openapi.yml, openapi/cardlytics-session-controller-api-openapi.yml
 description: Recommended x-agentic-access execution contracts, classified heuristically from
   the OpenAPI. A governance starting point for exposing this API to AI agents — review and bind
   audience per deployment. See research/curity/agentic-governance/.
 summary:
   operations: 86
   by_action_class:
-    acting: 36
-    connected: 50
+    acting: 34
+    connected: 52
   by_consequence:
-    write: 34
-    read: 50
-    safety-critical: 2
-  human_in_the_loop_required: 2
+    write: 33
+    read: 52
+    safety-critical: 1
+  human_in_the_loop_required: 1
 operations:
 - path: /v6/accounts/{accountId}/AdGroups/{adGroupId}/clone
   method: post
+  operationId: postV6AccountsByAccountIdAdGroupsByAdGroupIdClone
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -35,6 +42,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups/{adGroupId}/duplicate
   method: post
+  operationId: postV6AccountsByAccountIdAdGroupsByAdGroupIdDuplicate
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -52,6 +60,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups/{adGroupId}
   method: get
+  operationId: getV6AccountsByAccountIdAdGroupsByAdGroupId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -63,6 +72,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups/{adGroupId}
   method: patch
+  operationId: patchV6AccountsByAccountIdAdGroupsByAdGroupId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -80,6 +90,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups/{adGroupId}
   method: delete
+  operationId: deleteV6AccountsByAccountIdAdGroupsByAdGroupId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -97,6 +108,7 @@ operations:
     - read
 - path: /v6/AdGroups/{adGroupId}
   method: get
+  operationId: getV6AdGroupsByAdGroupId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -108,6 +120,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups
   method: get
+  operationId: getV6AccountsByAccountIdAdGroups
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -119,6 +132,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups
   method: post
+  operationId: postV6AccountsByAccountIdAdGroups
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -136,6 +150,7 @@ operations:
     - read
 - path: /v6/AdGroups
   method: get
+  operationId: getV6AdGroups
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -147,6 +162,7 @@ operations:
     - read
 - path: /v6/accounts/{accountId}/AdGroups/{adGroupId}/validation
   method: get
+  operationId: getV6AccountsByAccountIdAdGroupsByAdGroupIdValidation
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -158,6 +174,7 @@ operations:
     - read
 - path: /v6/AdGroups/validation/rule-set
   method: get
+  operationId: getV6AdGroupsValidationRuleSet
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -169,6 +186,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}
   method: get
+  operationId: getV7AccountsByAccountIdAdsByAdId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -180,6 +198,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}
   method: patch
+  operationId: patchV7AccountsByAccountIdAdsByAdId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -197,6 +216,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}
   method: delete
+  operationId: deleteV7AccountsByAccountIdAdsByAdId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -214,6 +234,7 @@ operations:
     - read
 - path: /v7/Ads/{adId}
   method: get
+  operationId: getV7AdsByAdId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -225,6 +246,7 @@ operations:
     - read
 - path: /v7/Ads/{adId}/RedeemingMerchants
   method: get
+  operationId: getV7AdsByAdIdRedeemingMerchants
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -236,6 +258,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}/RedeemingMerchants
   method: post
+  operationId: postV7AccountsByAccountIdAdsByAdIdRedeemingMerchants
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -253,6 +276,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}/RedeemingMerchants
   method: put
+  operationId: putV7AccountsByAccountIdAdsByAdIdRedeemingMerchants
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -270,6 +294,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads
   method: get
+  operationId: getV7AccountsByAccountIdAds
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -281,6 +306,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads
   method: post
+  operationId: postV7AccountsByAccountIdAds
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -298,6 +324,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/campaigns/{campaignId}/Ads
   method: get
+  operationId: getV7AccountsByAccountIdCampaignsByCampaignIdAds
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -309,6 +336,7 @@ operations:
     - read
 - path: /v7/Ads
   method: get
+  operationId: getV7Ads
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -320,6 +348,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}/duplicate
   method: post
+  operationId: postV7AccountsByAccountIdAdsByAdIdDuplicate
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -337,6 +366,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Ads/{adId}/validation
   method: get
+  operationId: getV7AccountsByAccountIdAdsByAdIdValidation
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -348,6 +378,7 @@ operations:
     - read
 - path: /v7/Ads/validation/rule-set
   method: get
+  operationId: getV7AdsValidationRuleSet
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -357,8 +388,19 @@ operations:
     audit: none
     scope:
     - read
+- path: /v2/ads/getAds
+  method: post
+  operationId: getAds
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
 - path: /v6/AudienceReach/calculateAudienceReach
   method: post
+  operationId: postV6AudienceReachCalculateAudienceReach
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -376,6 +418,7 @@ operations:
     - read
 - path: /v8/accounts/{accountId}/Audiences
   method: get
+  operationId: getV8AccountsByAccountIdAudiences
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -387,6 +430,7 @@ operations:
     - read
 - path: /v8/accounts/{accountId}/Audiences
   method: post
+  operationId: postV8AccountsByAccountIdAudiences
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -404,6 +448,7 @@ operations:
     - read
 - path: /v8/Audiences
   method: get
+  operationId: getV8Audiences
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -415,6 +460,7 @@ operations:
     - read
 - path: /v8/accounts/{accountId}/Audiences/{audienceId}
   method: get
+  operationId: getV8AccountsByAccountIdAudiencesByAudienceId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -426,6 +472,7 @@ operations:
     - read
 - path: /v8/accounts/{accountId}/Audiences/{audienceId}
   method: patch
+  operationId: patchV8AccountsByAccountIdAudiencesByAudienceId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -443,6 +490,7 @@ operations:
     - read
 - path: /v8/Audiences/{audienceId}
   method: get
+  operationId: getV8AudiencesByAudienceId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -454,6 +502,7 @@ operations:
     - read
 - path: /v8/accounts/{accountId}/Audiences/{audienceId}/validation
   method: get
+  operationId: getV8AccountsByAccountIdAudiencesByAudienceIdValidation
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -465,6 +514,7 @@ operations:
     - read
 - path: /v8/Audiences/validation/rule-set
   method: get
+  operationId: getV8AudiencesValidationRuleSet
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -476,6 +526,7 @@ operations:
     - read
 - path: /v5/accounts/{accountId}/AuditLogs
   method: get
+  operationId: getV5AccountsByAccountIdAuditLogs
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -485,8 +536,27 @@ operations:
     audit: none
     scope:
     - read
+- path: /api/v1/idp/oauth2/token
+  method: post
+  operationId: postApiV1IdpOauth2Token
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - openid
 - path: /v7/accounts/{accountId}/Campaigns
   method: get
+  operationId: getV7AccountsByAccountIdCampaigns
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -498,6 +568,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns
   method: post
+  operationId: postV7AccountsByAccountIdCampaigns
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -515,6 +586,7 @@ operations:
     - read
 - path: /v7/Campaigns
   method: get
+  operationId: getV7Campaigns
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -526,6 +598,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}
   method: get
+  operationId: getV7AccountsByAccountIdCampaignsByCampaignId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -537,6 +610,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}
   method: patch
+  operationId: patchV7AccountsByAccountIdCampaignsByCampaignId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -554,6 +628,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}
   method: delete
+  operationId: deleteV7AccountsByAccountIdCampaignsByCampaignId
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -571,6 +646,7 @@ operations:
     - read
 - path: /v7/Campaigns/{campaignId}
   method: get
+  operationId: getV7CampaignsByCampaignId
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -582,6 +658,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/diff
   method: get
+  operationId: getV7AccountsByAccountIdCampaignsByCampaignIdDiff
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -593,6 +670,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/optimize
   method: patch
+  operationId: patchV7AccountsByAccountIdCampaignsByCampaignIdOptimize
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -610,6 +688,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/status
   method: put
+  operationId: putV7AccountsByAccountIdCampaignsByCampaignIdStatus
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -627,6 +706,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/versions
   method: get
+  operationId: getV7AccountsByAccountIdCampaignsByCampaignIdVersions
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -638,6 +718,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/versions/latest
   method: get
+  operationId: getV7AccountsByAccountIdCampaignsByCampaignIdVersionsLatest
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -649,6 +730,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/projection
   method: post
+  operationId: postV7AccountsByAccountIdCampaignsByCampaignIdProjection
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -666,6 +748,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/duplicate
   method: post
+  operationId: postV7AccountsByAccountIdCampaignsByCampaignIdDuplicate
   x-agentic-access:
     action-class: acting
     consequence: write
@@ -683,6 +766,7 @@ operations:
     - read
 - path: /v7/accounts/{accountId}/Campaigns/{campaignId}/validation
   method: get
+  operationId: getV7AccountsByAccountIdCampaignsByCampaignIdValidation
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -694,6 +778,7 @@ operations:
     - read
 - path: /v7/Campaigns/validation/rule-set
   method: get
+  operationId: getV7CampaignsValidationRuleSet
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -705,6 +790,7 @@ operations:
     - read
 - path: /v7/Campaigns/count
   method: get
+  operationId: getV7CampaignsCount
   x-agentic-access:
     action-class: connected
     consequence: read
@@ -714,435 +800,6 @@ operations:
     audit: none
     scope:
     - read
-- path: /v6/Geo
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/Geo
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /v6/Geo/Country
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/Geo/DMA
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/Geo/Locality
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/Geo/PostalCode
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/Geo/Region
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/accounts/{accountId}/PricingModels/{pricingModelId}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/accounts/{accountId}/PricingModels/{pricingModelId}
-  method: patch
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /v6/accounts/{accountId}/PricingModels/{pricingModelId}
-  method: put
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /v6/accounts/{accountId}/adGroups/{adGroupId}/PricingModels
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/accounts/{accountId}/PricingModels
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /v6/PurchaseCategories/{purchaseCategoryId}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v6/PurchaseCategories
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v7/accounts/{accountId}/Rewards/{rewardId}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v7/accounts/{accountId}/Rewards/{rewardId}
-  method: patch
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /v7/accounts/{accountId}/Rewards/{rewardId}
-  method: put
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /v7/Rewards/rms/{rmsRewardId}
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v7/accounts/{accountId}/ads/{adId}/Rewards
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v7/accounts/{accountId}/Rewards/{rewardId}/validation
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v7/Rewards/validation/rule-set
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - read
-- path: /v7/accounts/{accountId}/Rewards
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - read
-- path: /api/v1/idp/oauth2/token
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - openid
-- path: /api/v1/partner/merchants/{external_merchant_id}
-  method: put
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - openid
-- path: /api/v1/partner/merchants/{external_merchant_id}
-  method: delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - openid
-- path: /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}
-  method: put
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - openid
-- path: /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}
-  method: delete
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - openid
-- path: /api/v1/partner/merchants/{external_merchant_id}/reports
-  method: post
-  x-agentic-access:
-    action-class: acting
-    consequence: write
-    subject: required
-    audience: null
-    token:
-      max-ttl: 900
-    escalation:
-      human-in-the-loop: conditional
-      triggers:
-      - abnormal
-      - high-value
-    audit: required
-    scope:
-    - openid
-- path: /api/v1/partner/redemptions
-  method: get
-  x-agentic-access:
-    action-class: connected
-    consequence: read
-    subject: optional
-    token:
-      max-ttl: 3600
-    audit: none
-    scope:
-    - openid
-- path: /v2/session/startSession
-  method: post
-  operationId: startSession
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
-- path: /v2/ads/getAds
-  method: post
-  operationId: getAds
-  x-agentic-access:
-    action-class: acting
-    consequence: safety-critical
-    subject: required
-    audience: null
-    token:
-      max-ttl: 120
-      exchange: true
-      purpose-required: true
-      proof-of-possession: true
-    escalation:
-      human-in-the-loop: required
-    audit: required
 - path: /v2/customerProfile/getCustomerRewardSummary
   method: get
   operationId: getRewardsSummary
@@ -1173,3 +830,421 @@ operations:
     token:
       max-ttl: 3600
     audit: none
+- path: /v6/Geo
+  method: get
+  operationId: getV6Geo
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/Geo
+  method: post
+  operationId: postV6Geo
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v6/Geo/Country
+  method: get
+  operationId: getV6GeoCountry
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/Geo/DMA
+  method: get
+  operationId: getV6GeoDMA
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/Geo/Locality
+  method: get
+  operationId: getV6GeoLocality
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/Geo/PostalCode
+  method: get
+  operationId: getV6GeoPostalCode
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/Geo/Region
+  method: get
+  operationId: getV6GeoRegion
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /api/v1/partner/merchants/{external_merchant_id}
+  method: put
+  operationId: putApiV1PartnerMerchantsByExternalMerchantId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - openid
+- path: /api/v1/partner/merchants/{external_merchant_id}
+  method: delete
+  operationId: deleteApiV1PartnerMerchantsByExternalMerchantId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - openid
+- path: /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}
+  method: put
+  operationId: putApiV1PartnerMerchantsByExternalMerchantIdOffersByExternalOfferId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - openid
+- path: /api/v1/partner/merchants/{external_merchant_id}/offers/{external_offer_id}
+  method: delete
+  operationId: deleteApiV1PartnerMerchantsByExternalMerchantIdOffersByExternalOfferId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - openid
+- path: /v6/accounts/{accountId}/PricingModels/{pricingModelId}
+  method: get
+  operationId: getV6AccountsByAccountIdPricingModelsByPricingModelId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/accounts/{accountId}/PricingModels/{pricingModelId}
+  method: patch
+  operationId: patchV6AccountsByAccountIdPricingModelsByPricingModelId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v6/accounts/{accountId}/PricingModels/{pricingModelId}
+  method: put
+  operationId: putV6AccountsByAccountIdPricingModelsByPricingModelId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v6/accounts/{accountId}/adGroups/{adGroupId}/PricingModels
+  method: get
+  operationId: getV6AccountsByAccountIdAdGroupsByAdGroupIdPricingModels
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/accounts/{accountId}/PricingModels
+  method: post
+  operationId: postV6AccountsByAccountIdPricingModels
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v6/PurchaseCategories/{purchaseCategoryId}
+  method: get
+  operationId: getV6PurchaseCategoriesByPurchaseCategoryId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v6/PurchaseCategories
+  method: get
+  operationId: getV6PurchaseCategories
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /api/v1/partner/redemptions
+  method: get
+  operationId: getApiV1PartnerRedemptions
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - openid
+- path: /api/v1/partner/merchants/{external_merchant_id}/reports
+  method: post
+  operationId: postApiV1PartnerMerchantsByExternalMerchantIdReports
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - openid
+- path: /v7/accounts/{accountId}/Rewards/{rewardId}
+  method: get
+  operationId: getV7AccountsByAccountIdRewardsByRewardId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v7/accounts/{accountId}/Rewards/{rewardId}
+  method: patch
+  operationId: patchV7AccountsByAccountIdRewardsByRewardId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v7/accounts/{accountId}/Rewards/{rewardId}
+  method: put
+  operationId: putV7AccountsByAccountIdRewardsByRewardId
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v7/Rewards/rms/{rmsRewardId}
+  method: get
+  operationId: getV7RewardsRmsByRmsRewardId
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v7/accounts/{accountId}/ads/{adId}/Rewards
+  method: get
+  operationId: getV7AccountsByAccountIdAdsByAdIdRewards
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v7/accounts/{accountId}/Rewards/{rewardId}/validation
+  method: get
+  operationId: getV7AccountsByAccountIdRewardsByRewardIdValidation
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v7/Rewards/validation/rule-set
+  method: get
+  operationId: getV7RewardsValidationRuleSet
+  x-agentic-access:
+    action-class: connected
+    consequence: read
+    subject: optional
+    token:
+      max-ttl: 3600
+    audit: none
+    scope:
+    - read
+- path: /v7/accounts/{accountId}/Rewards
+  method: post
+  operationId: postV7AccountsByAccountIdRewards
+  x-agentic-access:
+    action-class: acting
+    consequence: write
+    subject: required
+    audience: null
+    token:
+      max-ttl: 900
+    escalation:
+      human-in-the-loop: conditional
+      triggers:
+      - abnormal
+      - high-value
+    audit: required
+    scope:
+    - read
+- path: /v2/session/startSession
+  method: post
+  operationId: startSession
+  x-agentic-access:
+    action-class: acting
+    consequence: safety-critical
+    subject: required
+    audience: null
+    token:
+      max-ttl: 120
+      exchange: true
+      purpose-required: true
+      proof-of-possession: true
+    escalation:
+      human-in-the-loop: required
+    audit: required
