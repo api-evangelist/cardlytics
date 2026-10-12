@@ -1,0 +1,31 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/cardlytics/integrations
+- https://n8n.io/integrations/cardlytics/
+- https://composio.dev/toolkits/cardlytics
+- https://monid.ai/tools/cardlytics
+checked:
+- https://composio.dev/toolkits/cardlytics
+- https://monid.ai/tools/cardlytics
+- https://n8n.io/integrations/cardlytics/
+- https://zapier.com/apps/cardlytics/integrations
+summary: null
+marketplace_apps: []
+edges:
+- partner_name: plaid
+  partner: plaid
+  partner_match: domain
+  type: contract
+  channel: partner-built
+  relationship: processor-connection
+  direction: partner-built
+  evidence: https://github.com/api-evangelist/plaid/blob/main/openapi/plaid-plaid-api-openapi.yml
+  contract_reference:
+    repo: plaid
+    spec_file: plaid-plaid-api-openapi.yml
+    value: cardlytics
+    property: schemas.ProcessorTokenCreateRequest.processor
+    detected_by: detect-payment-method-edges.py
+    detected: '2026-10-12'
+templates: []
