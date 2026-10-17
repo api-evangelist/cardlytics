@@ -385,35 +385,48 @@ components:
       - USD
       - GBP
       type: string
-    PostPricingModelResourceModel:
+    Operation:
       type: object
       properties:
-        adGroupId:
-          type: integer
-          format: int32
-        feePercent:
+        value: {}
+        path:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feeCap:
+        op:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        targetRoas:
+        from:
           type:
-          - number
+          - string
           - 'null'
-          format: double
-        feeAmount:
-          type:
-          - number
-          - 'null'
-          format: double
-        currency:
-          $ref: '#/components/schemas/Currency'
       additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
     GetPricingModelResourceModel:
       type: object
       properties:
@@ -466,48 +479,35 @@ components:
           - string
           - 'null'
       additionalProperties: false
-    Operation:
+    PostPricingModelResourceModel:
       type: object
       properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
+        adGroupId:
+          type: integer
           format: int32
-        detail:
+        feePercent:
           type:
-          - string
+          - number
           - 'null'
-        instance:
+          format: double
+        feeCap:
           type:
-          - string
+          - number
           - 'null'
-      additionalProperties: {}
+          format: double
+        targetRoas:
+          type:
+          - number
+          - 'null'
+          format: double
+        feeAmount:
+          type:
+          - number
+          - 'null'
+          format: double
+        currency:
+          $ref: '#/components/schemas/Currency'
+      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2

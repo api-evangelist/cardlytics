@@ -544,12 +544,16 @@ paths:
       x-operation-id-source: derived
 components:
   schemas:
-    PlacementLocation:
+    CampaignStatus:
       enum:
-      - None
-      - All
-      - UnderTransaction
+      - Draft
+      - Pending
+      - InReview
+      - Scheduled
+      - Active
+      - Inactive
       type: string
+      description: Campaign status enumeration.
     RuleDefinition:
       type: object
       properties:
@@ -568,6 +572,157 @@ components:
           - string
           - 'null'
       additionalProperties: false
+    PostAdGroupResourceModel:
+      required:
+      - name
+      type: object
+      properties:
+        targetingCriteriaId:
+          type:
+          - integer
+          - 'null'
+          format: int64
+        name:
+          minLength: 1
+          type: string
+        campaignId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        audienceId:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementIndex:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        placementLocation:
+          $ref: '#/components/schemas/PlacementLocation'
+        institutions:
+          type:
+          - array
+          - 'null'
+          items:
+            type: integer
+            format: int32
+        testPopulation:
+          type:
+          - number
+          - 'null'
+          format: double
+      additionalProperties: false
+    GetValidationResourceModel:
+      type: object
+      properties:
+        isValid:
+          default: false
+        errors:
+          type:
+          - object
+          - 'null'
+          additionalProperties:
+            type: array
+            items:
+              type: string
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+      description: Get Validation endpoint resource model.
+    Operation:
+      type: object
+      properties:
+        value: {}
+        path:
+          type:
+          - string
+          - 'null'
+        op:
+          type:
+          - string
+          - 'null'
+        from:
+          type:
+          - string
+          - 'null'
+      additionalProperties: false
+    ProblemDetails:
+      type: object
+      properties:
+        type:
+          type:
+          - string
+          - 'null'
+        title:
+          type:
+          - string
+          - 'null'
+        status:
+          type:
+          - integer
+          - 'null'
+          format: int32
+        detail:
+          type:
+          - string
+          - 'null'
+        instance:
+          type:
+          - string
+          - 'null'
+      additionalProperties: {}
+    GetValidationDefinitionResourceModel:
+      type: object
+      properties:
+        typeName:
+          type:
+          - string
+          - 'null'
+        ruleSet:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/RuleDefinition'
+      additionalProperties: false
+      description: Get Validation Definition resource model.
+    RuleTypes:
+      enum:
+      - Required
+      - GreaterThan
+      - GreaterThanOrEqualTo
+      - LessThan
+      - Length
+      - Enum
+      - EnumNotDefaulted
+      - InclusiveBetween
+      - ExclusiveBetween
+      - NotEqual
+      - UniqueCollection
+      type: string
+      description: Validation rule definition types.
     GetAdGroupResourceModel:
       type: object
       properties:
@@ -642,167 +797,12 @@ components:
         isExpanded:
           default: false
       additionalProperties: false
-    ProblemDetails:
-      type: object
-      properties:
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-    PostAdGroupResourceModel:
-      required:
-      - name
-      type: object
-      properties:
-        targetingCriteriaId:
-          type:
-          - integer
-          - 'null'
-          format: int64
-        name:
-          minLength: 1
-          type: string
-        campaignId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        audienceId:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        placementIndex:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        placementLocation:
-          $ref: '#/components/schemas/PlacementLocation'
-        institutions:
-          type:
-          - array
-          - 'null'
-          items:
-            type: integer
-            format: int32
-        testPopulation:
-          type:
-          - number
-          - 'null'
-          format: double
-      additionalProperties: false
-    RuleTypes:
+    PlacementLocation:
       enum:
-      - Required
-      - GreaterThan
-      - GreaterThanOrEqualTo
-      - LessThan
-      - Length
-      - Enum
-      - EnumNotDefaulted
-      - InclusiveBetween
-      - ExclusiveBetween
-      - NotEqual
-      - UniqueCollection
+      - None
+      - All
+      - UnderTransaction
       type: string
-      description: Validation rule definition types.
-    CampaignStatus:
-      enum:
-      - Draft
-      - Pending
-      - InReview
-      - Scheduled
-      - Active
-      - Inactive
-      type: string
-      description: Campaign status enumeration.
-    GetValidationResourceModel:
-      type: object
-      properties:
-        isValid:
-          default: false
-        errors:
-          type:
-          - object
-          - 'null'
-          additionalProperties:
-            type: array
-            items:
-              type: string
-        type:
-          type:
-          - string
-          - 'null'
-        title:
-          type:
-          - string
-          - 'null'
-        status:
-          type:
-          - integer
-          - 'null'
-          format: int32
-        detail:
-          type:
-          - string
-          - 'null'
-        instance:
-          type:
-          - string
-          - 'null'
-      additionalProperties: {}
-      description: Get Validation endpoint resource model.
-    Operation:
-      type: object
-      properties:
-        value: {}
-        path:
-          type:
-          - string
-          - 'null'
-        op:
-          type:
-          - string
-          - 'null'
-        from:
-          type:
-          - string
-          - 'null'
-      additionalProperties: false
-    GetValidationDefinitionResourceModel:
-      type: object
-      properties:
-        typeName:
-          type:
-          - string
-          - 'null'
-        ruleSet:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/RuleDefinition'
-      additionalProperties: false
-      description: Get Validation Definition resource model.
   securitySchemes:
     oauth2-cognito:
       type: oauth2

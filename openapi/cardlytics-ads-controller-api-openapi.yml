@@ -35,18 +35,31 @@ paths:
       x-summary-source: derived
 components:
   schemas:
-    Image:
+    Text:
       type: object
       properties:
         type:
           type: string
-          example: IMAGE_URL
+          example: AD_COPY
           enum:
           - IMAGE_URL
           - AD_COPY
           - CALL_TO_ACTION_LINKS
         value:
-          $ref: '#/components/schemas/AdImageValue'
+          type: object
+          additionalProperties:
+            type: string
+    ImageURL:
+      type: object
+      properties:
+        url:
+          type: string
+        width:
+          type: integer
+          format: int32
+        height:
+          type: integer
+          format: int32
     GetAdsRequest:
       required:
       - channel
@@ -130,13 +143,44 @@ components:
         includeExpiredAds:
           type: boolean
           example: false
-    CallToActionLink:
+    PurchaseRequirement:
       type: object
       properties:
-        type:
+        minSpendAmount:
+          type: number
+          format: float
+        purchaseChannels:
+          type: array
+          items:
+            type: string
+            enum:
+            - InStore
+            - Online
+            - PayAtPump
+            - App
+            - Convenience
+        purchaseTypes:
+          type: array
+          items:
+            type: string
+            enum:
+            - Membership
+            - Subscription
+            - Fuel
+    StoreLocationAddress:
+      type: object
+      properties:
+        addressLine1:
           type: string
-          example: WEB_LINK
-        value:
+        addressLine2:
+          type: string
+        city:
+          type: string
+        state:
+          type: string
+        postalCode:
+          type: string
+        country:
           type: string
     AdReward:
       type: object
@@ -157,20 +201,86 @@ components:
           type: boolean
         purchaseRequirement:
           $ref: '#/components/schemas/PurchaseRequirement'
-    CallsToAction:
+    GeoCoordinate:
+      type: object
+      properties:
+        latitude:
+          type: number
+          format: double
+        longitude:
+          type: number
+          format: double
+    Image:
       type: object
       properties:
         type:
           type: string
-          example: CALL_TO_ACTION_LINKS
+          example: IMAGE_URL
           enum:
           - IMAGE_URL
           - AD_COPY
           - CALL_TO_ACTION_LINKS
         value:
+          $ref: '#/components/schemas/AdImageValue'
+    AdRankings:
+      type: object
+      properties:
+        all:
+          type: array
+          items:
+            type: string
+    CategoryGroup:
+      type: object
+      properties:
+        name:
+          type: string
+        id:
+          type: string
+        subcategories:
+          type: array
+          items:
+            $ref: '#/components/schemas/CategoryGroup'
+    AdImageValue:
+      type: object
+      properties:
+        large:
+          $ref: '#/components/schemas/ImageURL'
+        small:
+          $ref: '#/components/schemas/ImageURL'
+    GetAdsResponse:
+      type: object
+      properties:
+        requestId:
+          type: string
+        ads:
           type: object
           additionalProperties:
-            $ref: '#/components/schemas/CallToActionLink'
+            $ref: '#/components/schemas/Ad'
+        rankings:
+          $ref: '#/components/schemas/AdRankings'
+        categories:
+          type: object
+          additionalProperties:
+            $ref: '#/components/schemas/CategoryGroup'
+        storeLocations:
+          type: object
+          additionalProperties:
+            type: array
+            items:
+              $ref: '#/components/schemas/StoreLocation'
+    AdAssetList:
+      type: object
+      properties:
+        logo:
+          $ref: '#/components/schemas/Image'
+        largeRectangle:
+          $ref: '#/components/schemas/Image'
+        smallRectangle:
+          $ref: '#/components/schemas/Image'
+        copy:
+          $ref: '#/components/schemas/Text'
+        callsToAction:
+          $ref: '#/components/schemas/CallsToAction'
     Ad:
       type: object
       properties:
@@ -233,19 +343,12 @@ components:
           - FULLY_REDEEMED
         assets:
           $ref: '#/components/schemas/AdAssetList'
-    AdRankings:
-      type: object
-      properties:
-        all:
-          type: array
-          items:
-            type: string
-    Text:
+    CallsToAction:
       type: object
       properties:
         type:
           type: string
-          example: AD_COPY
+          example: CALL_TO_ACTION_LINKS
           enum:
           - IMAGE_URL
           - AD_COPY
@@ -253,50 +356,15 @@ components:
         value:
           type: object
           additionalProperties:
-            type: string
-    ImageURL:
+            $ref: '#/components/schemas/CallToActionLink'
+    CallToActionLink:
       type: object
       properties:
-        url:
+        type:
           type: string
-        width:
-          type: integer
-          format: int32
-        height:
-          type: integer
-          format: int32
-    GetAdsResponse:
-      type: object
-      properties:
-        requestId:
+          example: WEB_LINK
+        value:
           type: string
-        ads:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/Ad'
-        rankings:
-          $ref: '#/components/schemas/AdRankings'
-        categories:
-          type: object
-          additionalProperties:
-            $ref: '#/components/schemas/CategoryGroup'
-        storeLocations:
-          type: object
-          additionalProperties:
-            type: array
-            items:
-              $ref: '#/components/schemas/StoreLocation'
-    CategoryGroup:
-      type: object
-      properties:
-        name:
-          type: string
-        id:
-          type: string
-        subcategories:
-          type: array
-          items:
-            $ref: '#/components/schemas/CategoryGroup'
     StoreLocation:
       type: object
       properties:
@@ -315,71 +383,3 @@ components:
         longitude:
           type: number
           format: float
-    PurchaseRequirement:
-      type: object
-      properties:
-        minSpendAmount:
-          type: number
-          format: float
-        purchaseChannels:
-          type: array
-          items:
-            type: string
-            enum:
-            - InStore
-            - Online
-            - PayAtPump
-            - App
-            - Convenience
-        purchaseTypes:
-          type: array
-          items:
-            type: string
-            enum:
-            - Membership
-            - Subscription
-            - Fuel
-    AdAssetList:
-      type: object
-      properties:
-        logo:
-          $ref: '#/components/schemas/Image'
-        largeRectangle:
-          $ref: '#/components/schemas/Image'
-        smallRectangle:
-          $ref: '#/components/schemas/Image'
-        copy:
-          $ref: '#/components/schemas/Text'
-        callsToAction:
-          $ref: '#/components/schemas/CallsToAction'
-    StoreLocationAddress:
-      type: object
-      properties:
-        addressLine1:
-          type: string
-        addressLine2:
-          type: string
-        city:
-          type: string
-        state:
-          type: string
-        postalCode:
-          type: string
-        country:
-          type: string
-    AdImageValue:
-      type: object
-      properties:
-        large:
-          $ref: '#/components/schemas/ImageURL'
-        small:
-          $ref: '#/components/schemas/ImageURL'
-    GeoCoordinate:
-      type: object
-      properties:
-        latitude:
-          type: number
-          format: double
-        longitude:
-          type: number
-          format: double

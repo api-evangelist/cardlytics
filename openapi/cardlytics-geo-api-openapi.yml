@@ -383,6 +383,28 @@ components:
           items:
             type: string
       additionalProperties: false
+    GeoType:
+      enum:
+      - COUNTRY
+      - REGION
+      - LOCALITY
+      - DMA
+      - POSTAL_CODE
+      type: string
+    MatchedGeoSearchResourceModel:
+      type: object
+      properties:
+        matched:
+          type: integer
+          format: int32
+          readOnly: true
+        matches:
+          type:
+          - array
+          - 'null'
+          items:
+            $ref: '#/components/schemas/GeoSearchResourceModel'
+      additionalProperties: false
     GeoSearchResourceModel:
       type: object
       properties:
@@ -418,28 +440,6 @@ components:
           $ref: '#/components/schemas/GeoType'
       additionalProperties: false
       description: Model Class the represents a Geo Search result.
-    GeoType:
-      enum:
-      - COUNTRY
-      - REGION
-      - LOCALITY
-      - DMA
-      - POSTAL_CODE
-      type: string
-    MatchedGeoSearchResourceModel:
-      type: object
-      properties:
-        matched:
-          type: integer
-          format: int32
-          readOnly: true
-        matches:
-          type:
-          - array
-          - 'null'
-          items:
-            $ref: '#/components/schemas/GeoSearchResourceModel'
-      additionalProperties: false
   securitySchemes:
     oauth2-cognito:
       type: oauth2
